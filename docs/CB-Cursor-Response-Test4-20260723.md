@@ -1,228 +1,254 @@
 # Cursor Response: Test 4 Brief (CB-Cursor-Brief-Test4-20260724)
-**Version:** 1  
+**Version:** 2 (Q1 unblocked)  
 **Date:** July 23, 2026  
-**Status:** Prerequisite answers + design feedback only  
-**CRITICAL:** Test 4 was **NOT** executed. Awaiting Phil & team review and explicit approval.
+**Status:** Prerequisite answers complete — awaiting Phil & team review  
+**CRITICAL:** Test 4 was **NOT** executed. Awaiting explicit approval before any run.
+
+**Sources used:**
+1. `CB-Cursor-Brief-Test4-20260724` (design brief)
+2. `TS-Raquel-Testing-Documentation-Complete-20260722` (Tests / Runs 01–03 reference)
 
 ---
 
 ## Receipt Confirmation
 
-Brief received and parsed. Scope understood:
+Both documents received. Scope unchanged:
 - Phase 1: 159 Unicode scripts × 3 fidelity levels on Claude Sonnet 4.6 (477 iterations)
 - Phase 2: Top 20–30 × 3 levels × 8 providers (≈480–720 iterations)
-- Deliverables requested now: Q1–Q3 answers, report-design feedback, resource/constraint flags
 - **No test execution until explicit approval**
 
 ---
 
-## Environment Constraint (Affects Q1)
+## Important Terminology Correction (Read First)
 
-This cloud agent run is attached to repo `philcheevers-pixel/lifebutwrong`. That repo does **not** contain Raquel Tests 1–3 code, prior reports, or the five fidelity-method definitions.
+The Test 4 brief asked for **“five fidelity methods”** and how **“3 out of 5”** works. The July 22 testing documentation shows something different and more precise:
 
-Searched also:
-- Prior agents on this environment (no Raquel/Test 1–3 materials)
-- Public repo `philcheevers-pixel/tokenscope` (token/cost tooling; not Raquel fidelity methodology)
-
-**Implication:** Question 1 cannot be answered from primary sources available in this environment without inventing definitions. Inventing investor-facing methodology would be unacceptable. Q1 is blocked pending source materials (see “Unblock Q1” below).
-
----
-
-## Question 1: Fidelity Methods (CRITICAL) — BLOCKED
-
-### Current answer
-**I do not have authoritative definitions for Methods 1–5 from Tests 1–3 in this environment.**
-
-I will not fabricate Method 1–5 algorithms for an investor/audit report. “3 out of 5” must mean exactly what Tests 1–3 already measured.
-
-### What the Test 4 report will need (once sources are provided)
-For each method, the report section should include:
-1. **Name** (stable label used across Tests 1–4)
-2. **What it measures** (one sentence, investor-clear)
-3. **Algorithm** (inputs → steps → outputs; reproducible)
-4. **Pass / fail criterion** (exact threshold or boolean rule)
-5. **Failure modes** (what a fail looks like in practice)
-6. **Why it matters** (compression without understanding is not success)
-7. **Independence note** (how it differs from the other four methods)
-
-### How “3 out of 5” should be explained (framework only)
-Until Methods 1–5 are confirmed from Tests 1–3:
-
-> A script/level combination earns a fidelity score of **k/5**, where each method is an independent check. **Pass** for ranking purposes should be defined explicitly (recommended default below). “3 out of 5” means three methods passed and two failed — not a continuous percentage, and not interchangeable with “fidelity level 3.”
-
-**Recommended ranking rule (propose; confirm with Phil):**
-- **Primary filter:** compression ratio ≤ 1.0 (no token expansion vs English baseline)
-- **Secondary score:** fidelity passes (0–5), require ≥3/5 to be “production-candidate”
-- **Tie-breakers:** (1) higher fidelity count, (2) better compression, (3) lower variance across levels 1–3, (4) script name A–Z
-
-### Unblock Q1 — please share any of:
-1. Tests 1–3 report(s) or methodology notes (paste / link / file)
-2. Source code / harness that implements the five checks
-3. Even a rough bullet list from memory of what each method does
-
-Once received, I will rewrite Q1 with exact, auditable definitions and algorithms.
-
----
-
-## Question 2: Level of Effort & Resource Constraints
-
-Estimates below are **engineering ranges**, not quotes. They depend on (a) how many LLM calls each fidelity method requires, and (b) whether encoding is local vs model-assisted. Assumptions are stated so you can adjust.
-
-### Shared assumptions
-| Assumption | Value used | Notes |
-|---|---|---|
-| Payload | Essay “Why You Should Treat Your AI Well” | Same as Tests 1–3 |
-| English baseline size | ~600–1,200 tokens (est.) | Confirm from Tests 1–3 |
-| Provider (Phase 1) | Claude Sonnet 4.6 | ~$3 / 1M input, ~$15 / 1M output (standard API, July 2026) |
-| Iteration | 1 script × 1 fidelity level | May include encode + model call(s) + score |
-| LLM calls per iteration | **Low:** 1–2 · **Mid:** 3–5 · **High:** 6–10 | Depends on whether Methods 1–5 are local or LLM-judged |
-| Retries / flakes | +10–20% call overhead | Rate limits, empty outputs, JSON parse fails |
-
-### Phase 1 — 477 iterations (Claude only)
-
-| Scenario | Wall-clock (parallel) | Wall-clock (mostly serial) | Est. API cost |
-|---|---|---|---|
-| Low (1–2 calls/iter, local scoring) | **1–3 hours** | 8–16 hours | **~$15–40** |
-| Mid (3–5 calls/iter) | **3–8 hours** | 1–2 days | **~$40–120** |
-| High (6–10 calls/iter, LLM judges) | **8–20 hours** | 2–4 days | **~$100–300** |
-
-**Parallel execution:** Feasible and recommended. Claude supports concurrent requests subject to org rate limits (RPM/TPM). Practical concurrency for Phase 1: **8–20 in-flight** requests with backoff. Higher concurrency saves wall-clock but does not reduce token cost.
-
-**Batch API:** If Anthropic Batch is acceptable for investor timing (async, often hours), standard rates are typically ~50% lower — useful if Mid/High call volume materializes. Trade-off: slower iteration/debug loop.
-
-### Phase 2 — 480–720 iterations (8 providers)
-
-| Item | Estimate |
+| Phrase in Test 4 brief | What Tests 1–3 actually mean |
 |---|---|
-| Scope | Top 20–30 scripts × 3 levels × 8 providers = 480–720 iterations |
-| Wall-clock (staggered parallel) | **1–3 days** calendar (provider variance dominates) |
-| Cost band | **~$80–400** total across providers (wide; model mix + call depth) |
-| Hardest constraint | **Per-provider rate limits & auth**, not raw Claude cost |
+| “Five fidelity methods” | **Not five separate methods.** There are **three fidelity checks** (Level 1A, Level 1B, Level 2). |
+| “3 out of 5” | Score on the **Scotty five-question / five-theme audit**: how many of five questions (Run 02) or five key themes (Run 03 Level 2) the model got right. English baseline was **3/5**. |
+| “3 fidelity levels” | Maps cleanly to Run 03: **Level 1A (Echo)**, **Level 1B (Round-trip)**, **Level 2 (Theme audit)**. |
 
-### Constraints to flag before approval
+**Recommendation for investor report wording:** Do **not** say “five fidelity methods.” Say:
+1. **Three fidelity levels** (Echo / Round-trip / Theme), and
+2. Within Level 2 (and Run 02’s Scotty v1), a **five-item checklist** scored as **k/5**.
 
-1. **OpenAI token-counting API** — Brief correctly flags this. If unavailable, exclude OpenAI from Phase 2 *or* use documented tokenizer fallback (tiktoken) and label it clearly as approximate vs billed tokens.
-2. **Provider auth matrix** — Phase 2 needs working keys for: OpenAI, Anthropic, Google, Azure, Mistral, Grok, Perplexity, OpenRouter. Missing keys = drop that provider from the run, not silent skip.
-3. **Azure** — Often model-deployment specific; treat as separate config, not “OpenAI with different URL.”
-4. **Perplexity / OpenRouter** — May wrap other models; report must state *which underlying model ID* was called, or results are not auditable.
-5. **Token expansion scripts** — Ancient / rare scripts can explode context; set a hard max input token budget per call (e.g., abort/fail if >N× English baseline) so one hieroglyphic run cannot blow cost or context.
-6. **Non-determinism** — For investor auditability, fix temperature (e.g., 0), record model IDs + dates, and optionally run **n=1** for Phase 1 screening then **n=3** only on top candidates if variance matters.
-7. **This agent’s repo** — Execution should happen in the Raquel/test harness repo (or a dedicated repo), not `lifebutwrong`.
+If Phil intended five distinct methods beyond what Run 01–03 document, that needs to be stated explicitly — it is not in the July 22 reference.
 
-### Realistic recommendation
-- Phase 1 Mid scenario is the planning default until Method 1–5 call counts are known: **budget ~$100 + 1 working day** with concurrency 10–15.
-- Phase 2: **budget ~$250 + 2 calendar days**, with a provider readiness checklist before start.
-- If cost must be capped: keep full 159-script transparency for *token metrics* (local/cheap), and reserve full 5-method fidelity LLM judging for scripts that already compress.
+---
+
+## Question 1: Fidelity Methods / Levels (CRITICAL) — ANSWERED
+
+Based on `TS-Raquel-Testing-Documentation-Complete-20260722`.
+
+### What Raquel is testing (one sentence)
+Raquel asks whether a non-English representation of the same essay can **shrink inbound tokens** while still letting the model **preserve meaning** well enough for useful work.
+
+### English baseline (from Run 01)
+- Payload: essay *“Why You Should Treat Your AI Well”*
+- English: **1,661 tokens** (Claude Sonnet 4.6)
+- Compression % = how much smaller inbound became vs this baseline
+
+---
+
+### Check A — Compression measurement (Run 01; not a fidelity check)
+**What it tests:** Token size only. Does the representation shrink inbound data?  
+**Algorithm:**
+1. Tokenize English essay → `T_en` (baseline = 1,661).
+2. Produce representation R (Code Notation, Chinese, Oriya, etc.).
+3. Tokenize R → `T_r`.
+4. Compression reduction % = `(T_en − T_r) / T_en × 100`.
+5. Expansion if `T_r > T_en`.
+
+**Success / failure (operational):**
+- **Success (compresses):** `T_r < T_en` (target band cited: 25–35% reduction; Code Notation hit 67%).
+- **Neutral / fail for Zipfian ranking:** no reduction or expansion (Chinese ≈0%; Swahili +69%; Oriya +424%).
+
+**Why it matters:** Without compression, Raquel has no cost thesis. Fidelity alone is not enough.
+
+---
+
+### Method / Level 1A — Echo Fidelity (Run 03)
+**What it tests:** Character-level (or near-exact) reproduction. Did the model echo back what it received?  
+**Investor plain language:** “Can the AI repeat the encoded text accurately?”
+
+**Algorithm:**
+1. Send encoded payload to the model with an echo / repeat instruction.
+2. Receive output string `O`.
+3. Compare `O` to the encoded input `R` (character-by-character or documented similarity %).
+4. Record exact-match % (or 0% if unparseable).
+
+**Pass / fail (as used in Run 03):**
+- **Pass / strong:** ~100% exact match (English, Code Notation, Swahili).
+- **Soft pass / note:** high but imperfect (Oriya 96.97%).
+- **Fail:** 0% / cannot read (Egyptian Hieroglyphics, Cuneiform).
+
+**Failure looks like:** Model cannot parse the script, returns refusal/garbage, or diverges materially from the input string.
+
+**Why it matters:** Confirms the representation is at least legible to the model as data. Does **not** prove meaning was understood.
+
+---
+
+### Method / Level 1B — Round-Trip / Semantic Fidelity (Run 03)
+**What it tests:** Semantic preservation under reconstruction. When asked about the original meaning (or to restore meaning), does the model demonstrate correct understanding?  
+**Investor plain language:** “If we ask about the ideas in the encoded text, does the AI get the original meaning right?”
+
+**Algorithm (as described):**
+1. Send encoded payload.
+2. Ask the model questions about / reconstruction of the **original meaning**.
+3. Score whether the response preserves the original semantics (documented as PASS/FAIL in Run 03).
+
+**Pass / fail (Run 03 results):**
+- English baseline: **PASS**
+- Code Notation, Oriya, Swahili, Egyptian, Cuneiform: **FAIL** under a strict “reproduce original” reading
+
+**CRITICAL FINDING (carry into Test 4 report verbatim in spirit):**  
+Claude tends to **paraphrase**, not replay text word-for-word. Encoded versions failed Level 1B when judged as exact reconstruction. That is expected LLM behavior, not proof Raquel is useless.  
+**Patent / investor implication from Run 03:** Do **not** claim lossless character-level compression. **Do** claim **idea-level preservation** (Level 2).
+
+**Why it matters:** Separates “can echo glyphs” from “understood the essay.” Also prevents overclaiming.
+
+---
+
+### Method / Level 2 — Theme Audit / Scotty (Run 02 v1 questions + Run 03 themes)
+**What it tests:** Idea-level fidelity. Can the model identify the same key ideas from the encoded text as from English?  
+**Investor plain language:** “Does the AI still see the main points?”
+
+**Two related scorings in the July 22 docs:**
+
+#### Run 02 — Scotty v1 five-question audit
+1. Encode essay into representation R.
+2. Ask **5 fixed questions** about the content.
+3. Score **k/5** correct answers.
+4. Compare to English baseline (**3/5** in Run 02).
+
+**Examples from Run 02:** Code Notation 3/5; Oriya 4/5; Swahili 5/5; Egyptian/Cuneiform unparseable.
+
+#### Run 03 — Level 2 five-theme audit
+1. Establish English reference themes (model listed **3 of 5** key themes on English).
+2. Ask model to list the **five main themes** from encoded version.
+3. Score how many of the five reference themes were recovered (**k/5**).
+
+**Examples from Run 03 Level 2:** Code Notation **4/5** (better than English); Oriya 4/5; Swahili 3/5; Egyptian/Cuneiform 0/5.
+
+**Pass / fail (recommended for Test 4 ranking — confirm with Phil):**
+- **Production-candidate floor:** ≥ English baseline on Level 2 (i.e., ≥3/5 themes), **and** compression (`T_r < T_en`).
+- **Strong:** ≥4/5 themes with compression (Code Notation profile).
+- **Fail:** 0/5 or unparseable; or high themes **with expansion** (interesting scientifically, not a Raquel win).
+
+**Why it matters:** This is the Run 03–endorsed measurement standard for claims: **idea-level preservation**.
+
+---
+
+### How to explain “3 out of 5” in the Test 4 investor report
+
+> **“3 out of 5” is not a count of five different test methods.**  
+> It is the score on a **five-item content checklist** (five questions in Run 02, or five themes in Run 03 Level 2).  
+> The English baseline scored **3/5**. A result of **3/5** means the model recovered three of the five expected items — matching baseline. **4/5** or **5/5** means stronger idea recovery than the English run. **0/5** usually means the model could not read the representation.
+
+If the report needs a single fidelity headline per script, recommend:
+- Report **Level 1A %**, **Level 1B PASS/FAIL** (with paraphrase caveat), and **Level 2 k/5**
+- Use **Level 2 k/5 + compression** as the primary Zipfian sort key
+
+---
+
+### Mapping to Test 4’s “159 × 3 fidelity levels”
+Treat each script’s three iterations as:
+1. Level 1A Echo  
+2. Level 1B Round-trip  
+3. Level 2 Theme audit (Scotty)
+
+That yields 159 × 3 = 477 documented check results, matching the brief’s Phase 1 arithmetic.
+
+---
+
+## Question 2: Level of Effort & Resource Constraints (UPDATED)
+
+Baseline confirmed: **1,661 English tokens**.
+
+### Call model (refined)
+Per script, Phase 1 likely needs roughly:
+- 1× tokenization / size measurement (local or tokenizer API)
+- 1× Level 1A echo call
+- 1× Level 1B round-trip call
+- 1× Level 2 theme-list call  
+≈ **3 LLM calls per script** for the three fidelity levels, plus optional English reference once globally.
+
+For 159 scripts: ≈ **480 LLM calls** (± retries), not 477×5.
+
+| Phase | Wall-clock (parallel 10–15) | Est. API cost (Sonnet 4.6) | Notes |
+|---|---|---|---|
+| **Phase 1** | **2–6 hours** | **~$25–90** | Mid band; encoded scripts that expand (Oriya-class) cost more |
+| **Phase 2** (20–30 × 3 × 8) | **1–3 days** | **~$80–350** | Dominated by provider limits/keys |
+
+### Constraints to flag
+1. **OpenAI token-counting API** — if unavailable, exclude or use documented tiktoken fallback and label it.
+2. **Expansion bombs** — Oriya-class +424% will dominate cost/context; set abort if `T_r > N × 1,661` (recommend N=3 or 5).
+3. **Level 1B scoring rule** — must be decided pre-run: exact reconstruction will fail broadly (Run 03). Prefer graded semantic rubric or treat 1B as diagnostic, Level 2 as ranking.
+4. **Provider auth matrix** for Phase 2 (8 providers).
+5. **Perplexity/OpenRouter** — record underlying model IDs.
+6. Execute in a Raquel/test harness repo, not `lifebutwrong`.
 
 ---
 
 ## Question 3: Parallelization & Batching Strategy
 
-### Recommended strategy (time vs cost)
+**Unchanged recommendation; refined to 3 calls/script:**
 
-**Cost is driven by tokens, not concurrency.** Parallelization mainly reduces wall-clock.
+### Phase 1
+1. Precompute encodings locally where possible.
+2. Worker pool concurrency **10–15** on Claude.
+3. Per script: measure tokens → 1A → 1B → 2; write JSONL checkpoint after each level.
+4. Global English baseline themes/questions run **once**, reused for all Level 2 comparisons.
+5. Retry 429/5xx with exponential backoff; do not lose partial script results.
 
-#### Phase 1 (Claude) — recommended
-1. **Precompute** script encodings / representations locally where possible (no API cost).
-2. **Fan out** script×level jobs with a worker pool (concurrency **10–15**).
-3. **Per-job pipeline:** encode → primary model call → fidelity methods (local first, LLM methods after).
-4. **Backoff:** exponential retry on 429/5xx; dead-letter failures to a retry queue.
-5. **Checkpointing:** write each completed script×level result to disk/JSONL immediately (resume-safe; investor-friendly audit trail).
-6. **Optional Batch API** only if wall-clock SLA allows multi-hour async and Mid/High call volume.
+### Phase 2
+1. Freeze top 20–30 from Phase 1 ranking.
+2. Parallelize within each provider (concurrency ~3–8).
+3. Reuse the same encoded payloads across providers.
 
-#### Phase 2 (8 providers) — recommended
-1. **Outer loop:** provider (isolate keys, rate limits, failure domains).
-2. **Inner loop:** parallelize scripts×levels within each provider (concurrency tuned per provider: often **3–8**).
-3. **Do not** blast all 8 providers at max concurrency simultaneously from one IP/key set without checking combined infra limits.
-4. **Shared artifact:** same encoded payloads reused across providers (encode once).
-5. **Ranking freeze:** lock the Phase 1 top-30 list before Phase 2 starts (no mid-run reshuffling).
-
-### Time-to-completion vs resource cost trade-off
-| Approach | Wall-clock | $ cost | Risk |
-|---|---|---|---|
-| Serial | Worst | Same | Low operational risk, slow |
-| Parallel 10–15 (Claude) | Best practical | Same tokens | Manageable 429s |
-| Very high concurrency (50+) | Marginally faster | Same tokens | More failures, messier logs |
-| Anthropic Batch | Slower than live parallel | Often lower $ | Weaker interactive debug |
-
-**Recommendation:** Live parallel with checkpointing for Phase 1; provider-isolated parallel for Phase 2. Use Batch only if cost pressure is high and timeline is flexible.
+**Trade-off:** Parallelism cuts wall-clock; token spend stays ~constant. Anthropic Batch can cut $ ~50% if async delay is acceptable.
 
 ---
 
-## Cursor Feedback: Report Design
+## Report Design Feedback (UPDATED)
 
-### Overall verdict
-The proposed structure is strong for investor/NDA use: methodology in-body (not appendix), full 159 transparency, sidecar raw data, self-contained methods footer. **Keep this skeleton.**
+### Keep
+- Exec summary, in-body methodology, all 159 results (including failures), sidecar raw data, self-contained methods section, investor/NDA tone.
 
-### Suggested improvements
+### Must-fix from July 22 learnings
+1. **Replace “five fidelity methods”** with **three levels + five-item Scotty score**.
+2. **Scoring box up front:**
+   - Compression vs 1,661-token English baseline
+   - Level 1A echo %
+   - Level 1B semantic result (with paraphrase caveat)
+   - Level 2 theme score k/5
+   - Phase-2 eligible iff compresses **and** Level 2 ≥ 3/5 (confirm threshold)
+3. **Patent caution callout:** idea-level preservation (Level 2), not lossless character-level (Level 1B).
+4. **Ranked top 30 in PDF** + full 159 in sidecar/CSV.
+5. **Charts:** compression vs Level 2 score; histogram of k/5; failure classes (expand / unparseable / compress+pass).
 
-1. **Define the ranking metric in Section 1 and Section 3 explicitly**  
-   Add a one-box “Scoring Rule” early:
-   - Compression ratio definition (vs English baseline tokens)
-   - Fidelity = count of passed methods / 5
-   - Eligibility for Phase 2 (e.g., compression ≤ 1.0 **and** fidelity ≥ 3/5 **and** consistent across levels 1–3)
-   - Exact sort keys for “top 20–30”
+### Recommended ranking metric (propose)
+```
+eligible = (tokens_r < 1661) AND (level2_themes >= 3)
+sort = (-level2_themes, tokens_r ascending, -level1a_pct, script_name)
+top 20–30 = first eligible rows; if <20 eligible, take best compressors with notes
+```
 
-2. **Clarify “fidelity level” vs “fidelity method”**  
-   Investors will confuse these. Add a terminology callout:
-   - **Levels 1–3** = representation intensity / encoding variants tested
-   - **Methods 1–5** = independent checks that produce the k/5 score
-
-3. **Results table — recommended columns**
-   | Script | ISO/Unicode ID | Level 1 Comp | L1 Fid (x/5) | Level 2 Comp | L2 Fid | Level 3 Comp | L3 Fid | Composite Rank Score | Phase-2 Eligible? | Notes |
-   Keep a second view: **failures gallery** (zero fidelity / expansion) so transparency is visible without forcing investors to scan 159 rows.
-
-4. **Distribution visualization**  
-   Add 2–3 charts (not a dashboard dump):
-   - Histogram of fidelity scores (0–5)
-   - Scatter: compression vs fidelity
-   - Stacked counts: compress+pass / compress+fail / expand / zero
-
-5. **Sidecar raw data contract**  
-   Specify machine-readable schema up front (JSONL or CSV):  
-   `script_id, script_name, level, provider, model_id, timestamp, input_tokens, output_tokens, compression_ratio, method_1..method_5, methods_passed, raw_outputs_path`  
-   One row per script×level (Phase 1) / script×level×provider (Phase 2).
-
-6. **Methodology footer — add reproducibility block**
-   - Exact model IDs and API versions/dates
-   - Temperature / decoding params
-   - English baseline token count
-   - Random seeds if any
-   - Exclusion rules (context overflow, API errors)
-
-7. **Column structure note**  
-   For the main PDF/report, prefer **ranked top 30 full detail + summary stats for all 159**, with complete 159 table in sidecar + HTML/CSV. A 159-row dense table in the narrative PDF hurts readability; transparency is preserved if the sidecar is first-class and linked.
-
-8. **Investor one-pager front**  
-   Optional half-page before Exec Summary: claim → evidence → limitation. Helps VC skimmers without weakening the full audit trail.
-
-### What not to change
-- No cherry-picking
-- Methods explained in the main report body
-- Failures included
-- Self-contained methodology section
+### Sidecar columns
+`script_id, script_name, level, provider, model_id, timestamp, tokens_in, tokens_out, tokens_vs_english, compression_pct, echo_pct, roundtrip_result, themes_k, themes_of, phase2_eligible, notes, raw_path`
 
 ---
 
-## Constraints & Scope Adjustments (Recommendations)
+## Constraints & Adjustments
 
-| Adjustment | Why |
+| Item | Recommendation |
 |---|---|
-| **Unblock Q1 before any run** | Investor methodology section is blocked without Methods 1–5 |
-| **Confirm call graph of each method** | Swings Phase 1 cost from ~$25 to ~$300 |
-| **Cap expansion** | Hard-fail iterations that exceed N× baseline tokens |
-| **Phase 1 = Claude only, full 159** | Keep as designed (good Zipfian / transparency story) |
-| **Phase 2 = only locked top list** | Prevents budget creep |
-| **Drop providers lacking keys/token APIs** | Better than approximate silent substitutes |
-| **Run harness outside `lifebutwrong`** | Wrong repo for this workstream |
-| **Optional cost saver** | Local/heuristic methods on all 159; LLM-judged methods only if compression passes |
-
-### Scope cut options (if budget-constrained)
-1. **159 scripts × compression-only screen**, then full 5-method fidelity on top 40, then Phase 2 on top 20  
-2. **Phase 2 with 4 providers first** (Anthropic, OpenAI, Google, Grok), expand later  
-3. **Single fidelity level for Phase 1 screen**, re-test levels 1–3 only on top 30  
-
-I do **not** recommend cutting the “show the failures” requirement; that is core to the investor narrative.
+| Brief’s “5 methods” language | Correct to 3 levels + Scotty k/5 before investor draft |
+| Level 1B as hard gate | **No** — use as diagnostic; Level 2 + compression for ranking |
+| Ancient / untrained scripts | Expect 0% echo, 0/5 themes; keep in dataset for transparency |
+| Expansion languages (Swahili/Oriya class) | Document high fidelity if present; exclude from “Raquel win” set |
+| Scope cut if needed | Full 159 compression+1A cheap screen, full 1B/2 on compressors only |
 
 ---
 
@@ -230,33 +256,26 @@ I do **not** recommend cutting the “show the failures” requirement; that is 
 
 | Item | Status |
 |---|---|
-| Q1 Methods 1–5 definitions | **Blocked** — need Tests 1–3 source |
-| Q2 Effort / cost / parallel feasible? | **Answered** — parallel yes; budget bands above |
-| Q3 Parallelization strategy | **Answered** — recommended plan above |
-| Report design feedback | **Answered** — keep structure + scoring/term/sidecar upgrades |
-| Resource feasibility | **Feasible** at Mid band with concurrency; confirm method call counts |
+| Q1 fidelity definitions | **Answered** from July 22 doc (3 levels; “3/5” = Scotty score) |
+| Q2 effort / cost | **Answered** — Phase 1 ~$25–90 / 2–6h parallel |
+| Q3 parallelization | **Answered** — concurrency 10–15 + checkpoints |
+| Report design | **Answered** — keep structure; fix terminology + scoring box |
 | Test 4 executed? | **No** |
 
 ---
 
-## Next Steps (aligned to brief)
+## Next Steps
 
-1. ~~Cursor answers Q1–Q3~~ → Q2/Q3 done; **Q1 awaiting materials**
-2. Phil & team review this response; send Tests 1–3 fidelity-method definitions
-3. Cursor revises Q1 with exact auditable algorithms
-4. Adjust scope/budget if needed
-5. **Phil explicit approval** to execute Test 4
-6. Only then: build/run Phase 1 → report + sidecar → Phase 2 planning
+1. Phil & team confirm: (a) terminology correction accepted, (b) Level 2 ≥3/5 + compression as Phase-2 gate, (c) Level 1B diagnostic not hard fail.
+2. Adjust scope/budget if desired.
+3. **Explicit approval** to execute Test 4 Phase 1.
+4. Only then: build harness → run 159 scripts × Levels 1A/1B/2 on Claude → investor report + sidecar.
 
 ---
 
-## Ask of Phil / team
+## Open Confirmations Needed From Phil
 
-Please send the Tests 1–3 fidelity methodology (paste is fine from phone). Minimum needed:
-
-1. Name + one-sentence purpose of Methods 1–5  
-2. Pass/fail rule for each  
-3. Whether each method is local code or requires an LLM judge call  
-4. How Levels 1–3 differ  
-
-With that, Q1 can be completed to investor standard without guessing.
+1. Accept renaming “five methods” → **three fidelity levels + Scotty five-item score**?
+2. Confirm Phase-2 eligibility: **compression AND Level 2 ≥ 3/5**?
+3. Confirm Level 1B is **diagnostic** (paraphrase expected) rather than a hard pass gate?
+4. Abort threshold for token expansion (suggest **3×** or **5×** English = 4,983 / 8,305 tokens)?
