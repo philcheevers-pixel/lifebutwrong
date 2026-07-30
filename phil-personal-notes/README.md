@@ -1,20 +1,31 @@
-# Phil personal notes (not website content)
+# Phil personal notes — how to get these into Google Docs
 
-These markdown files are **working notes** for TokenScope / Raquel / Pinkhouse.
+These are **Word (.docx)** files. Google Docs accepts them cleanly.
 
-They are **not** part of the Life But Wrong public site.  
-Do **not** merge this into `main` for deployment unless you intentionally want them in the repo for your own backup.
+**Not** Life But Wrong website content. Do not merge to deploy the public site.
 
-## Files
+## Files (use the .docx ones)
 
-1. `TokenScope-Raquel-Demo-Sales-Coaching.md` — demo sales coaching, tokens explanation, install effort
-2. `Raquel-Trial-Installation-Playbook.md` — full trial install from “yes we’ll test”
+1. `TokenScope-Raquel-Demo-Sales-Coaching.docx`
+2. `Raquel-Trial-Installation-Playbook.docx`
 
-## How to get them on your Windows PC
+(Markdown `.md` copies are also here if you want them.)
 
-1. Open this folder on GitHub
-2. Click a `.md` file
-3. Click the raw / download control (or copy the text)
-4. Save under something like `C:\Users\philc\Documents\Pinkhouse\`
+## Easiest path on your phone or laptop
 
-Or on the PR page: **Code** → download zip of the branch.
+### From this Cursor agent page
+1. Open your agent: https://cursor.com/agents/bc-5f169181-93d0-4b29-969a-dd7ddd1f4d6f
+2. Look for **Artifacts** / files from the run
+3. Download the two `.docx` files
+4. On your phone/computer: open **Google Drive** → **New** → **File upload** → pick the `.docx`
+5. Open the uploaded file → it becomes/opens in **Google Docs**
+6. Move it into your secret Pinkhouse / Raquel folder in Drive
+
+### From email to yourself (also fine)
+If you can download the `.docx` once, email it to yourself, then on the phone: open attachment → Save to Drive → Open with Google Docs.
+
+## About C:\ drive
+The cloud agent **cannot** write directly to `C:\Users\...` on your Windows PC. Google Drive is the right “anywhere” home for these.
+
+## Secret
+Keep the Drive folder private (only your account). These notes are for you, not the public site.
