@@ -161,3 +161,13 @@ Best default strategy:
 ---
 
 *Written for the Pink House Life of Jesus testbed so the team has a shared record of design intent and SEO choices.*
+
+---
+
+## Related: 60-day promotion plan
+
+For the week-by-week promotion, SEO sprint, parish outreach, and Christmas runway calendar, see:
+
+- [`60-DAY-PROMOTION-AND-SEO-PLAN.md`](./60-DAY-PROMOTION-AND-SEO-PLAN.md)
+- [`60-DAY-PROMOTION-AND-SEO-PLAN.docx`](./60-DAY-PROMOTION-AND-SEO-PLAN.docx) — easiest to save to your laptop or open in Google Docs
+
