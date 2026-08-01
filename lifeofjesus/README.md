@@ -15,6 +15,7 @@ Comfort-first website for Pierre’s **Life of Jesus** coloring books.
 | `about.html` | Mission + testimonials |
 | `contact.html` | Press / church contacts |
 | `css/`, `js/`, `assets/` | Styles, motion, product imagery |
+| `DESIGN-AND-SEO.md` | Design mindset, SEO inventory, study-guide recommendation |
 
 ## Local preview
 
