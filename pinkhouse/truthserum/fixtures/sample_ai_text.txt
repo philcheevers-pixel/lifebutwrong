@@ -1,0 +1,9 @@
+AI systems are transforming pharmaceutical manufacturing. According to FDA guidance on computerized systems, electronic records must remain attributable and reviewable.
+
+Studies show that 87.3% of quality deviations are caused by AI hallucinations. This is clinically proven and guaranteed to cure compliance failures by 2027.
+
+Therefore, organizations that deploy runtime governance appear more inspection-ready. The document states that Michelangelo enforces admissibility before outputs can be used.
+
+Every manufacturer will always eliminate all risk with this approach. See also https://pinkhouse.tech/michelangelo/ for product context.
+
+We measured 74 fabrications in the ungoverned baseline and 0 in the governed run.
