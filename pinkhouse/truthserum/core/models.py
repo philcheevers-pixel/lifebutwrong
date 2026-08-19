@@ -1,71 +1,63 @@
-"""Data models for Truth Serum audits."""
+"""Data models for Truth Serum MVP."""
 
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass, field
 from enum import Enum
-from typing import Any
+from typing import Any, Optional
+
+from pydantic import BaseModel, Field
 
 
-class ClaimType(str, Enum):
-    """Public Truth Serum claim buckets (UI labels in parentheses)."""
-
-    OBSERVED = "observed"  # Reviewed & Reasonable / Observed
-    INFERRED = "inferred"  # Inferred
-    WORTH_CHECKING = "speculative"  # Worth Checking (frontend key: speculative)
-    UNVERIFIED = "unverified"  # Problems Found / Unverified
+class ClaimStatus(str, Enum):
+    SUPPORTED = "supported"
+    UNSUPPORTED = "unsupported"  # Unsupported / weakly supported
+    UNCLEAR = "unclear"  # Needs more context
+    CONFLATION = "conflation"  # Possible conflation or leap
 
 
-@dataclass
-class Claim:
+class Verdict(str, Enum):
+    GREEN = "green"
+    YELLOW = "yellow"
+    RED = "red"
+
+
+class ClaimResult(BaseModel):
+    id: str
     text: str
-    claim_type: ClaimType
-    reason: str
-    signals: list[str] = field(default_factory=list)
-
-    def to_dict(self) -> dict[str, Any]:
-        return {
-            "text": self.text,
-            "type": self.claim_type.value,
-            "reason": self.reason,
-            "signals": list(self.signals),
-        }
+    status: ClaimStatus
+    note: str
+    evidence: list[str] = Field(default_factory=list)
+    excerpt: Optional[str] = None
 
 
-@dataclass
-class AuditResult:
-    claims: list[Claim]
-    score: int
-    recommendation: str
-    mode: str = "heuristic"  # heuristic | llm | hybrid
-    evidence: dict[str, Any] = field(default_factory=dict)
+class AnalyzeResponse(BaseModel):
+    verdict: Verdict
+    summary: str
+    claim_count: int
+    breakdown: dict[str, int]
+    claims: list[ClaimResult]
+    problematic_claims: list[ClaimResult]
+    disclaimer: str
+    mode: str  # heuristic | search | llm | hybrid
+    limits: dict[str, Any] = Field(default_factory=dict)
+    report_markdown: str = ""
+    report_html: str = ""
 
-    @property
-    def counts(self) -> dict[str, int]:
-        counts = {
-            "observed": 0,
-            "inferred": 0,
-            "speculative": 0,
-            "unverified": 0,
-            "total": len(self.claims),
-        }
-        for claim in self.claims:
-            key = claim.claim_type.value
-            if key == "speculative":
-                counts["speculative"] += 1
-            elif key in counts:
-                counts[key] += 1
-        return counts
 
-    def to_dict(self) -> dict[str, Any]:
-        return {
-            "score": self.score,
-            "recommendation": self.recommendation,
-            "mode": self.mode,
-            "counts": self.counts,
-            "claims": [c.to_dict() for c in self.claims],
-            "evidence": self.evidence,
-        }
+DISCLAIMER = (
+    "Experimental automated claim review. Not a substitute for expert fact-checking. "
+    "Built to surface issues, not to rubber-stamp documents."
+)
 
-    def as_jsonable(self) -> dict[str, Any]:
-        return asdict(self) | {"counts": self.counts, "score": self.score}
+STATUS_LABELS = {
+    ClaimStatus.SUPPORTED: "Supported",
+    ClaimStatus.UNSUPPORTED: "Unsupported / weakly supported",
+    ClaimStatus.UNCLEAR: "Unclear / needs more context",
+    ClaimStatus.CONFLATION: "Possible conflation or leap",
+}
+
+VERDICT_SENTENCES = {
+    Verdict.GREEN: "Most extracted claims look supported or carefully hedged.",
+    Verdict.YELLOW: "Some claims need checking before you rely on this text.",
+    Verdict.RED: "Material unsupported or conflated claims were found — do not treat this as clean.",
+}

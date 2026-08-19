@@ -1,10 +1,14 @@
-"""Split AI-generated prose into atomic claims."""
+"""Extract atomic, checkable claims from prose."""
 
 from __future__ import annotations
 
+import json
+import os
 import re
+import urllib.error
+import urllib.request
+from typing import Optional
 
-# Sentence-ish boundaries. Keep abbreviations from splitting hard.
 _ABBREV = re.compile(
     r"\b(?:Mr|Mrs|Ms|Dr|Prof|Sr|Jr|vs|etc|e\.g|i\.e|Fig|Eq|No|Vol|Inc|Ltd|U\.S|U\.K)\.$",
     re.I,
@@ -22,76 +26,142 @@ def _normalize(text: str) -> str:
     return text.strip()
 
 
-def _split_paragraphs(text: str) -> list[str]:
-    parts = re.split(r"\n\s*\n+", text)
-    return [p.strip() for p in parts if p.strip()]
-
-
-def _split_sentences(paragraph: str) -> list[str]:
-    lines = []
-    for raw_line in paragraph.split("\n"):
-        line = raw_line.strip()
-        if not line:
-            continue
-        if _BULLET.match(line):
-            lines.append(_BULLET.sub("", line).strip())
-            continue
-        # Soft-split long compounds on semicolons / em dashes when both sides look claim-like.
-        chunks = re.split(r"\s*;\s+|\s+—\s+", line)
-        for chunk in chunks:
-            chunk = chunk.strip()
-            if not chunk:
-                continue
-            # Protect common abbreviations before splitting.
-            tokens = _SENTENCE_END.split(chunk)
-            rebuilt: list[str] = []
-            buf = ""
-            for tok in tokens:
-                candidate = (buf + " " + tok).strip() if buf else tok
-                if buf and _ABBREV.search(buf):
-                    buf = candidate
-                    continue
-                if buf:
-                    rebuilt.append(buf)
-                buf = tok.strip()
-            if buf:
-                rebuilt.append(buf)
-            lines.extend(s for s in rebuilt if s)
-    return lines
-
-
 def _is_claimlike(sentence: str) -> bool:
     words = sentence.split()
-    if len(words) < 4:
+    if len(words) < 5:
         return False
-    # Drop pure headings / titles in ALL CAPS short lines.
     letters = re.sub(r"[^A-Za-z]", "", sentence)
     if letters and letters.isupper() and len(words) <= 8:
         return False
-    # Drop questions that are not assertions (keep rhetorical if long & assertive later).
-    if sentence.endswith("?") and len(words) < 12:
+    if sentence.endswith("?") and len(words) < 14:
+        return False
+    # Skip pure imperatives / UI chrome
+    if re.match(r"^(click|tap|press|download|subscribe)\b", sentence, re.I):
         return False
     return True
 
 
-def extract_claims(text: str, *, max_claims: int = 80) -> list[str]:
-    """Return ordered unique claim strings from document text."""
+def extract_claims_heuristic(text: str, *, max_claims: int = 40) -> list[str]:
     text = _normalize(text)
     if not text:
         return []
-
     claims: list[str] = []
     seen: set[str] = set()
-    for para in _split_paragraphs(text):
-        for sentence in _split_sentences(para):
-            cleaned = _WHITESPACE.sub(" ", sentence).strip(" -•*")
-            if not _is_claimlike(cleaned):
+    for para in re.split(r"\n\s*\n+", text):
+        for raw_line in para.split("\n"):
+            line = raw_line.strip()
+            if not line:
                 continue
-            key = cleaned.lower()
-            if key in seen:
-                continue
-            seen.add(key)
-            claims.append(cleaned)
-            if len(claims) >= max_claims:
-                return claims
+            if _BULLET.match(line):
+                pieces = [_BULLET.sub("", line).strip()]
+            else:
+                pieces = re.split(r"\s*;\s+|\s+—\s+", line)
+            for piece in pieces:
+                piece = piece.strip()
+                if not piece:
+                    continue
+                # Sentence split with abbrev guard
+                parts = _SENTENCE_END.split(piece)
+                buf = ""
+                sentences: list[str] = []
+                for tok in parts:
+                    candidate = (buf + " " + tok).strip() if buf else tok
+                    if buf and _ABBREV.search(buf):
+                        buf = candidate
+                        continue
+                    if buf:
+                        sentences.append(buf)
+                    buf = tok.strip()
+                if buf:
+                    sentences.append(buf)
+                for sentence in sentences:
+                    cleaned = _WHITESPACE.sub(" ", sentence).strip(" -•*")
+                    if not _is_claimlike(cleaned):
+                        continue
+                    key = cleaned.lower()
+                    if key in seen:
+                        continue
+                    seen.add(key)
+                    claims.append(cleaned)
+                    if len(claims) >= max_claims:
+                        return claims
     return claims
+
+
+_LLM_EXTRACT_SYSTEM = """You extract discrete, checkable claims from text for Truth Serum.
+Return ONLY a JSON array of strings. Each string is one atomic claim.
+Rules:
+- Prefer factual assertions that can be checked.
+- Skip pure opinion fluff, greetings, and instructions.
+- Keep claims short and self-contained.
+- Max claims as instructed.
+- No markdown, no commentary — JSON array only.
+"""
+
+
+def extract_claims_llm(text: str, *, max_claims: int = 40) -> Optional[list[str]]:
+    api_key = os.environ.get("ANTHROPIC_API_KEY")
+    if not api_key:
+        return None
+    model = os.environ.get("TRUTHSERUM_MODEL", "claude-sonnet-4-20250514")
+    payload = {
+        "model": model,
+        "max_tokens": 2048,
+        "system": _LLM_EXTRACT_SYSTEM,
+        "messages": [
+            {
+                "role": "user",
+                "content": f"Extract up to {max_claims} claims from:\n---\n{text[:40000]}\n---",
+            }
+        ],
+    }
+    req = urllib.request.Request(
+        "https://api.anthropic.com/v1/messages",
+        data=json.dumps(payload).encode(),
+        headers={
+            "content-type": "application/json",
+            "x-api-key": api_key,
+            "anthropic-version": "2023-06-01",
+        },
+        method="POST",
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=60) as resp:
+            body = json.loads(resp.read().decode())
+    except (urllib.error.URLError, urllib.error.HTTPError, TimeoutError, json.JSONDecodeError):
+        return None
+    parts = [p.get("text", "") for p in body.get("content", []) if p.get("type") == "text"]
+    raw = "\n".join(parts).strip()
+    # Strip code fences if present
+    raw = re.sub(r"^```(?:json)?\s*|\s*```$", "", raw).strip()
+    try:
+        data = json.loads(raw)
+    except json.JSONDecodeError:
+        return None
+    if not isinstance(data, list):
+        return None
+    out: list[str] = []
+    seen: set[str] = set()
+    for item in data:
+        if not isinstance(item, str):
+            continue
+        cleaned = _WHITESPACE.sub(" ", item).strip()
+        if len(cleaned.split()) < 4:
+            continue
+        key = cleaned.lower()
+        if key in seen:
+            continue
+        seen.add(key)
+        out.append(cleaned)
+        if len(out) >= max_claims:
+            break
+    return out or None
+
+
+def extract_claims(text: str, *, max_claims: int = 40, prefer_llm: bool = True) -> tuple[list[str], str]:
+    """Return (claims, extract_mode)."""
+    if prefer_llm:
+        llm = extract_claims_llm(text, max_claims=max_claims)
+        if llm:
+            return llm, "llm"
+    return extract_claims_heuristic(text, max_claims=max_claims), "heuristic"

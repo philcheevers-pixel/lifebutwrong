@@ -1,68 +1,93 @@
-# Michelangelo Truth Serum — Core Logic
+# Truth Serum — ready-to-build MVP
 
-**Brand:** Pink House Technology / Michelangelo only — not Life But Wrong.  
-**Live UI:** https://pinkhouse.tech/truth.html  
-**Status:** Core audit engine + deploy stubs for the missing `truth-proxy.php` / `truth-pay.php` endpoints (currently 404 on production).
+**Product:** free, experimental claim-level checker  
+**Tone:** *Experimental automated claim review. Not a substitute for expert fact-checking. Built to surface issues, not to rubber-stamp documents.*  
+**Brand home:** Pink House / Michelangelo posture demo — **not** Life But Wrong.
 
-## What this is
+## What’s included
 
-Truth Serum audits AI-generated text before someone signs or sends it:
-
-1. Split the document into atomic claims  
-2. Classify each claim: **Observed** · **Inferred** · **Worth Checking** · **Unverified**  
-3. Compute an interpretable **Trust Score / 100**  
-4. Emit a Michelangelo report string the existing frontend already knows how to parse  
-
-Optional: when `ANTHROPIC_API_KEY` is set, the proxy can ask Claude to refine the heuristic pass into a richer report (same wire format).
-
-## Deploy to pinkhouse.tech
-
-Copy these files next to `truth.html` on the Apache docroot:
-
-| File | Role |
+| Path | Role |
 |------|------|
-| `truth-proxy.php` | POST `{ "text": "..." }` → audit report JSON |
-| `truth-pay.php` | Stripe PaymentIntent + coupon bypass |
-| `core/` + `truthserum_proxy.py` | Python engine invoked by PHP |
+| `server/` | FastAPI backend (`POST /analyze`, rate limits, file upload) |
+| `core/` | Claim extract → verify → traffic-light verdict → lean report |
+| `web/` | Paste + file upload UI, results, download, Ko-fi support |
+| `extension/` | Chrome Manifest V3 (selection / page → same API) |
+| `cli.py` | Offline / scripted runs |
 
-Environment on the server:
+## Core loop
 
-```bash
-export ANTHROPIC_API_KEY=...          # optional LLM refinement
-export TRUTHSERUM_COUPON=TESTFREE     # coupon bypass code
-export STRIPE_SECRET_KEY=sk_live_...  # required for real card charges
-export TRUTHSERUM_PYTHON=python3
-```
+1. Accept pasted text or `.txt` / `.md` / `.pdf` / `.docx`
+2. Extract atomic claims (LLM if `ANTHROPIC_API_KEY`, else heuristic)
+3. Verify each claim (Brave Search if `BRAVE_API_KEY`, LLM judgment if key present, else heuristic)
+4. Aggregate **Green / Yellow / Red** + lean exception-focused report
+5. Optional voluntary support via **Ko-fi** on the results page only (never gated)
 
-Local smoke test (no PHP):
+## Claim statuses
+
+- Supported  
+- Unsupported / weakly supported  
+- Unclear / needs more context  
+- Possible conflation or leap  
+
+## MVP hard limits
+
+- Max **3,000** words (env: `TRUTHSERUM_MAX_WORDS`)
+- Max **40** claims (`TRUTHSERUM_MAX_CLAIMS`)
+- **5** free runs / IP / day (`TRUTHSERUM_RATE_LIMIT_PER_DAY`)
+- Upload max **2 MB**
+
+## Run locally
 
 ```bash
 cd pinkhouse/truthserum
-python3 -m tests.test_core
-python3 cli.py fixtures/sample_ai_text.txt
-python3 truthserum_proxy.py   # http://127.0.0.1:8765/truth-proxy.php
+python3 -m pip install -r requirements.txt
+export PYTHONPATH=.
+# optional: export ANTHROPIC_API_KEY=... BRAVE_API_KEY=...
+python3 -m uvicorn server.app:app --host 0.0.0.0 --port 8080
 ```
 
-## Report wire format (must stay stable)
+Open http://127.0.0.1:8080/
 
-The live `truth.html` parser expects sections like:
+CLI:
 
-```
-PROBLEMS FOUND: N
-- ...
-
-WORTH CHECKING: N
-- ...
-
-REVIEWED & REASONABLE: N
-- ...
-
-TOTAL CLAIMS EXAMINED: N
-TRUST SCORE: XX / 100
+```bash
+python3 cli.py --no-llm --no-search fixtures/sample_ai_text.txt
+python3 tests/test_core.py
 ```
 
-Do not rename those headers without updating the frontend.
+## Chrome extension
 
-## Patent / product context
+1. Start the backend
+2. Chrome → Extensions → Load unpacked → select `extension/`
+3. Set API base in the popup (default `http://127.0.0.1:8080`)
+4. Select text on a page → right-click **Check with Truth Serum**
 
-Provisional patent **63/924,367**. Product page describes Michelangelo as pre-execution governance; Truth Serum is the public claim-audit surface for that framework.
+For a public droplet URL, set the popup API base to `https://your.domain` and ensure CORS allows the extension origin (or serve API on the same host).
+
+## Deploy (DigitalOcean droplet)
+
+```bash
+git pull
+cd pinkhouse/truthserum
+python3 -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+# put secrets in /etc/truthserum.env
+uvicorn server.app:app --host 0.0.0.0 --port 8080
+```
+
+Put nginx in front (TLS), set `ANTHROPIC_API_KEY`, `BRAVE_API_KEY`, and update the Ko-fi URL in `web/app.js` / extension storage.
+
+## Ko-fi
+
+Edit `web/app.js` (`TRUTHSERUM_KOFI_URL` or the default href) and the extension popup link to your Ko-fi page. Support appears **only on results**.
+
+## Done checklist (v1)
+
+- [x] Web paste + file upload
+- [x] Traffic-light results + exception list
+- [x] Downloadable Markdown/HTML report
+- [x] Chrome extension → same backend
+- [x] Ko-fi button on results
+- [x] Word / claim / rate limits
+- [ ] Wire real Ko-fi URL + API keys on droplet
+- [ ] Point DNS / nginx at the service

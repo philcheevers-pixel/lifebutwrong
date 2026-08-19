@@ -1,15 +1,15 @@
-"""Michelangelo Truth Serum — core audit engine."""
+"""Michelangelo Truth Serum — core package."""
 
-from .audit import audit_text
-from .models import AuditResult, Claim, ClaimType
-from .report import format_report
+from .models import AnalyzeResponse, ClaimResult, ClaimStatus, Verdict
+from .pipeline import analyze_text, analyze_to_dict
 
 __all__ = [
-    "Claim",
-    "ClaimType",
-    "AuditResult",
-    "audit_text",
-    "format_report",
+    "AnalyzeResponse",
+    "ClaimResult",
+    "ClaimStatus",
+    "Verdict",
+    "analyze_text",
+    "analyze_to_dict",
 ]
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"

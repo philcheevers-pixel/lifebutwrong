@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Truth Serum</title>
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 0; width: 360px; color: #12151a; background: #eef2f6; }
+    header { padding: 0.85rem 1rem 0.4rem; }
+    h1 { font-size: 1rem; margin: 0; }
+    .sub { color: #5b6775; font-size: 0.75rem; margin-top: 0.2rem; }
+    main { padding: 0.5rem 1rem 1rem; }
+    textarea { width: 100%; min-height: 90px; box-sizing: border-box; font: inherit; padding: 0.5rem; }
+    button { width: 100%; margin-top: 0.45rem; padding: 0.55rem; border: 0; background: #12151a; color: #fff; font-weight: 600; cursor: pointer; }
+    button.secondary { background: #0f6a6a; }
+    .error { color: #b42318; font-size: 0.8rem; margin-top: 0.4rem; }
+    .light { display: inline-block; padding: 0.2rem 0.45rem; color: #fff; font-weight: 700; font-size: 0.75rem; margin: 0.5rem 0; }
+    .green { background: #1f7a4d; } .yellow { background: #b58100; } .red { background: #b42318; }
+    .claim { background: #fff; border-left: 3px solid #c5ced8; padding: 0.45rem 0.55rem; margin: 0.4rem 0; font-size: 0.8rem; }
+    .claim.unsupported { border-left-color: #b42318; }
+    .claim.conflation { border-left-color: #c05600; }
+    .claim.unclear { border-left-color: #b58100; }
+    .support { margin-top: 0.6rem; font-size: 0.75rem; }
+    .support a { color: #0f6a6a; }
+    label { font-size: 0.7rem; color: #5b6775; }
+    input[type=url] { width: 100%; box-sizing: border-box; margin-top: 0.2rem; padding: 0.35rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Truth Serum</h1>
+    <p class="sub">Experimental claim review — not expert fact-checking</p>
+  </header>
+  <main>
+    <label>API base <input id="api" type="url" placeholder="http://127.0.0.1:8080" /></label>
+    <textarea id="text" placeholder="Selected text appears here…"></textarea>
+    <button id="selection" class="secondary" type="button">Use selected text</button>
+    <button id="page" class="secondary" type="button">Use visible page text</button>
+    <button id="run" type="button">Analyze</button>
+    <p id="error" class="error" hidden></p>
+    <div id="out" hidden>
+      <div id="light" class="light">—</div>
+      <p id="summary"></p>
+      <div id="issues"></div>
+      <button id="download" type="button">Download Markdown report</button>
+      <p class="support">Free tool. <a id="kofi" href="https://ko-fi.com/" target="_blank" rel="noopener">Support on Ko-fi</a></p>
+    </div>
+  </main>
+  <script src="popup.js"></script>
+</body>
+</html>

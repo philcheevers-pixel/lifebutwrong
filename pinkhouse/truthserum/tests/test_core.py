@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Unit tests for Michelangelo Truth Serum core logic."""
+"""Tests for Truth Serum MVP core."""
 
 from __future__ import annotations
 
@@ -10,86 +10,69 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from core.audit import audit_payload, audit_text
-from core.classify import classify_claim
-from core.extract import extract_claims
-from core.models import ClaimType
-from core.report import format_report
-from core.score import compute_trust_score, recommendation_text
+from core.extract import extract_claims_heuristic
+from core.models import ClaimStatus, Verdict
+from core.pipeline import analyze_text
+from core.report import compute_verdict
+from core.verify import classify_heuristic
 
 
 class ExtractTests(unittest.TestCase):
-    def test_splits_sentences_and_bullets(self):
+    def test_extracts_multiple_claims(self):
         text = (
-            "Alpha statement is long enough here. Beta statement is also long enough.\n\n"
-            "- Gamma claim that should be captured as a bullet claim."
+            "Alpha claim is long enough to count here as one unit. "
+            "Beta claim is also long enough to count as another unit.\n\n"
+            "- Gamma claim that should be captured from a bullet list item."
         )
-        claims = extract_claims(text)
+        claims = extract_claims_heuristic(text)
         self.assertGreaterEqual(len(claims), 3)
-        self.assertTrue(any("Gamma" in c for c in claims))
 
 
 class ClassifyTests(unittest.TestCase):
-    def test_sourced_claim_is_observed(self):
-        claim = classify_claim(
-            "According to FDA guidance, electronic records must remain attributable."
+    def test_supported_with_citation(self):
+        c = classify_heuristic(
+            "According to FDA guidance, electronic records must remain attributable.",
+            "c1",
         )
-        self.assertEqual(claim.claim_type, ClaimType.OBSERVED)
+        self.assertEqual(c.status, ClaimStatus.SUPPORTED)
 
-    def test_stat_without_source_is_worth_checking_or_unverified(self):
-        claim = classify_claim(
-            "Studies show that 87.3% of quality deviations are caused by AI hallucinations."
+    def test_unsupported_stat(self):
+        c = classify_heuristic(
+            "Studies show that 87.3% of quality deviations are caused by AI hallucinations.",
+            "c2",
         )
-        self.assertIn(
-            claim.claim_type,
-            {ClaimType.WORTH_CHECKING, ClaimType.UNVERIFIED},
+        self.assertEqual(c.status, ClaimStatus.UNSUPPORTED)
+
+    def test_conflation_leap(self):
+        c = classify_heuristic(
+            "Therefore this clearly proves that every manufacturer will always eliminate all risk.",
+            "c3",
         )
-
-    def test_medical_absolute_is_unverified(self):
-        claim = classify_claim(
-            "This treatment is clinically proven and guaranteed to cure diabetes in all patients."
-        )
-        self.assertEqual(claim.claim_type, ClaimType.UNVERIFIED)
-
-    def test_inference_marker(self):
-        claim = classify_claim(
-            "Therefore organizations that deploy runtime governance appear more inspection-ready."
-        )
-        self.assertEqual(claim.claim_type, ClaimType.INFERRED)
+        self.assertEqual(c.status, ClaimStatus.CONFLATION)
 
 
-class ScoreTests(unittest.TestCase):
-    def test_empty_is_zero(self):
-        self.assertEqual(compute_trust_score([]), 0)
-
-    def test_recommendation_bands(self):
-        self.assertIn("Safe", recommendation_text(95))
-        self.assertIn("Review", recommendation_text(75))
-        self.assertIn("Do not send", recommendation_text(20))
-
-
-class AuditIntegrationTests(unittest.TestCase):
-    def test_sample_fixture_produces_parseable_report(self):
+class PipelineTests(unittest.TestCase):
+    def test_sample_fixture(self):
         sample = (ROOT / "fixtures" / "sample_ai_text.txt").read_text(encoding="utf-8")
-        result = audit_text(sample, use_llm=False)
-        report = format_report(result)
-        self.assertIn("PROBLEMS FOUND:", report)
-        self.assertIn("WORTH CHECKING:", report)
-        self.assertIn("REVIEWED & REASONABLE:", report)
-        self.assertIn("TOTAL CLAIMS EXAMINED:", report)
-        self.assertRegex(report, r"TRUST SCORE:\s*\d+\s*/\s*100")
-        self.assertGreater(result.counts["total"], 0)
-        # Sample contains unsupported stats / absolutes → not a perfect score.
-        self.assertLess(result.score, 100)
+        result = analyze_text(sample, use_llm=False, use_search=False)
+        self.assertIn(result.verdict, {Verdict.GREEN, Verdict.YELLOW, Verdict.RED})
+        self.assertGreater(result.claim_count, 0)
+        self.assertIn("Truth Serum Report", result.report_markdown)
+        self.assertIn("Experimental automated claim review", result.disclaimer)
+        self.assertTrue(result.problematic_claims or result.verdict == Verdict.GREEN)
+        # Fixture is intentionally messy → not green.
+        self.assertNotEqual(result.verdict, Verdict.GREEN)
 
-    def test_payload_shape_matches_frontend(self):
-        sample = (ROOT / "fixtures" / "sample_ai_text.txt").read_text(encoding="utf-8")
-        payload = audit_payload(sample, use_llm=False)
-        self.assertIn("content", payload)
-        self.assertEqual(payload["content"][0]["type"], "text")
-        self.assertTrue(payload["content"][0]["text"])
-        self.assertIn("truthserum", payload)
-        self.assertIn("score", payload["truthserum"])
+    def test_verdict_red_on_many_bad(self):
+        from core.models import ClaimResult
+
+        claims = [
+            ClaimResult(id="1", text="a", status=ClaimStatus.UNSUPPORTED, note="x"),
+            ClaimResult(id="2", text="b", status=ClaimStatus.UNSUPPORTED, note="x"),
+            ClaimResult(id="3", text="c", status=ClaimStatus.UNSUPPORTED, note="x"),
+            ClaimResult(id="4", text="d", status=ClaimStatus.SUPPORTED, note="x"),
+        ]
+        self.assertEqual(compute_verdict(claims), Verdict.RED)
 
 
 if __name__ == "__main__":

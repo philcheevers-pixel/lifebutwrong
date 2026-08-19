@@ -1,2 +1,3 @@
-# Pink House / Michelangelo Truth Serum
-# Not part of the Life But Wrong public site.
+# Pink House packages (not Life But Wrong)
+
+- `truthserum/` — free experimental claim checker (web + API + Chrome extension)

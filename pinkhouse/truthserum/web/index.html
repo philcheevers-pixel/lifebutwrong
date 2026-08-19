@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Truth Serum — Experimental Claim Checker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <span class="mark">TS</span>
+      <div>
+        <h1>Truth Serum</h1>
+        <p class="tag">Experimental automated claim review</p>
+      </div>
+    </div>
+    <p class="positioning">Not a substitute for expert fact-checking. Built to surface issues, not to rubber-stamp documents.</p>
+  </header>
+
+  <main>
+    <section class="how" id="how">
+      <h2>How it works</h2>
+      <ol>
+        <li>Paste text or upload a <code>.txt</code> / <code>.md</code> / <code>.pdf</code> file.</li>
+        <li>Truth Serum extracts discrete claims.</li>
+        <li>Each claim is checked for support, weakness, ambiguity, or leaps.</li>
+        <li>You get a traffic-light verdict and a lean report focused on problems.</li>
+      </ol>
+      <p class="limits">MVP limits: ~3,000 words · up to 40 claims · a few free runs per network per day.</p>
+    </section>
+
+    <section class="input" id="input-panel">
+      <label for="text">Paste text</label>
+      <textarea id="text" rows="12" placeholder="Paste AI-generated or other text here…"></textarea>
+      <div class="row">
+        <label class="file">
+          <span>Or upload a file</span>
+          <input id="file" type="file" accept=".txt,.md,.markdown,.pdf,.docx,text/plain,application/pdf" />
+        </label>
+        <span id="word-count" class="meta">0 words</span>
+      </div>
+      <button id="run" class="primary" type="button">Run Truth Serum</button>
+      <p id="error" class="error" hidden></p>
+    </section>
+
+    <section class="loading" id="loading" hidden>
+      <p>Extracting claims and checking them…</p>
+    </section>
+
+    <section class="results" id="results" hidden>
+      <div class="verdict-card">
+        <div id="light" class="light yellow">YELLOW</div>
+        <p id="summary" class="summary"></p>
+        <p id="meta" class="meta"></p>
+      </div>
+
+      <div class="breakdown" id="breakdown"></div>
+
+      <h2>Issues to review</h2>
+      <div id="issues" class="issues"></div>
+
+      <div class="actions">
+        <button id="download-md" type="button">Download report (Markdown)</button>
+        <button id="download-html" type="button">Download report (HTML)</button>
+        <button id="again" type="button" class="ghost">Check another</button>
+      </div>
+
+      <aside class="support">
+        <p>Truth Serum is free. If it helped, you can chip in for API costs.</p>
+        <a id="kofi" class="kofi" href="https://ko-fi.com/" target="_blank" rel="noopener">Support on Ko-fi</a>
+        <p class="meta">Voluntary · never required · results stay free</p>
+      </aside>
+
+      <p class="disclaimer">Experimental automated claim review. Not a substitute for expert fact-checking. Built to surface issues, not to rubber-stamp documents.</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>Truth Serum · public demonstration of a truth-first posture · Pink House Technology</p>
+  </footer>
+  <script src="/static/app.js"></script>
+</body>
+</html>
