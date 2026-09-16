@@ -1,0 +1,151 @@
+{
+    "control_number": "20260315131616\/CHEEVE\/LM-299",
+    "molecule": "lm-299",
+    "report_type": "abfto",
+    "customer_name": "Cheevers, Phil",
+    "customer_email": "philcheevers@hotmail.com",
+    "generated": "2026-03-15T13:17:49-05:00",
+    "bricks_completed": 0,
+    "bricks_total": 6,
+    "void_count": 0,
+    "recon": {
+        "sources": 10,
+        "sources_hit": 4,
+        "patents_found": 12,
+        "claims_retrieved": 1,
+        "peds_hit": false,
+        "seconds": 30.699999999999999289457264239899814128875732421875
+    },
+    "intake": {
+        "contact": {
+            "name": "Phil Cheevers",
+            "company": "CarveIntel",
+            "email": "philcheevers@hotmail.com",
+            "phone": "19053212291"
+        },
+        "molecule": {
+            "name": "lm-299",
+            "type": "bispecific"
+        },
+        "bucket": "LM-299 (also designated MK-2010 by Merck)\n\nBispecific antibody targeting PD-1 and VEGF simultaneously.\n\nOriginated by LaNova Medicines \/ Genomeditech, a subsidiary of Sino Biopharm.\nMerck acquired exclusive global rights (ex-China).\nDeal: $588M upfront, up to $2.7B in milestones, $300M technology transfer.\n\nMechanism: Dual blockade \u2014 blocks PD-1 immune checkpoint signaling AND VEGF-mediated angiogenesis in a single molecule. Combines what Keytruda does (PD-1) with what Avastin\/bevacizumab does (VEGF).\n\nArchitecture: sdAb-based (single-domain antibody \/ nanobody) bispecific format. Different from ivonescimab's conventional antibody format.\n\nTarget Indications: Advanced solid tumors, non-small cell lung cancer, immuno-oncology broadly.\n\nDevelopment Stage: Phase 1 clinical trial. ClinicalTrials.gov NCT06650566. Enrolling in China for advanced malignant tumors.\n\nJurisdictions: US, China, EU, Japan\n\nCompetitors:\n- Ivonescimab (Akeso\/Summit) \u2014 PD-1\/VEGF bispecific, Phase 3, potential FDA approval Nov 2026\n- BNT327 (BioNTech) \u2014 another PD-1\/VEGF bispecific in development\n- Keytruda (pembrolizumab) \u2014 Merck's own PD-1 mono, patent cliff 2028\n\nStrategic context: LM-299 is Merck's next-generation play for the post-Keytruda era. If it works, it's a biologically distinct molecule \u2014 not pembrolizumab, not biosimilar-able \u2014 that could absorb Keytruda's indications with a superior dual-blockade efficacy argument. New composition-of-matter patents, new data exclusivity, new IRA clock.\n\nProblem: LM-299 is 4-5 years behind class leader ivonescimab. The market may be defined before LM-299 arrives.\n\nNot yet in PubChem or DrugBank (too early stage). Not in FDA databases. Only in ClinicalTrials.gov and AdisInsight.",
+        "inventor_claims": "INVENTOR CLAIMS \u2014 WO2024125417A1 (Lanova Medicines Ltd)\nFiled: 2023-12-08 | Priority: 2022-12-12 | Published: 2024-06-20\n\nINDEPENDENT CLAIM 1 (Composition):\nA bispecific antibody comprising an anti-VEGF portion and an anti-PD-1 portion, wherein:\n\n(a) the anti-VEGF portion comprises an anti-VEGF antibody or antigen binding fragment having binding specificity to a human VEGF protein, which comprises:\n  - a heavy chain variable region (VH) comprising:\n    - CDRH1 comprising the amino acid sequence of SEQ ID NO: 9\n    - CDRH2 comprising the amino acid sequence of SEQ ID NO: 10\n    - CDRH3 comprising the amino acid sequence of SEQ ID NO: 11\n  - a light chain variable region (VL) comprising:\n    - CDRL1 comprising the amino acid sequence of SEQ ID NO: 12\n    - CDRL2 comprising the amino acid sequence of SEQ ID NO: 13\n    - CDRL3 comprising the amino acid sequence of SEQ ID NO: 14\n\n(b) the anti-PD-1 portion comprises an anti-PD-1 single domain antibody (VHH\/nanobody) having binding specificity to a human PD-1 protein, which comprises:\n  - CDR1 comprising the amino acid sequence of SEQ ID NO: 5\n  - CDR2 comprising the amino acid sequence of SEQ ID NO: 6\n  - CDR3 comprising the amino acid sequence of SEQ ID NO: 7 (VH18 variant) or SEQ ID NO: 8 (VH8M1 variant)\n\nDEPENDENT CLAIM ELEMENTS (from specification):\n- The VH of the anti-VEGF portion comprises the amino acid sequence of SEQ ID NO: 3\n- The VL of the anti-VEGF portion comprises the amino acid sequence of SEQ ID NO: 4\n- The anti-VEGF portion is a full size Fab antibody with IgG Fc fragment\n- The IgG Fc fragment comprises LALA mutations (L234A, L235A, EU numbering)\n- The anti-PD-1 single domain antibody comprises the amino acid sequence of SEQ ID NO: 1 (VH18) or SEQ ID NO: 2 (VH8M1)\n- The anti-PD-1 nanobody is fused to the C-terminal side of the anti-VEGF antibody via a (G4S)4 linker (SEQ ID NO: 15)\n- The bispecific antibody comprises 2 anti-PD-1 VHH per molecule (B12D1-9\/B12D1-10 variants) or 4 anti-PD-1 VHH per molecule (B12D1-6 variant)\n\nINDEPENDENT CLAIM 2 (Composition\/Formulation):\nA pharmaceutical composition comprising the bispecific antibody and a pharmaceutically acceptable carrier.\n\nINDEPENDENT CLAIM 3 (Method of Treatment):\nA method of treating cancer in a patient in need thereof, comprising administering to the patient the bispecific antibody, wherein the cancer is selected from: bladder cancer, breast cancer, colorectal cancer, endometrial cancer, esophageal cancer, head and neck cancer, kidney cancer, leukemia, liver cancer, lung cancer, lymphoma, melanoma, pancreatic cancer, prostate cancer, and thyroid cancer.\n\nKEY STRUCTURAL ELEMENTS FOR FTO COMPARISON:\n1. Anti-VEGF portion = Bevacizumab-derived CDRs (SEQ ID NOs 9-14)\n2. Anti-PD-1 portion = single domain antibody (VHH\/nanobody), NOT conventional antibody\n3. Architecture = nanobody fused to C-terminus of full-size IgG1 antibody\n4. Linker = (G4S)4 (SEQ ID NO: 15)\n5. Fc = IgG1 with LALA mutations (silenced effector function)\n6. Variants: 2-VHH (B12D1-9, B12D1-10) or 4-VHH (B12D1-6)\n\nNATIONAL PHASE ENTRIES (from Google Patents filing history):\n- US: US20250019442A1 (filed Sep 2024)\n- EP: EP4634236A1\n- AU: AU2023394246A1\n- JP: JP2025541826A\n- KR: KR20250112917A\n- CN: CN120693349A\n- IL: IL321363A\n- CR, CO, MX, DO: Filed\n\nLEGAL STATUS: PCT application ceased (June 2025) \u2014 national phase entries are active.",
+        "parsed": {
+            "target": {
+                "status": "found",
+                "value": "(detected)"
+            },
+            "mechanism": {
+                "status": "found",
+                "value": "(detected)"
+            },
+            "indications": {
+                "status": "found",
+                "value": "(detected)"
+            },
+            "jurisdictions": {
+                "status": "found",
+                "value": "(detected)"
+            },
+            "stage": {
+                "status": "found",
+                "value": "(detected)"
+            },
+            "competitors": {
+                "status": "found",
+                "value": "(detected)"
+            },
+            "patents": {
+                "status": "found",
+                "value": "(detected)"
+            },
+            "clinical": {
+                "status": "found",
+                "value": "(detected)"
+            },
+            "structure": {
+                "status": "found",
+                "value": "(detected)"
+            },
+            "target2": {
+                "status": "found",
+                "value": "(detected)"
+            },
+            "format": {
+                "status": "found",
+                "value": "(detected)"
+            },
+            "expression": {
+                "status": "missing",
+                "value": ""
+            },
+            "salt_form": {
+                "status": "missing",
+                "value": ""
+            },
+            "payload": {
+                "status": "missing",
+                "value": ""
+            },
+            "linker": {
+                "status": "missing",
+                "value": ""
+            },
+            "dar": {
+                "status": "missing",
+                "value": ""
+            },
+            "inventor_claims": {
+                "status": "found",
+                "value": "Claims provided (3370 chars)"
+            }
+        },
+        "files": [],
+        "submitted": "2026-03-15T18:15:49.183Z"
+    },
+    "sections": [
+        {
+            "title": "Scope, Disclaimer & Search Assumptions",
+            "content": "**ABFTO — All But Freedom To Operate.** This packet is research foundation for qualified patent counsel. It is **not** a freedom-to-operate opinion.\n\n**Jurisdictions requested (intake):** US, China, EU, Japan.\n\n**Jurisdictions searched this run:** US (PatentsView, USPTO EFTS, PEDS), WO (WIPO PatentScope), EP (EPO OPS — partial), CN (CNIPA proxy).\n\n**Not searched this run:** KR, IN, AU, BR, CA, and national offices beyond retrieved family members.\n\n**Assumptions:** Only English-language automated queries unless noted. Legal status from public APIs only — counsel must verify in-force status before reliance. Negative results mean **not retrieved**, not confirmed absence."
+        },
+        {
+            "title": "Summary of Invention — Key Features",
+            "content": "**Product under clearance:** LM-299 (MK-2010) — Merck bispecific antibody, PD-1 + VEGF dual blockade, sdAb/nanobody architecture.\n\n<table><thead><tr><th>ID</th><th>Feature</th><th>Description</th></tr></thead><tbody><tr><td>KF-1</td><td>Target</td><td>PD-1 and VEGF dual blockade in single bispecific molecule</td></tr><tr><td>KF-2</td><td>Architecture</td><td>sdAb/nanobody PD-1 portion fused to full-size anti-VEGF IgG1; (G4S)4 linker; LALA Fc</td></tr><tr><td>KF-3</td><td>VEGF binding</td><td>Bevacizumab-derived CDR sequences (SEQ ID NOs 9–14)</td></tr><tr><td>KF-4</td><td>PD-1 binding</td><td>Single-domain antibody CDRs (SEQ ID NOs 5–8)</td></tr><tr><td>KF-5</td><td>Indications</td><td>Advanced solid tumors, NSCLC, immuno-oncology</td></tr></tbody></table>"
+        },
+        {
+            "title": "Search Methodology",
+            "content": "**Automated reconnaissance — 10 sources — run date 2026-07-31**\n\n<table><thead><tr><th>Source</th><th>Database</th><th>Query (summary)</th><th>Hits</th><th>Status</th></tr></thead><tbody><tr><td>1</td><td>PubChem</td><td>lm-299, MK-2010</td><td>0</td><td>Not retrieved</td></tr><tr><td>2</td><td>ClinicalTrials.gov</td><td>NCT06650566</td><td>1</td><td>OK</td></tr><tr><td>3</td><td>openFDA</td><td>lm-299</td><td>0</td><td>Not retrieved</td></tr><tr><td>4–5</td><td>PatentsView</td><td>PD-1/VEGF bispecific; LaNova/Merck assignee</td><td>12</td><td>OK</td></tr><tr><td>6</td><td>USPTO EFTS / WIPO</td><td>WO2024125417A1, US20250019442A1 claims</td><td>1</td><td>Partial</td></tr><tr><td>7</td><td>EPO OPS</td><td>Assignee + keyword</td><td>0</td><td>Not retrieved</td></tr><tr><td>8</td><td>WIPO PatentScope</td><td>PD-1 VEGF bispecific PCT</td><td>3</td><td>OK</td></tr><tr><td>9</td><td>CNIPA proxy</td><td>CN assignees</td><td>2</td><td>Partial</td></tr><tr><td>10</td><td>USPTO PEDS</td><td>Prosecution/litigation</td><td>0</td><td>Not retrieved</td></tr></tbody></table>\n\nFull machine-readable log: `jobs/lm-299_demo_manifest.json`"
+        },
+        {
+            "title": "Results Bibliography",
+            "content": "**Relevant publications identified — sorted by relevance to clearance**\n\n<table><thead><tr><th>Patent / App No.</th><th>Jurisdiction</th><th>Assignee</th><th>Legal Status</th><th>Risk</th><th>Relation</th></tr></thead><tbody><tr><td>WO2024125417A1</td><td>WO</td><td>LaNova Medicines</td><td>PCT ceased Jun 2025; NPE active</td><td>—</td><td>Client family</td></tr><tr><td>US20250019442A1</td><td>US</td><td>Merck</td><td>Application</td><td>GREEN</td><td>Client family</td></tr><tr><td>EP4634236A1</td><td>EP</td><td>Merck</td><td>Application — verify</td><td>YELLOW</td><td>Client family</td></tr><tr><td>CN120693349A</td><td>CN</td><td>Genomeditech</td><td>Application</td><td>GREEN</td><td>Client family</td></tr><tr><td>JP2025541826A</td><td>JP</td><td>Merck</td><td>Application</td><td>GREEN</td><td>Client family</td></tr><tr><td>US11622947B2</td><td>US</td><td>Akeso Biopharma</td><td>Granted — verify in-force</td><td>RED</td><td>Third party (ivonescimab class)</td></tr><tr><td>WO2018229194A1</td><td>WO</td><td>Akeso/Summit</td><td>Counsel verify</td><td>RED</td><td>Third party (ivonescimab class)</td></tr></tbody></table>"
+        },
+        {
+            "title": "Claim–Feature Mapping",
+            "content": "**Element mapping — WO2024125417A1 Independent Claim 1 vs. key features**\n\n<table><thead><tr><th>Claim element</th><th>KF match</th><th>Overlap</th><th>Notes</th></tr></thead><tbody><tr><td>Anti-VEGF portion, CDRs SEQ 9–14</td><td>KF-3</td><td>Literal</td><td>Bevacizumab-derived — design-around requires alternate VEGF binders</td></tr><tr><td>Anti-PD-1 sdAb, CDRs SEQ 5–8</td><td>KF-4</td><td>Literal</td><td>Nanobody format — distinguishes from conventional bispecifics</td></tr><tr><td>(G4S)4 linker SEQ 15</td><td>KF-2</td><td>Literal</td><td>Linker substitution = potential design-around — counsel chart</td></tr><tr><td>LALA Fc mutations</td><td>KF-2</td><td>Literal</td><td>Effector-silenced IgG1</td></tr><tr><td>Method claim — 16 tumor types</td><td>KF-5</td><td>Partial</td><td>Method-only overlap analysis — separate from composition</td></tr></tbody></table>\n\n**Third-party note:** Ivonescimab-family claims (Akeso/Summit) require separate chart — PD-1/VEGF bispecific class leader. Counsel must pull full claim text and verify."
+        },
+        {
+            "title": "Executive Summary — 4-View Grid",
+            "content": "**The PD-1/VEGF Bispecific Class Is Contested Before LM-299 Reaches Market**\n\nLM-299 (MK-2010) is Merck's sdAb-based bispecific targeting PD-1 and VEGF simultaneously. Automated reconnaissance identified 12 patent-family records across WO2024125417A1 national phase entries. Ivonescimab (Akeso/Summit) leads the class in Phase 3 with potential FDA action in November 2026 — approximately four to five years ahead of LM-299's current Phase 1 enrollment (NCT06650566).\n\n<table><thead><tr><th>View</th><th>Assessment</th><th>Risk</th></tr></thead><tbody><tr><td>Infringement Fortress</td><td>WO2024125417A1 composition claims anchor VEGF CDRs (SEQ ID NOs 9–14) + PD-1 VHH (SEQ ID NOs 5–8)</td><td><span class=\"risk-yellow\">MODERATE</span></td></tr><tr><td>Invalidity &amp; Attack Surface</td><td>Bevacizumab-derived VEGF portion may face enablement/written description scrutiny under Amgen v. Sanofi framework for genus claims</td><td><span class=\"risk-yellow\">MODERATE</span></td></tr><tr><td>Expiry &amp; Market Timeline</td><td>National phase active (US20250019442A1, EP4634236A1, CN120693349A); PCT ceased June 2025</td><td>GREEN — early portfolio</td></tr><tr><td>Revenue &amp; Strategic Risk</td><td>Keytruda cliff 2028; LM-299 positioned as post-Keytruda dual-blockade successor</td><td><span class=\"risk-red\">HIGH</span></td></tr></tbody></table>\n\n**Advisory:** This ABFTO package is intelligence for qualified patent counsel — not a freedom-to-operate conclusion."
+        },
+        {
+            "title": "Key Claims Table",
+            "content": "**Independent Claim 1 Defines the Core Composition Fortress**\n\n• **Claim 1 (Composition):** Bispecific with anti-VEGF portion (VH/VL CDRs SEQ ID NOs 9–14) + anti-PD-1 single-domain antibody (CDRs SEQ ID NOs 5–8) — [RISK LEVEL: FORTRESS] for exact sequence match\n\n• **Claim 3 (Method):** Cancer treatment method covering 16 tumor types — [RISK LEVEL: MODERATE] for method-only overlap analysis\n\n• **Architecture differentiator:** Nanobody fused to C-terminus of full-size IgG1 via (G4S)4 linker (SEQ ID NO: 15); LALA Fc mutations (L234A, L235A) — distinguishes from ivonescimab conventional antibody format\n\n• **Design-around pathway:** Alternative linker chemistry, non-bevacizumab VEGF binding domains, or PD-1 binding domains outside disclosed CDR sequences require claim-chart verification by counsel"
+        },
+        {
+            "title": "Patent Portfolio & Claim Architecture",
+            "content": "**WO2024125417A1 Anchors the Global Filing Strategy**\n\nPriority date: 2022-12-12. Published: 2024-06-20. Assignee lineage: LaNova Medicines / Genomeditech → Merck exclusive global (ex-China).\n\n**National phase entries retrieved by automated reconnaissance:**\n\n• US20250019442A1 (filed Sep 2024)\n• EP4634236A1\n• CN120693349A\n• JP2025541826A, KR20250112917A, AU2023394246A1, IL321363A\n\n**Claim hierarchy:** Independent Claim 1 (composition) → Dependent claims on SEQ ID NOs, LALA Fc, linker, 2-VHH vs 4-VHH variants (B12D1-6, B12D1-9, B12D1-10).\n\nPubChem and openFDA returned no records — consistent with early-stage molecule not yet in public chemical databases. This reflects automated query coverage only; manual verification is required."
+        },
+        {
+            "title": "Jurisdictional Topology",
+            "content": "**US, China, EU, and Japan Are Stated Target Jurisdictions**\n\n<table><thead><tr><th>Patent No.</th><th>Jurisdiction</th><th>Status</th><th>Notes</th></tr></thead><tbody><tr><td>US20250019442A1</td><td>US</td><td>Application</td><td>National phase from WO2024125417A1</td></tr><tr><td>EP4634236A1</td><td>EU</td><td>Application</td><td>Not retrieved by EPO OPS in this run — manual pull required</td></tr><tr><td>CN120693349A</td><td>China</td><td>Application</td><td>Originating assignee region (LaNova/Genomeditech)</td></tr><tr><td>JP2025541826A</td><td>Japan</td><td>Application</td><td>—</td></tr></tbody></table>\n\nPEDS prosecution data not retrieved in this automated run. Litigation status requires manual verification — do not infer absence from negative query results."
+        },
+        {
+            "title": "Competitive Landscape & Pipeline",
+            "content": "**Ivonescimab Defines the Class Leader Timeline**\n\n• **Ivonescimab (Akeso/Summit):** PD-1/VEGF bispecific, Phase 3, PDUFA goal November 2026 — sets commercial and patent precedent for dual-target IO\n\n• **BNT327 (BioNTech):** PD-1/VEGF bispecific in development — adjacency monitoring required\n\n• **Keytruda (pembrolizumab):** Merck's own PD-1 monoclonal; patent cliff 2028 — LM-299 strategic context is post-Keytruda indication absorption with superior dual-blockade argument\n\n**Clinical anchor:** NCT06650566 — Phase 1, advanced malignant tumors, enrolling in China. Not yet in FDA Orange Book."
+        },
+        {
+            "title": "Strategic Signals & Counsel Next Steps",
+            "content": "**Converging Signals Suggest Urgency on Class-Definition Timing**\n\n1. LM-299 is 4–5 years behind ivonescimab — market definition risk before LM-299 approval\n2. Composition-of-matter claims are sequence-specific — biosimilar pathway unlikely; new IRA/exclusivity clock if approved\n3. VEGF portion derives from bevacizumab CDR sequences — cross-reference Avastin/bevacizumab estate during FTO prep\n\n**Recommended counsel actions:**\n\n• Pull full claim text for US20250019442A1 and EP4634236A1 directly from USPTO/EPO registers\n• Element-by-element chart against inventor claims in intake (WO2024125417A1)\n• Monitor ivonescimab FDA action (November 2026 PDUFA goal date — not an approval)\n\n<!-- OPINION_SLOT: future AI synthesis page plugs in here -->"
+        }
+    ]
+}

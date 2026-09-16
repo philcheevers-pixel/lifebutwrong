@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%232B61E5'/><text x='50' y='75' font-size='70' font-weight='800' text-anchor='middle' fill='white' font-family='Arial'>C</text></svg>">
+<title>Inventor Intake | CarveIntel Patent Intelligence</title>
+<meta name="description" content="Submit your molecule or invention for a free preliminary patent landscape evaluation. 16 structured questions, 15 minutes. Patent attorneys, associates, and compounding pharmacists — know what's protected before you start.">
+<meta name="keywords" content="patent intake form, free patent evaluation, patent landscape analysis, pharmaceutical patent search, submit molecule for patent review, prior art check, FTO intake, patent assessment, drug patent evaluation, compounding patent search">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://carveintel.com/intake.html">
+<meta property="og:title" content="Inventor Intake — CarveIntel">
+<meta property="og:description" content="Submit your molecule for a free preliminary patent landscape evaluation. 16 questions, 15 minutes. Know what's protected before you start.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://carveintel.com/intake.html">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --blue: #2B61E5;
+  --blue-light: #EBF0FD;
+  --blue-hover: #1D4FD0;
+  --dark: #0F172A;
+  --slate: #475569;
+  --gray: #94A3B8;
+  --border: #E2E8F0;
+  --white: #FFFFFF;
+  --green: #059669;
+  --green-bg: #ECFDF5;
+  --red: #DC2626;
+  --red-bg: #FEF2F2;
+  --amber: #D97706;
+  --amber-bg: #FFFBEB;
+  --light-neutral: #F8FAFC;
+  --font-stack: 'DM Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --space-xs: 8px;
+  --space-sm: 16px;
+  --space-md: 24px;
+  --space-lg: 40px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: var(--font-stack);
+  background: var(--light-neutral);
+  color: var(--dark);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ===== BRAND HEADER (matches synopsis/checkout) ===== */
+.header {
+  padding: 14px 48px;
+  background: var(--white);
+  border-bottom: 3px solid var(--blue);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.header .brand { font-size: 26px; font-weight: 800; color: #000; letter-spacing: -0.5px; }
+.header .brand span { color: var(--blue); }
+.header .sep { font-size: 18px; color: #CBD5E1; font-weight: 300; }
+.header .sub { font-size: 18px; color: var(--gray); font-weight: 400; }
+
+/* ===== SUBHEADER (matches synopsis/checkout) ===== */
+.subheader {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 6px 48px;
+  font-size: 12px;
+  color: var(--gray);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.subheader .step { color: var(--blue); font-weight: 700; }
+.subheader .active { color: var(--dark); font-weight: 600; }
+.subheader .dim { color: #CBD5E1; }
+
+/* ===== HERO SECTION ===== */
+.hero {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 28px 24px;
+  text-align: center;
+}
+.hero h1 {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--dark);
+  margin-bottom: 8px;
+}
+.hero .subtitle {
+  color: var(--slate);
+  font-size: 15px;
+  max-width: 640px;
+  margin: 0 auto 16px;
+}
+.badge {
+  display: inline-block;
+  background: var(--blue);
+  color: var(--white);
+  padding: 6px 18px;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ===== PROGRESS BAR ===== */
+.progress-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 20px;
+}
+.progress-inner {
+  max-width: 780px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.progress-track {
+  flex: 1;
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: var(--blue);
+  border-radius: 2px;
+  transition: width 0.4s ease;
+  width: 0%;
+}
+.progress-text {
+  font-size: 13px;
+  color: var(--slate);
+  font-weight: 600;
+  min-width: 70px;
+  text-align: right;
+}
+
+/* ===== FORM CONTAINER ===== */
+.form-container {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 20px 24px 80px;
+}
+
+/* ===== SECTION HEADERS ===== */
+.section-header {
+  margin: 40px 0 8px;
+  padding: 16px 20px;
+  background: var(--white);
+  border-left: 3px solid var(--blue);
+  border-radius: 0 4px 4px 0;
+}
+.section-letter {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--blue);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+.section-title {
+  font-size: 21px;
+  font-weight: 700;
+  color: var(--dark);
+  margin-top: 2px;
+}
+.section-desc {
+  font-size: 15px;
+  color: var(--slate);
+  margin-top: 4px;
+}
+
+/* ===== QUESTION CARDS ===== */
+.q-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 24px;
+  margin: 12px 0;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.q-card:focus-within {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(43, 97, 229, 0.12);
+}
+.q-number {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--blue);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+.q-text {
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--dark);
+  margin-bottom: 6px;
+  line-height: 1.45;
+}
+.q-guidance {
+  font-size: 15px;
+  color: var(--slate);
+  margin-bottom: 12px;
+  line-height: 1.55;
+}
+.q-maps {
+  font-size: 13px;
+  color: var(--blue);
+  background: rgba(43, 97, 229, 0.06);
+  padding: 5px 10px;
+  border-radius: 4px;
+  margin-bottom: 12px;
+  display: block;
+  font-weight: 500;
+  text-align: left;
+}
+textarea {
+  width: 100%;
+  min-height: 90px;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-family: var(--font-stack);
+  font-size: 15px;
+  line-height: 1.6;
+  resize: vertical;
+  background: var(--light-neutral);
+  color: var(--dark);
+  transition: border-color 0.2s, background 0.2s;
+}
+textarea:focus {
+  outline: none;
+  border-color: var(--blue);
+  background: var(--white);
+}
+textarea::placeholder { color: var(--gray); }
+
+/* ===== ATTORNEY REVIEW WARNING ===== */
+.attorney-flag {
+  background: var(--amber-bg);
+  border: 1px solid #FDE68A;
+  border-left: 4px solid var(--amber);
+  border-radius: 0 6px 6px 0;
+  padding: 10px 14px;
+  margin-bottom: 12px;
+  font-size: 13px;
+  color: #92400E;
+  line-height: 1.5;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+.attorney-flag svg { flex-shrink: 0; margin-top: 1px; }
+
+/* ===== FILE UPLOAD ===== */
+.file-upload-area {
+  margin-top: 12px;
+  padding: 16px;
+  border: 2px dashed var(--border);
+  border-radius: 8px;
+  text-align: center;
+  transition: border-color 0.2s, background 0.2s;
+  cursor: pointer;
+}
+.file-upload-area:hover, .file-upload-area.dragover {
+  border-color: var(--blue);
+  background: var(--blue-light);
+}
+.file-upload-area input[type="file"] {
+  display: none;
+}
+.file-upload-label {
+  font-size: 14px;
+  color: var(--slate);
+  cursor: pointer;
+}
+.file-upload-label strong { color: var(--blue); }
+.file-upload-hint {
+  font-size: 12px;
+  color: var(--gray);
+  margin-top: 4px;
+}
+.file-list {
+  margin-top: 8px;
+  text-align: left;
+}
+.file-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 10px;
+  background: var(--green-bg);
+  border-radius: 4px;
+  margin-bottom: 4px;
+  font-size: 13px;
+  color: #065F46;
+}
+.file-item button {
+  background: none;
+  border: none;
+  color: var(--red);
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 0 4px;
+}
+
+/* ===== CONTACT SECTION ===== */
+.contact-section {
+  background: var(--white);
+  border: 2px solid var(--blue);
+  border-radius: 8px;
+  padding: 28px;
+  margin: 32px 0;
+}
+.contact-section h3 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 16px;
+}
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.field-row.full { grid-template-columns: 1fr; }
+label {
+  display: block;
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 4px;
+  color: var(--dark);
+}
+input[type="text"], input[type="email"] {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-family: var(--font-stack);
+  font-size: 15px;
+  background: var(--light-neutral);
+  color: var(--dark);
+}
+input:focus {
+  outline: none;
+  border-color: var(--blue);
+  background: var(--white);
+}
+
+/* ===== SUBMIT ===== */
+.submit-area { text-align: center; margin: 32px 0; }
+.submit-btn {
+  background: var(--blue);
+  color: var(--white);
+  border: none;
+  padding: 16px 52px;
+  font-family: var(--font-stack);
+  font-size: 17px;
+  font-weight: 700;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+  letter-spacing: 0.5px;
+}
+.submit-btn:hover { background: var(--blue-hover); }
+.submit-note {
+  font-size: 13px;
+  color: var(--slate);
+  margin-top: 10px;
+}
+
+/* ===== DISCLAIMER ===== */
+.disclaimer {
+  background: var(--white);
+  border-left: 3px solid var(--gray);
+  padding: 16px 20px;
+  margin: 24px 0;
+  font-size: 14px;
+  color: var(--slate);
+  line-height: 1.6;
+  border-radius: 0 4px 4px 0;
+}
+.disclaimer strong { color: var(--dark); }
+
+/* ===== QA REVIEW PANEL ===== */
+.qa-panel {
+  display: none;
+  max-width: 780px;
+  margin: 24px auto;
+  padding: 24px;
+  background: var(--white);
+  border: 2px solid var(--blue);
+  border-radius: 8px;
+}
+.qa-panel.show { display: block; }
+.qa-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.qa-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 700;
+  color: white;
+  flex-shrink: 0;
+}
+.qa-icon.good { background: var(--green); }
+.qa-icon.fair { background: var(--amber); }
+.qa-icon.needs_work { background: var(--red); }
+.qa-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--dark);
+}
+.qa-summary {
+  font-size: 15px;
+  color: var(--slate);
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+.qa-flag {
+  padding: 12px 16px;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  font-size: 14px;
+  line-height: 1.5;
+  border-left: 4px solid;
+}
+.qa-flag.high {
+  background: var(--red-bg);
+  border-color: var(--red);
+  color: #991B1B;
+}
+.qa-flag.medium {
+  background: var(--amber-bg);
+  border-color: var(--amber);
+  color: #92400E;
+}
+.qa-flag.low {
+  background: var(--green-bg);
+  border-color: var(--green);
+  color: #166534;
+}
+.qa-flag-label {
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 2px;
+}
+.qa-strengths {
+  margin-top: 16px;
+  padding: 12px 16px;
+  background: var(--green-bg);
+  border-radius: 6px;
+}
+.qa-strengths h4 {
+  font-size: 13px;
+  font-weight: 700;
+  color: #166534;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.qa-strengths li {
+  font-size: 14px;
+  color: #166534;
+  margin-left: 16px;
+  margin-bottom: 4px;
+}
+.qa-actions {
+  margin-top: 20px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.qa-btn {
+  font-family: var(--font-stack);
+  font-size: 15px;
+  font-weight: 700;
+  padding: 12px 28px;
+  border-radius: 6px;
+  cursor: pointer;
+  border: none;
+  transition: background 0.2s;
+  letter-spacing: 0.5px;
+}
+.qa-btn-submit {
+  background: var(--blue);
+  color: white;
+}
+.qa-btn-submit:hover { background: var(--blue-hover); }
+.qa-btn-edit {
+  background: white;
+  color: var(--dark);
+  border: 2px solid var(--border);
+}
+.qa-btn-edit:hover { border-color: var(--blue); color: var(--blue); }
+.qa-loading {
+  text-align: center;
+  padding: 40px 20px;
+  font-size: 15px;
+  color: var(--slate);
+}
+.qa-spinner {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border: 3px solid var(--border);
+  border-top: 3px solid var(--blue);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-bottom: 12px;
+}
+@keyframes spin { 100% { transform: rotate(360deg); } }
+
+/* ===== CONFIRMATION ===== */
+.confirmation {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.7);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+}
+.confirmation.show { display: flex; }
+.confirm-card {
+  background: var(--white);
+  border-radius: 8px;
+  padding: 48px;
+  max-width: 460px;
+  text-align: center;
+  border-top: 3px solid var(--blue);
+}
+.confirm-card .checkmark {
+  width: 56px;
+  height: 56px;
+  background: var(--green);
+  color: white;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  margin-bottom: 16px;
+}
+.confirm-card h2 {
+  font-size: 26px;
+  color: var(--dark);
+  margin-bottom: 12px;
+}
+.confirm-card p {
+  color: var(--slate);
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+/* ===== FOOTER ===== */
+.footer {
+  text-align: center;
+  padding: 16px;
+  font-size: 12px;
+  color: var(--gray);
+}
+
+@media (max-width: 600px) {
+  .header { padding: 12px 20px; }
+  .subheader { padding: 6px 20px; }
+  .hero h1 { font-size: 22px; }
+  .field-row { grid-template-columns: 1fr; }
+  .q-card { padding: 18px; }
+}
+
+@media print {
+  .progress-bar, .submit-area, .subheader { display: none; }
+  textarea { border: 1px solid #ccc; min-height: 100px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== BRAND HEADER (matches synopsis/checkout) ===== -->
+<div class="header">
+  <div class="brand">Carve<span>Intel</span></div>
+  <div class="sep">|</div>
+  <div class="sub">Patent Intelligence</div>
+</div>
+
+<!-- ===== STEP NAV (matches synopsis/checkout) ===== -->
+<div class="subheader">
+  <span class="step">STEP 1</span>
+  <span>&bull;</span>
+  <span class="active">Intake</span>
+  <span class="dim">&rarr;</span>
+  <span class="dim">STEP 2 Synopsis</span>
+  <span class="dim">&rarr;</span>
+  <span class="dim">STEP 3 Checkout</span>
+</div>
+
+<!-- ===== HERO ===== -->
+<div class="hero">
+  <h1>Inventor Intake Form</h1>
+  <p class="subtitle">16 questions across 6 domains. Each answer maps directly to analytical variables in the CarveIntel ABFTO engine.</p>
+  <span class="badge">Complimentary &mdash; No Charge</span>
+</div>
+
+<!-- ===== PROGRESS BAR ===== -->
+<div class="progress-bar">
+  <div class="progress-inner">
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-text" id="progressText">0 / 16</div>
+  </div>
+</div>
+
+<div class="form-container">
+
+  <div class="disclaimer">
+    <strong>Confidentiality:</strong> All information submitted through this intake form is treated as confidential and used solely for generating your patent intelligence report. CarveIntel does not share, publish, or distribute submitted data. We recommend discussing privilege considerations with your supervising attorney before submission.
+  </div>
+
+  <form id="intakeForm">
+
+  <!-- SECTION A -->
+  <div class="section-header">
+    <div class="section-letter">Section A</div>
+    <div class="section-title">The Invention</div>
+    <div class="section-desc">Molecular structure, mechanism, target, and supporting data.</div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-number">Question 1</div>
+    <div class="q-text">Describe the invention in plain language. What is it, and what does it do?</div>
+    <div class="q-guidance">Non-technical summary first, then scientific detail. Think of explaining it to a patent examiner who doesn't work in your specific field.</div>
+    <div class="q-maps">&rarr; Invention Classification, Claim Architecture Basis, Technology Domain</div>
+    <textarea name="q1" placeholder="A bispecific antibody targeting both PD-L1 and VEGF-A, designed to simultaneously block immune checkpoint signaling and tumor angiogenesis..."></textarea>
+  </div>
+
+  <div class="q-card">
+    <div class="q-number">Question 2</div>
+    <div class="q-text">What is the molecular structure? Provide sequences, formulas, or structural descriptions.</div>
+    <div class="q-guidance">Biologics: amino acid sequences, CDR regions, variable regions. Small molecules: chemical formula, stereochemistry. Devices/processes: schematic or flowchart.</div>
+    <div class="q-maps">&rarr; Structural Data, Sequence ID, Composition Claims Basis</div>
+    <textarea name="q2" placeholder="Include as much structural detail as available. Reference attached files if needed."></textarea>
+
+    <!-- FILE UPLOAD (optional — for SMILES, structure diagrams, patent PDFs) -->
+    <div class="file-upload-area" id="fileDropZone" onclick="document.getElementById('fileInput').click()">
+      <input type="file" id="fileInput" multiple accept=".pdf,.doc,.docx,.txt,.csv,.png,.jpg,.jpeg,.mol,.sdf,.cdx">
+      <div class="file-upload-label"><strong>Attach files</strong> (optional) &mdash; drag &amp; drop or click to browse</div>
+      <div class="file-upload-hint">SMILES strings, structure diagrams, patent PDFs, sequence files. Max 10 MB per file.</div>
+      <div class="file-list" id="fileList"></div>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-number">Question 3</div>
+    <div class="q-text">What is the specific biological or chemical target? How does the invention interact with it?</div>
+    <div class="q-guidance">Binding site, receptor, enzyme, pathway. What does it block, activate, modulate, or replace?</div>
+    <div class="q-maps">&rarr; Target Identification, Mechanism Claims Basis, Design-Around Vulnerability Assessment</div>
+    <textarea name="q3" placeholder="Targets the PD-1/PD-L1 interaction by binding to PD-L1 at the..."></textarea>
+  </div>
+
+  <div class="q-card">
+    <div class="q-number">Question 4</div>
+    <div class="q-text">What data do you have? Efficacy, safety, binding affinity, selectivity, stability.</div>
+    <div class="q-guidance">In vitro data, animal studies, human data, analytical characterization. Note what's published vs. unpublished.</div>
+    <div class="q-maps">&rarr; Data Maturity Assessment, Prior Art Exposure Risk, Enablement Support</div>
+    <textarea name="q4" placeholder="Binding affinity (Kd), IC50 values, in vivo efficacy data, stability studies..."></textarea>
+  </div>
+
+  <!-- SECTION B -->
+  <div class="section-header">
+    <div class="section-letter">Section B</div>
+    <div class="section-title">Prior Art Landscape</div>
+    <div class="section-desc">What the inventor already knows. This is not exhaustive search &mdash; that's what the ABFTO report does.</div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-number">Question 5</div>
+    <div class="q-text">What existing products, patents, or publications are you aware of in this space?</div>
+    <div class="q-guidance">Competitor products, published papers, known patent families, conference presentations. What's "close" to the invention?</div>
+    <div class="q-maps">&rarr; Known Prior Art, Obviousness Risk Triage, Competitor Identification</div>
+    <textarea name="q5" placeholder="List specific product names, patent numbers, paper citations, or companies working in this space."></textarea>
+  </div>
+
+  <div class="q-card">
+    <div class="q-number">Question 6</div>
+    <div class="q-text">What makes your invention different from what already exists?</div>
+    <div class="q-guidance">The inventive step in the scientist's own words. Better efficacy? Novel target? Different mechanism? New formulation?</div>
+    <div class="q-maps">&rarr; Inventive Step Basis, Non-Obviousness Arguments, Claim Differentiation Strategy</div>
+    <!-- ATTORNEY REVIEW FLAG -->
+    <div class="attorney-flag">
+      <svg width="16" height="16" fill="none" stroke="#D97706" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+      <span>This answer directly affects prior art analysis. Consider reviewing with supervising attorney before submission.</span>
+    </div>
+    <textarea name="q6" placeholder="What specifically is new? Why couldn't someone skilled in the art have arrived at this?"></textarea>
+  </div>
+
+  <div class="q-card">
+    <div class="q-number">Question 7</div>
+    <div class="q-text">Have you or your team published anything about this invention or related work?</div>
+    <div class="q-guidance">Papers, posters, conference talks, abstracts, patents, investor presentations, grant applications. Include dates. Critical for 102/103 prior art exposure.</div>
+    <div class="q-maps">&rarr; Self-Prior Art Exposure, Grace Period Calculation, Publication Bar Risk</div>
+    <!-- ATTORNEY REVIEW FLAG -->
+    <div class="attorney-flag">
+      <svg width="16" height="16" fill="none" stroke="#D97706" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+      <span>This answer directly affects prior art analysis. Consider reviewing with supervising attorney before submission.</span>
+    </div>
+    <textarea name="q7" placeholder="List all publications, presentations, and public disclosures with dates."></textarea>
+  </div>
+
+  <!-- SECTION C -->
+  <div class="section-header">
+    <div class="section-letter">Section C</div>
+    <div class="section-title">Commercial Intent &amp; Strategic Context</div>
+    <div class="section-desc">Why the patent matters and how it will be used. Drives the strategic analysis.</div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-number">Question 8</div>
+    <div class="q-text">What are the target indications or therapeutic areas?</div>
+    <div class="q-guidance">Primary indication, secondary indications, orphan drug potential. Include any regulatory designations (Fast Track, Breakthrough Therapy, etc.).</div>
+    <div class="q-maps">&rarr; Indication Scope, Market Size Assessment, Regulatory Pathway Analysis</div>
+    <textarea name="q8" placeholder="Primary: non-small cell lung cancer (1L). Secondary: hepatocellular carcinoma..."></textarea>
+  </div>
+
+  <div class="q-card">
+    <div class="q-number">Question 9</div>
+    <div class="q-text">What is the development stage and timeline?</div>
+    <div class="q-guidance">Preclinical, Phase I/II/III, NDA/BLA filed, approved. Expected milestone dates. Partnerships affecting timeline.</div>
+    <div class="q-maps">&rarr; Development Stage, Filing Priority Assessment, Competitive Window Analysis</div>
+    <textarea name="q9" placeholder="Currently in Phase 2. Topline data expected Q3 2026. Phase 3 planned Q1 2027..."></textarea>
+  </div>
+
+  <div class="q-card">
+    <div class="q-number">Question 10</div>
+    <div class="q-text">What are the target markets and jurisdictions?</div>
+    <div class="q-guidance">US, EU, Japan, China, emerging markets. Where will you seek approval? Biggest revenue opportunities? Biggest patent threats?</div>
+    <div class="q-maps">&rarr; Jurisdictional Topology, Filing Strategy, Regulatory Harmonization Gaps</div>
+    <textarea name="q10" placeholder="US and EU primary. Japan and China planned. Concerned about patent enforcement in India/Brazil."></textarea>
+  </div>
+
+  <!-- SECTION D -->
+  <div class="section-header">
+    <div class="section-letter">Section D</div>
+    <div class="section-title">Manufacturing &amp; Formulation</div>
+    <div class="section-desc">Manufacturing patents are often the most defensible &mdash; and the most overlooked.</div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-number">Question 11</div>
+    <div class="q-text">Describe the production process.</div>
+    <div class="q-guidance">Cell lines, expression systems, synthetic chemistry, purification steps, critical quality attributes. What's novel about the process?</div>
+    <div class="q-maps">&rarr; Manufacturing Claims Basis, Process Patent Scope, Design-Around Barriers</div>
+    <textarea name="q11" placeholder="CHO cell line expressing... Purified via protein A chromatography followed by..."></textarea>
+  </div>
+
+  <div class="q-card">
+    <div class="q-number">Question 12</div>
+    <div class="q-text">What is the formulation? Concentration, excipients, delivery system, stability profile.</div>
+    <div class="q-guidance">Buffer system, surfactants, stabilizers, pH range, container closure (vial, syringe, autoinjector). Stability data if available.</div>
+    <div class="q-maps">&rarr; Formulation Claims Basis, Delivery System Protection, Lifecycle Extension Opportunities</div>
+    <textarea name="q12" placeholder="150 mg/mL in histidine buffer, pH 6.0. Polysorbate 80 at 0.02%. Pre-filled syringe..."></textarea>
+  </div>
+
+  <div class="q-card">
+    <div class="q-number">Question 13</div>
+    <div class="q-text">Are there alternative manufacturing methods or formulations you've considered or tested?</div>
+    <div class="q-guidance">What the inventor tried and rejected is as valuable as what works. Identifies competitor design-around pathways.</div>
+    <div class="q-maps">&rarr; Design-Around Pathway Identification, Negative Data Value, Defensive Patent Opportunities</div>
+    <textarea name="q13" placeholder="Tested lyophilized formulation — inferior stability. Considered HEK293 expression — lower yield."></textarea>
+  </div>
+
+  <!-- SECTION E -->
+  <div class="section-header">
+    <div class="section-letter">Section E</div>
+    <div class="section-title">Existing IP &amp; Legal Context</div>
+    <div class="section-desc">Current patents, applications, licensing. The IP landscape already around this invention.</div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-number">Question 14</div>
+    <div class="q-text">Do you have existing patents, applications, or provisional filings related to this invention?</div>
+    <div class="q-guidance">Patent numbers, application numbers, filing dates, priority dates. Continuations, divisionals, CIPs. Foreign filings or PCT applications.</div>
+    <div class="q-maps">&rarr; Existing Portfolio Mapping, Priority Date Chain, Continuation Strategy Assessment</div>
+    <textarea name="q14" placeholder="US Provisional 63/XXX,XXX filed [date]. PCT/US20XX/XXXXX filed [date]."></textarea>
+  </div>
+
+  <div class="q-card">
+    <div class="q-number">Question 15</div>
+    <div class="q-text">Are there any licensing agreements, collaborations, or joint development arrangements?</div>
+    <div class="q-guidance">Co-inventors, institutional IP policies, collaboration agreements, MTAs, government grant conditions (Bayh-Dole march-in rights, etc.).</div>
+    <div class="q-maps">&rarr; Ownership Assessment, Freedom to Operate Constraints, Licensing Landscape</div>
+    <textarea name="q15" placeholder="Co-developed with University of [X] under sponsored research agreement. NIH funding — Bayh-Dole applies."></textarea>
+  </div>
+
+  <!-- SECTION F -->
+  <div class="section-header">
+    <div class="section-letter">Section F</div>
+    <div class="section-title">Risk Awareness</div>
+    <div class="section-desc">The inventor's own concerns. Often surfaces risks formal analysis might miss.</div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-number">Question 16</div>
+    <div class="q-text">What keeps you up at night about protecting this invention?</div>
+    <div class="q-guidance">Express concerns in your own words. Weak points, potential challenges, competitors that worry you most.</div>
+    <div class="q-maps">&rarr; Inventor-Flagged Vulnerabilities, Subjective Risk Assessment, Investigation Priorities</div>
+    <textarea name="q16" placeholder="Worried that [competitor] has a similar program. Concerned about 102 bar from our AACR poster in April 2025."></textarea>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="contact-section">
+    <h3>Contact Information</h3>
+    <div class="field-row">
+      <div><label for="contactName">Your Name</label><input type="text" id="contactName" name="contactName" placeholder="Full name" required></div>
+      <div><label for="contactEmail">Email</label><input type="email" id="contactEmail" name="contactEmail" placeholder="you@firm.com" required></div>
+    </div>
+    <div class="field-row">
+      <div><label for="firmName">Firm / Organization</label><input type="text" id="firmName" name="firmName" placeholder="Firm or company name"></div>
+      <div><label for="contactPhone">Phone (optional)</label><input type="text" id="contactPhone" name="contactPhone" placeholder="+1 ..."></div>
+    </div>
+    <div class="field-row full">
+      <div><label for="moleculeName">Molecule / Invention Name</label><input type="text" id="moleculeName" name="moleculeName" placeholder="INN, code name, or internal designation"></div>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    <strong>What happens next:</strong> Your submission goes to the CarveIntel Canon engine immediately. For known molecules with existing patent families, your complimentary patent synopsis is delivered same day. Novel inventions with the full 16-question intake are typically delivered within 24 hours.
+  </div>
+
+  <div class="submit-area">
+    <button type="button" id="reviewBtn" class="submit-btn" onclick="runQA()">Review My Answers</button>
+    <p class="submit-note">AI-powered quality assessment checks your answers before submission.</p>
+  </div>
+
+  </form>
+</div>
+
+<!-- QA Review Panel -->
+<div class="qa-panel" id="qaPanel">
+  <div id="qaLoading" class="qa-loading" style="display:none;">
+    <div class="qa-spinner"></div><br>
+    Analyzing your answers...
+  </div>
+  <div id="qaResults" style="display:none;">
+    <div class="qa-header">
+      <div class="qa-icon" id="qaIcon"></div>
+      <div class="qa-title" id="qaTitle">Quality Assessment</div>
+    </div>
+    <div class="qa-summary" id="qaSummary"></div>
+    <div id="qaFlags"></div>
+    <div id="qaStrengths"></div>
+    <div class="qa-actions">
+      <button class="qa-btn qa-btn-edit" onclick="editAnswers()">Edit My Answers</button>
+      <button class="qa-btn qa-btn-submit" onclick="submitFinal()">Submit &mdash; Looks Good</button>
+    </div>
+  </div>
+</div>
+
+<!-- Confirmation -->
+<div class="confirmation" id="confirmationOverlay">
+  <div class="confirm-card">
+    <div class="checkmark">&#10003;</div>
+    <h2>Intake Received</h2>
+    <p>Your complimentary patent synopsis is being generated now. You'll be redirected to view it momentarily.</p>
+    <p style="margin-top:20px; color: var(--dark);"><strong>Phil Cheevers</strong><br>Founder, CarveIntel<br><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="6e1e0607022e0d0f1c180b07001a0b02400d0103">[email&#160;protected]</a> | 905 321 2291</p>
+  </div>
+</div>
+
+<div class="footer">&copy; 2026 CarveIntel. All rights reserved. This is a non-legal intake tool. CarveIntel does not provide legal opinions.</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// ── Progress tracking ──
+const textareas = document.querySelectorAll('textarea');
+const progressFill = document.getElementById('progressFill');
+const progressText = document.getElementById('progressText');
+
+function updateProgress() {
+  let filled = 0;
+  textareas.forEach(ta => { if (ta.value.trim().length > 0) filled++; });
+  progressFill.style.width = Math.round((filled / 16) * 100) + '%';
+  progressText.textContent = filled + ' / 16';
+}
+textareas.forEach(ta => {
+  ta.addEventListener('input', updateProgress);
+  ta.addEventListener('input', function() {
+    this.style.height = 'auto';
+    this.style.height = Math.max(90, this.scrollHeight) + 'px';
+  });
+});
+
+// ── File upload handling ──
+var uploadedFiles = [];
+var fileInput = document.getElementById('fileInput');
+var fileDropZone = document.getElementById('fileDropZone');
+var fileListEl = document.getElementById('fileList');
+
+fileInput.addEventListener('change', function() { handleFiles(this.files); });
+
+fileDropZone.addEventListener('dragover', function(e) {
+  e.preventDefault();
+  this.classList.add('dragover');
+});
+fileDropZone.addEventListener('dragleave', function() {
+  this.classList.remove('dragover');
+});
+fileDropZone.addEventListener('drop', function(e) {
+  e.preventDefault();
+  this.classList.remove('dragover');
+  handleFiles(e.dataTransfer.files);
+});
+
+function handleFiles(files) {
+  for (var i = 0; i < files.length; i++) {
+    var f = files[i];
+    if (f.size > 10 * 1024 * 1024) {
+      alert(f.name + ' exceeds 10 MB limit.');
+      continue;
+    }
+    uploadedFiles.push(f);
+  }
+  renderFileList();
+}
+
+function renderFileList() {
+  fileListEl.innerHTML = '';
+  uploadedFiles.forEach(function(f, idx) {
+    var div = document.createElement('div');
+    div.className = 'file-item';
+    var sizeMB = (f.size / (1024 * 1024)).toFixed(1);
+    div.innerHTML = '<span>' + escH(f.name) + ' (' + sizeMB + ' MB)</span><button onclick="removeFile(' + idx + ')">&times;</button>';
+    fileListEl.appendChild(div);
+  });
+}
+
+function removeFile(idx) {
+  uploadedFiles.splice(idx, 1);
+  renderFileList();
+}
+
+// ── DEMO PREFILL: if email is philcheevers@hotmail.com, load LM-299 / Aaron Gu data ──
+function checkPrefill() {
+  var emailVal = document.getElementById('contactEmail').value.trim().toLowerCase();
+  if (emailVal === 'philcheevers@hotmail.com' && !window._prefilled) {
+    window._prefilled = true;
+    document.getElementById('contactName').value = 'Aaron Gu';
+    document.getElementById('contactEmail').value = 'philcheevers@hotmail.com';
+    var firmEl = document.getElementById('firmName');
+    if (firmEl) firmEl.value = 'Han Kun Law Offices';
+    document.getElementById('contactPhone').value = '';
+    document.getElementById('moleculeName').value = 'LM-299';
+
+    document.querySelector('[name="q1"]').value = 'LM-299 is an investigational bispecific antibody targeting both programmed cell death protein-1 (PD-1) and vascular endothelial growth factor (VEGF). It is designed to simultaneously inhibit PD-1/PD-L1 immune checkpoint signaling and VEGF/VEGFR-mediated tumor angiogenesis. The molecular architecture consists of an anti-VEGF antibody linked to two C-terminal single-domain anti-PD-1 antibodies, creating a differentiated tripartite structure. Developed by LaNova Medicines Ltd. (Shanghai), LM-299 was licensed exclusively to Merck (MSD) in November 2024 for $588 million upfront with up to $2.7 billion in milestone payments. The drug represents Merck\'s strategic response to the emerging PD-1/VEGF bispecific class that threatens Keytruda dominance.';
+    document.querySelector('[name="q2"]').value = 'Bispecific antibody construct:\n- Anti-VEGF full-length IgG antibody backbone\n- Two C-terminal single-domain anti-PD-1 antibodies (VHH/nanobody format) fused to heavy chain C-terminus\n- Differentiated from competing bispecifics (e.g., ivonescimab/AK112) which use different structural formats\n- Protein class: Bispecific antibody (BsAb)\n- Full sequence data proprietary to LaNova/Merck\n- Expression system: Likely CHO cell line (standard for IgG-based biologics)';
+    document.querySelector('[name="q3"]').value = 'Dual-target mechanism:\n1. PD-1 blockade: The two single-domain anti-PD-1 arms bind PD-1 on T cells, blocking PD-L1/PD-L2 interaction, releasing immune checkpoint inhibition and restoring anti-tumor T cell activity.\n2. VEGF neutralization: The anti-VEGF antibody backbone binds soluble VEGF-A, preventing VEGF/VEGFR signaling, inhibiting tumor angiogenesis and normalizing tumor vasculature.\n3. Synergistic effect: Combined immune activation + anti-angiogenesis creates a dual anti-tumor mechanism. VEGF inhibition may also reduce immunosuppressive tumor microenvironment, enhancing PD-1 blockade efficacy.';
+    document.querySelector('[name="q4"]').value = 'Phase 1 clinical trial currently enrolling patients in China (as of Q4 2024). Preclinical data supported the $588M upfront from Merck, suggesting strong pharmacology. No published Phase 1 efficacy data yet. Technology transfer from LaNova to Merck anticipated completion in 2025, with $300M milestone upon completion. Merck plans global development program across multiple oncology indications. Competitive context: Akeso/Summit\'s ivonescimab (PD-1/VEGF bispecific) beat Keytruda in Phase 3 NSCLC trial in 2024, validating the mechanism.';
+    document.querySelector('[name="q5"]').value = 'Known PD-1/VEGF bispecific competitors:\n1. Ivonescimab (AK112) \u2014 Akeso/Summit Therapeutics. Phase 3 data beat Keytruda in 1L NSCLC. Most advanced in class.\n2. Pembrolizumab (Keytruda) \u2014 Merck. PD-1 monoclonal. $25B+ annual revenue. Patent cliff approaching 2028-2031.\n3. Bevacizumab (Avastin) \u2014 Roche/Genentech. Anti-VEGF monoclonal. Biosimilar competition active.\n4. Atezolizumab + bevacizumab (Tecentriq+Avastin) \u2014 Roche. PD-L1 + anti-VEGF combination regimen (separate antibodies).\n5. Multiple Chinese biotechs developing PD-1/VEGF bispecifics at various stages.';
+    document.querySelector('[name="q6"]').value = 'LM-299 has a differentiated molecular design vs. other PD-1/VEGF bispecifics: it uses an anti-VEGF full-length antibody linked to two C-terminal single-domain anti-PD-1 antibodies. This tripartite architecture differs from ivonescimab (which uses a different bispecific format) and may offer different binding kinetics, valency, pharmacokinetics, and manufacturing characteristics. The dual VHH format for PD-1 may provide higher avidity for PD-1 engagement while maintaining full IgG-like VEGF neutralization. Merck assessed this as sufficiently differentiated to warrant $3.3B total deal value.';
+    document.querySelector('[name="q7"]').value = 'No peer-reviewed publications identified for LM-299 specifically. LaNova Medicines is a privately held company founded September 2019 in Shanghai. Key public disclosures:\n- Merck press release November 14, 2024 (deal announcement)\n- Merck press release December 20, 2024 (deal closure)\n- Phase 1 clinical trial registration in China (trial registry data)\n- LaNova corporate disclosures re: pipeline\nPotential prior art exposure through Chinese clinical trial registration and regulatory filings.';
+    document.querySelector('[name="q8"]').value = 'Primary: Non-small cell lung cancer (NSCLC), first-line. This is the indication where ivonescimab beat Keytruda, making it the most commercially urgent target.\nSecondary indications (likely): Hepatocellular carcinoma, renal cell carcinoma, gastric cancer, endometrial cancer, and other solid tumors where PD-1 + anti-angiogenesis combinations have shown activity.\nMerck deal covers "multiple indications" \u2014 broad oncology development program anticipated.';
+    document.querySelector('[name="q9"]').value = 'Phase 1 clinical trial enrolling in China (as of November 2024). Technology transfer from LaNova to Merck expected completion 2025 ($300M milestone). Merck will lead global development, manufacturing, and commercialization. Timeline estimate: Phase 2 initiation 2025-2026, Phase 3 2027-2028, potential approval 2029-2030. Critical competitive pressure: ivonescimab may reach US market first if Summit\'s Phase 3 program succeeds.';
+    document.querySelector('[name="q10"]').value = 'Global rights licensed to Merck. Primary markets: US, EU, Japan, China.\nChina: Phase 1 already enrolling. Regulatory pathway through NMPA. Competitive landscape intense \u2014 multiple domestic PD-1/VEGF bispecifics in development.\nUS: FDA pathway. Key competitive concern is ivonescimab (Summit/Akeso) which has Phase 3 data in NSCLC.\nEU: EMA pathway. Keytruda biosimilar competition emerging 2028+.\nJapan: PMDA. Merck has strong existing oncology infrastructure (Keytruda).';
+    document.querySelector('[name="q11"]').value = 'Bispecific antibody production (inferred from molecular design):\n- CHO cell expression system (standard for IgG-based bispecifics)\n- Bispecific assembly: anti-VEGF IgG heavy chain with C-terminal VHH fusion\n- Purification: Protein A affinity chromatography, followed by ion exchange and polishing steps\n- Critical quality attributes: Bispecific purity, aggregation control, charge variants, glycosylation profile\n- Technology transfer from LaNova to Merck manufacturing network anticipated 2025\n- Merck has extensive biologics manufacturing infrastructure globally';
+    document.querySelector('[name="q12"]').value = 'Formulation details not publicly disclosed (proprietary). Likely IV infusion formulation for oncology indication (consistent with PD-1 and anti-VEGF antibody class).\nAnticipated: Liquid formulation in glass vial for IV dilution. Concentration, buffer system, and excipients to be determined through Merck\'s CMC development program.\nStability profile under development. Cold chain (2-8\u00b0C) storage expected per biologics standard.';
+    document.querySelector('[name="q13"]').value = 'Alternative bispecific formats considered in the PD-1/VEGF space include:\n1. Knobs-into-holes heterodimeric IgG (used by some competitors)\n2. CrossMab format\n3. DVD-Ig (dual variable domain)\n4. Tandem scFv approaches\nLaNova selected the VHH-fusion approach specifically for its differentiated profile. The anti-VEGF backbone + dual VHH format was chosen over single-chain or Fab-based alternatives. Alternative expression systems (HEK293) may have been evaluated but CHO is standard for commercial scale.';
+    document.querySelector('[name="q14"]').value = 'LaNova Medicines patent portfolio (expected but specific numbers not publicly disclosed):\n- Composition of matter patents covering LM-299 bispecific construct\n- Method of treatment patents for oncology indications\n- Manufacturing process patents\n- Formulation patents\n- Chinese patent filings (CNIPA) likely filed 2020-2024\n- PCT applications expected for global coverage\n- All patent rights transferred to Merck under exclusive global license (Nov 2024)\nMerck\'s existing Keytruda patent portfolio (pembrolizumab) is relevant prior art context.';
+    document.querySelector('[name="q15"]').value = 'Exclusive global license: Merck acquired all development, manufacturing, and commercialization rights from LaNova Medicines Ltd. (Shanghai) in November 2024.\nDeal structure: $588M upfront + up to $2.7B in milestone payments (technology transfer, development, regulatory, commercial).\nLaNova retains no development or commercialization rights.\nLaNova founder: Dr. Crystal Qin (Chairwoman and CEO).\nNo government funding constraints disclosed. LaNova is privately held.';
+    document.querySelector('[name="q16"]').value = 'Key risks:\n1. Ivonescimab (Akeso/Summit) has Phase 3 data showing superiority over Keytruda in NSCLC \u2014 first-mover advantage threat.\n2. Multiple Chinese PD-1/VEGF bispecifics in development \u2014 crowded competitive space.\n3. LM-299 is only Phase 1 \u2014 years behind ivonescimab in clinical development.\n4. Keytruda patent cliff (2028-2031) creates urgency but also defensive motivation for Merck.\n5. Technology transfer risk \u2014 $300M milestone tied to successful transfer from LaNova to Merck manufacturing.\n6. Chinese patent landscape \u2014 freedom to operate in China where multiple PD-1/VEGF programs are active.\n7. Regulatory risk \u2014 PD-1/VEGF bispecific class has no approved members yet (ivonescimab closest).';
+
+    document.querySelectorAll('textarea').forEach(ta => {
+      ta.style.height = 'auto';
+      ta.style.height = Math.max(90, ta.scrollHeight) + 'px';
+    });
+    updateProgress();
+  }
+}
+document.getElementById('contactEmail').addEventListener('blur', checkPrefill);
+document.getElementById('contactEmail').addEventListener('change', checkPrefill);
+document.getElementById('contactEmail').addEventListener('input', function() {
+  if (this.value.trim().toLowerCase() === 'philcheevers@hotmail.com') {
+    setTimeout(checkPrefill, 300);
+  } else { window._prefilled = false; }
+});
+setTimeout(checkPrefill, 100);
+
+// ── Collect form data ──
+function getFormData() {
+  var form = document.getElementById('intakeForm');
+  var data = new FormData(form);
+  return {
+    contact: {
+      name: data.get('contactName') || '',
+      email: data.get('contactEmail') || '',
+      firm: data.get('firmName') || '',
+      phone: data.get('contactPhone') || '',
+      molecule: data.get('moleculeName') || ''
+    },
+    answers: Object.fromEntries(
+      Array.from({length:16}, function(_,i) { return ['q'+(i+1), data.get('q'+(i+1)) || '']; })
+    ),
+    attachments: uploadedFiles.map(function(f) { return f.name; }),
+    submitted: new Date().toISOString()
+  };
+}
+
+// ── QA Review ──
+async function runQA() {
+  var form = document.getElementById('intakeForm');
+  var name = form.querySelector('#contactName');
+  var email = form.querySelector('#contactEmail');
+  if (!name.value.trim() || !email.value.trim()) {
+    name.focus();
+    alert('Please fill in your name and email before reviewing.');
+    return;
+  }
+  var q1 = form.querySelector('[name="q1"]');
+  if (!q1.value.trim()) {
+    q1.focus();
+    alert('Please describe the invention (Question 1) before reviewing.');
+    return;
+  }
+
+  var panel = document.getElementById('qaPanel');
+  var loading = document.getElementById('qaLoading');
+  var results = document.getElementById('qaResults');
+  var btn = document.getElementById('reviewBtn');
+
+  panel.classList.add('show');
+  loading.style.display = 'block';
+  results.style.display = 'none';
+  btn.disabled = true;
+  btn.textContent = 'Analyzing...';
+  panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  try {
+    var payload = getFormData();
+    var resp = await fetch('https://carveintel.com/intake-qa.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    if (!resp.ok) throw new Error('QA service returned ' + resp.status);
+    var qa = await resp.json();
+    renderQA(qa);
+  } catch (err) {
+    console.error('QA error:', err);
+    renderQA({
+      summary: 'QA review is temporarily unavailable. You can still submit your intake form.',
+      score: 'fair',
+      flags: [],
+      strengths: [],
+      ready: true
+    });
+  }
+
+  loading.style.display = 'none';
+  results.style.display = 'block';
+  btn.disabled = false;
+  btn.textContent = 'Review My Answers';
+}
+
+function renderQA(qa) {
+  var icon = document.getElementById('qaIcon');
+  var title = document.getElementById('qaTitle');
+  var summary = document.getElementById('qaSummary');
+  var flagsDiv = document.getElementById('qaFlags');
+  var strengthsDiv = document.getElementById('qaStrengths');
+
+  var icons = { good: '\u2713', fair: '!', needs_work: '\u2717' };
+  var titles = { good: 'Ready to Submit', fair: 'Minor Items to Review', needs_work: 'Needs Attention' };
+  icon.className = 'qa-icon ' + (qa.score || 'fair');
+  icon.textContent = icons[qa.score] || '!';
+  title.textContent = titles[qa.score] || 'Quality Assessment';
+  summary.textContent = qa.summary || '';
+
+  flagsDiv.innerHTML = '';
+  if (qa.flags && qa.flags.length > 0) {
+    qa.flags.forEach(function(flag) {
+      var typeLabels = { contradiction: 'Contradiction', missing_critical: 'Missing Information', clarification: 'Clarification Needed', tip: 'Tip' };
+      var div = document.createElement('div');
+      div.className = 'qa-flag ' + (flag.severity || 'medium');
+      div.innerHTML = '<div class="qa-flag-label">' + (flag.question || '') + ' \u2014 ' + (typeLabels[flag.type] || flag.type) + '</div>' + flag.message;
+      flagsDiv.appendChild(div);
+    });
+  }
+
+  strengthsDiv.innerHTML = '';
+  if (qa.strengths && qa.strengths.length > 0) {
+    var html = '<div class="qa-strengths"><h4>Strengths</h4><ul>';
+    qa.strengths.forEach(function(s) { html += '<li>' + s + '</li>'; });
+    html += '</ul></div>';
+    strengthsDiv.innerHTML = html;
+  }
+}
+
+function editAnswers() {
+  document.getElementById('qaPanel').classList.remove('show');
+  document.querySelector('.form-container').scrollIntoView({ behavior: 'smooth' });
+}
+
+// ── Final submit → webhook → redirect to synopsis ──
+function submitFinal() {
+  var payload = getFormData();
+
+  // Build mailto fallback body
+  var body = 'CARVEINTEL INVENTOR INTAKE FORM\n========================================\n\n';
+  body += 'Contact: ' + (payload.contact.name || '-') + '\n';
+  body += 'Email: ' + (payload.contact.email || '-') + '\n';
+  body += 'Firm: ' + (payload.contact.firm || '-') + '\n';
+  body += 'Molecule: ' + (payload.contact.molecule || '-') + '\n\n';
+  var qs = ['Invention description','Molecular structure','Target and interaction','Supporting data','Known prior art','Differentiators','Prior publications','Target indications','Development stage','Target markets','Production process','Formulation','Alternative methods','Existing IP','Licensing/collaborations','Risk concerns'];
+  for (var i = 1; i <= 16; i++) {
+    body += '--- Q' + i + ': ' + qs[i-1] + ' ---\n';
+    body += (payload.answers['q'+i] || '(No response)') + '\n\n';
+  }
+
+  // Build redirect URL → in-synopsis.html
+  var mol = encodeURIComponent(payload.contact.molecule || 'New Molecule');
+  var email = encodeURIComponent(payload.contact.email || '');
+  var fname = encodeURIComponent((payload.contact.name || '').split(' ')[0]);
+  var lname = encodeURIComponent((payload.contact.name || '').split(' ').slice(1).join(' '));
+  var company = encodeURIComponent(payload.contact.firm || '');
+
+  var synopsisUrl = 'in-synopsis.html?mol=' + mol + '&email=' + email + '&fname=' + fname + '&lname=' + lname + '&company=' + company;
+
+  // Submit to webhook, then redirect to synopsis
+  fetch('https://carveintel.com/intake-webhook.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  }).then(function() {
+    document.getElementById('qaPanel').classList.remove('show');
+    window.location.href = synopsisUrl;
+  }).catch(function() {
+    // Fallback: email then redirect
+    var subj = encodeURIComponent('Intake: ' + (payload.contact.molecule || payload.contact.name || 'New'));
+    window.location.href = 'mailto:phil@carveintel.com?subject=' + subj + '&body=' + encodeURIComponent(body);
+    setTimeout(function() {
+      window.location.href = synopsisUrl;
+    }, 1000);
+  });
+}
+
+function escH(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+</script>
+</body>
+</html>
