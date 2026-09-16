@@ -1,0 +1,86 @@
+{
+    "contact": {
+        "name": "Phil Cheevers",
+        "company": "CarveIntel",
+        "email": "philcheevers@hotmail.com",
+        "phone": "19053212291"
+    },
+    "molecule": {
+        "name": "lm-299",
+        "type": "bispecific"
+    },
+    "bucket": "LM-299 (also designated MK-2010 by Merck)\n\nBispecific antibody targeting PD-1 and VEGF simultaneously.\n\nOriginated by LaNova Medicines \/ Genomeditech, a subsidiary of Sino Biopharm.\nMerck acquired exclusive global rights (ex-China).\nDeal: $588M upfront, up to $2.7B in milestones, $300M technology transfer.\n\nMechanism: Dual blockade \u2014 blocks PD-1 immune checkpoint signaling AND VEGF-mediated angiogenesis in a single molecule. Combines what Keytruda does (PD-1) with what Avastin\/bevacizumab does (VEGF).\n\nArchitecture: sdAb-based (single-domain antibody \/ nanobody) bispecific format. Different from ivonescimab's conventional antibody format.\n\nTarget Indications: Advanced solid tumors, non-small cell lung cancer, immuno-oncology broadly.\n\nDevelopment Stage: Phase 1 clinical trial. ClinicalTrials.gov NCT06650566. Enrolling in China for advanced malignant tumors.\n\nJurisdictions: US, China, EU, Japan\n\nCompetitors:\n- Ivonescimab (Akeso\/Summit) \u2014 PD-1\/VEGF bispecific, Phase 3, potential FDA approval Nov 2026\n- BNT327 (BioNTech) \u2014 another PD-1\/VEGF bispecific in development\n- Keytruda (pembrolizumab) \u2014 Merck's own PD-1 mono, patent cliff 2028\n\nStrategic context: LM-299 is Merck's next-generation play for the post-Keytruda era. If it works, it's a biologically distinct molecule \u2014 not pembrolizumab, not biosimilar-able \u2014 that could absorb Keytruda's indications with a superior dual-blockade efficacy argument. New composition-of-matter patents, new data exclusivity, new IRA clock.\n\nProblem: LM-299 is 4-5 years behind class leader ivonescimab. The market may be defined before LM-299 arrives.\n\nNot yet in PubChem or DrugBank (too early stage). Not in FDA databases. Only in ClinicalTrials.gov and AdisInsight.",
+    "inventor_claims": "",
+    "parsed": {
+        "target": {
+            "status": "found",
+            "value": "PD-1 and VEGF"
+        },
+        "mechanism": {
+            "status": "found",
+            "value": "Dual blockade \u2014 blocks PD-1 immune checkpoint signaling AND VEGF-mediated angiogenesis in a single molecule"
+        },
+        "indications": {
+            "status": "found",
+            "value": "Advanced solid tumors, non-small cell lung cancer, immuno-oncology broadly"
+        },
+        "jurisdictions": {
+            "status": "found",
+            "value": "US, China, EU, Japan"
+        },
+        "stage": {
+            "status": "found",
+            "value": "Phase 1 clinical trial"
+        },
+        "competitors": {
+            "status": "found",
+            "value": "Ivonescimab (Akeso\/Summit), BNT327 (BioNTech), Keytruda (pembrolizumab)"
+        },
+        "patents": {
+            "status": "missing",
+            "value": ""
+        },
+        "clinical": {
+            "status": "found",
+            "value": "ClinicalTrials.gov NCT06650566. Enrolling in China for advanced malignant tumors"
+        },
+        "structure": {
+            "status": "found",
+            "value": "sdAb-based (single-domain antibody \/ nanobody) bispecific format"
+        },
+        "target2": {
+            "status": "found",
+            "value": "VEGF"
+        },
+        "format": {
+            "status": "found",
+            "value": "sdAb-based (single-domain antibody \/ nanobody) bispecific format"
+        },
+        "expression": {
+            "status": "missing",
+            "value": ""
+        },
+        "salt_form": {
+            "status": "missing",
+            "value": ""
+        },
+        "payload": {
+            "status": "missing",
+            "value": ""
+        },
+        "linker": {
+            "status": "missing",
+            "value": ""
+        },
+        "dar": {
+            "status": "missing",
+            "value": ""
+        },
+        "inventor_claims": {
+            "status": "missing",
+            "value": ""
+        }
+    },
+    "files": [],
+    "submitted": "2026-04-03T17:33:25.432Z"
+}

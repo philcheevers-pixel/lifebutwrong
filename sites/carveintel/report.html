@@ -1,0 +1,1812 @@
+<!-- report.html | CarveIntel Intelligence Report | v6.3 | 2026-02-18 -->
+<!-- v6.3: Citations slate+1.5x, tables body-text size, footer 2x, risk tags enlarged -->
+<!-- auto-pagination for long sections, page overflow splitting -->
+<!-- v6.1: Fix footerLabel scope (ReferenceError crash), defensive showError, CSS fix -->
+<!-- ABFTO cover/disclaimer/footer, duplicate synthesis removal, Raw Output fix -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intelligence Report | CarveIntel</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%232B61E5'/><text x='50' y='75' font-size='70' font-weight='800' text-anchor='middle' fill='white' font-family='Arial'>C</text></svg>">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&family=DM+Sans:wght@400;500;600;700;800&display=swap');
+
+        :root {
+            --carve-blue: #2B61E5;
+            --carve-blue-dark: #1E4ABF;
+            --carve-blue-light: #EBF0FD;
+            --carve-black: #0A0A0A;
+            --carve-gray: #475569;
+            --carve-gray-light: #64748B;
+            --carve-border: #E5E7EB;
+            --font-display: 'DM Sans', 'Helvetica Neue', Arial, sans-serif;
+            --font-body: 'Source Serif 4', Georgia, serif;
+            --page-width: 8.5in;
+            --page-height: 11in;
+            --page-margin: 0.75in;
+            --sidebar-width: 260px;
+            /* v6.2: usable content height per page (page - top margin - bottom margin - footer space) */
+            --page-usable-height: 8.75in;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-body);
+            background-color: #E8EAED;
+            color: var(--carve-black);
+            line-height: 1.7;
+        }
+
+        /* MASTER HEADER */
+        .master-header {
+            padding: 16px 40px;
+            background-color: #FFFFFF;
+            border-bottom: 3px solid var(--carve-blue);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-left { display: flex; align-items: center; }
+
+        .brand-text {
+            font-family: var(--font-display);
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--carve-black);
+            letter-spacing: -0.5px;
+        }
+
+        .brand-text span { color: var(--carve-blue); }
+        .separator { font-size: 22px; color: #D1D5DB; margin: 0 14px; font-weight: 300; }
+        .sub-brand { font-family: var(--font-display); font-size: 22px; color: var(--carve-gray); font-weight: 300; }
+
+        /* LAYOUT */
+        .app-layout { display: flex; min-height: calc(100vh - 60px); }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: #FFFFFF;
+            border-right: 1px solid var(--carve-border);
+            position: sticky;
+            top: 60px;
+            height: calc(100vh - 60px);
+            overflow-y: auto;
+            padding: 24px 0;
+            flex-shrink: 0;
+            display: none;
+        }
+
+        .sidebar-section-title {
+            font-family: var(--font-display);
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--carve-gray-light);
+            padding: 0 20px;
+            margin-bottom: 12px;
+            margin-top: 24px;
+        }
+
+        .sidebar-section-title:first-child { margin-top: 0; }
+
+        .toc-list { list-style: none; padding: 0; margin-bottom: 10px; }
+
+        .toc-item {
+            font-family: var(--font-display);
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--carve-gray);
+            padding: 5px 16px 5px 20px;
+            cursor: pointer;
+            border-left: 3px solid transparent;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: block;
+            text-decoration: none;
+            transform: translateX(0);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .toc-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 0;
+            height: 100%;
+            background: var(--carve-blue-light);
+            transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: -1;
+        }
+
+        .toc-item:hover::before { width: 100%; }
+
+        .toc-item:hover {
+            color: var(--carve-blue);
+            border-left-color: var(--carve-blue);
+            transform: translateX(6px);
+            padding-left: 28px;
+            font-weight: 600;
+        }
+
+        .toc-item.active {
+            color: var(--carve-blue);
+            font-weight: 700;
+            border-left-color: var(--carve-blue);
+            background: var(--carve-blue-light);
+        }
+
+        /* SIDEBAR: Language */
+        .sidebar-languages { padding: 0 20px; margin-bottom: 10px; }
+
+        .language-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+        }
+
+        .lang-btn {
+            font-family: var(--font-display);
+            font-size: 12px;
+            font-weight: 600;
+            padding: 6px 4px;
+            text-align: center;
+            border: 2px solid var(--carve-border);
+            border-radius: 6px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.15s;
+            color: var(--carve-gray);
+        }
+
+        .lang-btn:hover { border-color: var(--carve-blue); color: var(--carve-blue); }
+
+        .lang-btn.active {
+            border-color: var(--carve-blue);
+            background: var(--carve-blue);
+            color: white;
+        }
+
+        .lang-btn.loading { opacity: 0.4; cursor: wait; }
+
+        /* SIDEBAR: Actions */
+        .sidebar-actions { padding: 0 20px; }
+
+        .action-btn {
+            font-family: var(--font-display);
+            font-size: 13px;
+            font-weight: 600;
+            width: 100%;
+            padding: 10px 16px;
+            border: 2px solid var(--carve-border);
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.15s;
+            color: var(--carve-gray);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .action-btn:hover { border-color: var(--carve-blue); color: var(--carve-blue); }
+        .action-btn svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+        /* MAIN CONTENT */
+        .main-content {
+            flex: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* PAPER PAGES */
+        .paper-sheet {
+            width: var(--page-width);
+            min-height: var(--page-height);
+            max-height: var(--page-height);
+            background: #FFFFFF;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.12), 0 0 1px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            padding: var(--page-margin);
+            padding-bottom: 1in;
+            position: relative;
+            page-break-after: always;
+            overflow: hidden;
+        }
+
+        /* v6.2: Allow cover and disclaimer pages to use min-height only (no max) */
+        .paper-sheet.cover-sheet,
+        .paper-sheet.disclaimer-sheet {
+            max-height: none;
+        }
+
+        .page-footer {
+            position: absolute;
+            bottom: 0.4in;
+            left: var(--page-margin);
+            right: var(--page-margin);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: var(--font-display);
+            font-size: 13px;
+            color: #475569;
+            border-top: 3px solid #334155;
+            padding-top: 12px;
+        }
+
+        /* COVER PAGE */
+        .cover-page {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: calc(var(--page-height) - 1.75in);
+            border: 2px solid var(--carve-blue);
+            padding: 0.3in;
+            border-radius: 4px;
+        }
+
+        .cover-top { padding-top: 0.3in; }
+
+        .cover-brand {
+            font-family: var(--font-display);
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--carve-blue);
+            margin-bottom: 0.25in;
+        }
+
+        .cover-line { width: 80px; height: 4px; background: var(--carve-blue); margin-bottom: 0.35in; }
+
+        .cover-molecule-name {
+            font-family: var(--font-display);
+            font-size: 46px;
+            font-weight: 800;
+            color: var(--carve-black);
+            line-height: 1.1;
+            margin-bottom: 0.12in;
+            text-transform: capitalize;
+        }
+
+        .cover-subtitle {
+            font-family: var(--font-display);
+            font-size: 18px;
+            font-weight: 400;
+            color: var(--carve-gray);
+            margin-bottom: 0.4in;
+        }
+
+        .cover-molecule-image {
+            width: 100%;
+            max-width: 3.8in;
+            height: 2.6in;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #F8FAFF 0%, #EBF0FD 40%, #DFE8FD 100%);
+            border-radius: 16px;
+            border: 2px solid var(--carve-blue);
+            box-shadow: 0 4px 24px rgba(43, 97, 229, 0.18), 0 0 60px rgba(43, 97, 229, 0.06);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .cover-molecule-image::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at center, rgba(43,97,229,0.04) 0%, transparent 70%);
+            animation: moleculeGlow 8s ease-in-out infinite;
+        }
+
+        @keyframes moleculeGlow {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 1; }
+        }
+
+        .cover-molecule-image img { max-width: 100%; max-height: 100%; object-fit: contain; }
+
+        .cover-molecule-image .placeholder-text {
+            font-family: var(--font-display);
+            font-size: 13px;
+            color: var(--carve-gray-light);
+        }
+
+        .cover-bottom { padding-bottom: 0.1in; }
+
+        .cover-meta-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px 40px;
+            font-family: var(--font-display);
+            font-size: 12px;
+            margin-bottom: 20px;
+        }
+
+        .cover-meta-label {
+            color: var(--carve-gray-light);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 10px;
+        }
+
+        .cover-meta-value { color: var(--carve-black); font-weight: 500; margin-top: 2px; }
+
+        .cover-classification {
+            font-family: var(--font-display);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #DC2626;
+            padding: 8px 16px;
+            border: 2px solid #DC2626;
+            display: inline-block;
+            border-radius: 4px;
+        }
+
+        /* EXECUTIVE BRIEF */
+        .header-page-title {
+            font-family: var(--font-display);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--carve-blue);
+            margin-bottom: 0.12in;
+        }
+
+        .header-page-molecule {
+            font-family: var(--font-display);
+            font-size: 30px;
+            font-weight: 800;
+            color: var(--carve-black);
+            margin-bottom: 0.08in;
+            text-transform: capitalize;
+        }
+
+        .header-page-desc {
+            font-size: 14px;
+            color: var(--carve-gray);
+            margin-bottom: 0.25in;
+            line-height: 1.5;
+        }
+
+        .exec-brief-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+
+        .brief-item {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            padding: 12px 16px;
+            background: #F9FAFB;
+            border-radius: 8px;
+            border-left: 4px solid var(--carve-blue);
+        }
+
+        .brief-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+
+        .brief-text {
+            font-family: var(--font-display);
+            font-size: 13px;
+            font-weight: 500;
+            color: #334155;
+            line-height: 1.5;
+        }
+
+        /* SECTION PAGES */
+        .section-header {
+            margin-bottom: 0.25in;
+            padding-bottom: 0.1in;
+            border-bottom: 3px solid var(--carve-blue);
+        }
+
+        /* v6.2: Continuation pages get a lighter header */
+        .section-header-cont {
+            margin-bottom: 0.2in;
+            padding-bottom: 0.08in;
+            border-bottom: 2px solid var(--carve-border);
+        }
+
+        .section-header-cont .section-number {
+            font-size: 10px;
+            color: var(--carve-gray-light);
+        }
+
+        .section-header-cont .section-title {
+            font-size: 20px;
+            color: var(--carve-gray);
+        }
+
+        .section-number {
+            font-family: var(--font-display);
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--carve-blue);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--carve-black);
+            line-height: 1.2;
+        }
+
+        .section-body {
+            font-size: 13pt;
+            line-height: 1.85;
+            color: #334155;
+        }
+
+        /* v6.2: FIX 2 — Left justify body text (was text-align: justify) */
+        .section-body p { margin-bottom: 14px; text-align: left; }
+
+        .section-body h3 {
+            font-family: var(--font-display);
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--carve-black);
+            margin: 24px 0 10px;
+        }
+
+        .section-body ul, .section-body ol { margin: 8px 0 12px 24px; }
+        .section-body li { margin-bottom: 5px; line-height: 1.7; }
+
+        .section-body p strong:first-child {
+            font-family: var(--font-display);
+            font-size: 14px;
+            color: var(--carve-black);
+        }
+
+        /* Data callout */
+        .data-callout {
+            background: #F0F4FF;
+            border: 1px solid #D4DDFF;
+            border-radius: 8px;
+            padding: 14px 18px;
+            margin: 16px 0;
+            font-family: var(--font-display);
+        }
+
+        .data-callout-title {
+            font-weight: 700;
+            color: var(--carve-blue);
+            font-size: 10px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        .data-callout-value { font-size: 26px; font-weight: 800; color: var(--carve-black); }
+        .data-callout-context { font-size: 11px; color: var(--carve-gray); margin-top: 4px; }
+
+        /* Metrics row */
+        .metrics-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin: 18px 0;
+        }
+
+        .metric-card {
+            background: #F9FAFB;
+            border: 1px solid var(--carve-border);
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-family: var(--font-display);
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--carve-blue);
+        }
+
+        .metric-label {
+            font-family: var(--font-display);
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--carve-gray);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 4px;
+        }
+
+        /* Risk indicators */
+        .risk-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-family: var(--font-display);
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 20px;
+        }
+
+        .risk-high { background: #FEE2E2; color: #DC2626; }
+        .risk-moderate { background: #FEF3C7; color: #D97706; }
+        .risk-low { background: #D1FAE5; color: #059669; }
+
+        /* Timeline */
+        .timeline { margin: 18px 0; padding-left: 20px; border-left: 3px solid var(--carve-blue); }
+
+        .timeline-item { margin-bottom: 14px; position: relative; }
+
+        .timeline-item::before {
+            content: '';
+            width: 10px; height: 10px;
+            background: var(--carve-blue);
+            border-radius: 50%;
+            position: absolute;
+            left: -27px; top: 5px;
+        }
+
+        .timeline-date { font-family: var(--font-display); font-size: 12px; font-weight: 700; color: var(--carve-blue); }
+        .timeline-text { font-size: 12px; color: #334155; margin-top: 2px; }
+
+        /* v6.2: FIX 1 — Tables: fixed layout, word-wrap, better padding */
+        /* v6.3: Table text enlarged to body text size per Phil */
+        .section-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 14px;
+            font-family: var(--font-display);
+            table-layout: fixed;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+        .section-body table th {
+            background: #1E293B;
+            color: white;
+            padding: 12px 14px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+        .section-body table td {
+            padding: 12px 14px;
+            border-bottom: 1px solid var(--carve-border);
+            color: #334155;
+            font-size: 14px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            vertical-align: top;
+        }
+        .section-body table tr:nth-child(even) td { background: #F8FAFC; }
+        .section-body table tr:last-child td { border-bottom: none; }
+
+        /* v6.2: Ensure tables don't overflow page width */
+        .section-body table col,
+        .section-body table colgroup { width: auto; }
+
+        /* RISK LEVEL TAGS — enlarged */
+        .risk-red { background: #FEE2E2; color: #991B1B; padding: 3px 10px; border-radius: 3px; font-weight: 600; font-size: 13px; }
+        .risk-yellow { background: #FEF3C7; color: #92400E; padding: 3px 10px; border-radius: 3px; font-weight: 600; font-size: 13px; }
+        .risk-green { background: #D1FAE5; color: #065F46; padding: 3px 10px; border-radius: 3px; font-weight: 600; font-size: 13px; }
+
+        /* FTO DISCLAIMER BOX */
+        .fto-disclaimer { background: #FFF7ED; border: 1px solid #FDBA74; border-radius: 6px; padding: 12px 16px; margin-top: 20px; font-size: 11px; color: #9A3412; line-height: 1.5; }
+        .fto-disclaimer strong { color: #7C2D12; }
+
+        /* VOID AND CONFLICT MARKERS */
+        .void-marker { background: #F1F5F9; border-left: 3px solid #94A3B8; padding: 8px 12px; margin: 8px 0; font-size: 11px; color: #64748B; }
+        .void-marker strong { color: #334155; }
+
+        .intel-table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 14px; table-layout: fixed; word-wrap: break-word; }
+
+        .intel-table th {
+            font-family: var(--font-display);
+            font-size: 13px; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.5px;
+            background: #F1F5F9; color: var(--carve-gray);
+            padding: 12px 14px; text-align: left;
+            border-bottom: 2px solid var(--carve-border);
+            word-wrap: break-word;
+        }
+
+        .intel-table td { padding: 12px 14px; border-bottom: 1px solid var(--carve-border); color: #334155; font-size: 14px; word-wrap: break-word; vertical-align: top; }
+        .intel-table tr:last-child td { border-bottom: none; }
+
+        /* CITATIONS */
+        .cite-ref {
+            font-family: var(--font-display);
+            font-size: 13px;
+            font-weight: 700;
+            color: #475569;
+            vertical-align: super;
+            line-height: 0;
+            cursor: pointer;
+            text-decoration: none;
+            padding: 0 2px;
+            transition: color 0.15s;
+        }
+
+        .cite-ref:hover { color: #1E293B; text-decoration: underline; }
+
+        .footnotes {
+            margin-top: 24px;
+            padding-top: 12px;
+            border-top: 1px solid var(--carve-border);
+        }
+
+        .footnote-item {
+            font-family: var(--font-display);
+            font-size: 12px;
+            color: #475569;
+            line-height: 1.6;
+            margin-bottom: 6px;
+            padding-left: 24px;
+            text-indent: -24px;
+        }
+
+        .footnote-num {
+            font-weight: 700;
+            color: #334155;
+            margin-right: 4px;
+        }
+
+        .footnote-item a {
+            color: #475569;
+            text-decoration: none;
+            word-break: break-all;
+        }
+
+        .footnote-item a:hover { text-decoration: underline; color: #1E293B; }
+
+        /* MOLECULE SPEC SHEET */
+        .mol-spec {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .mol-spec-full { grid-column: 1 / -1; }
+
+        .mol-card {
+            background: #F8FAFC;
+            border: 1px solid var(--carve-border);
+            border-radius: 8px;
+            padding: 14px 16px;
+            border-left: 4px solid var(--carve-blue);
+        }
+
+        .mol-card-label {
+            font-family: var(--font-display);
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--carve-blue);
+            margin-bottom: 6px;
+        }
+
+        .mol-card-value {
+            font-family: var(--font-display);
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--carve-black);
+            line-height: 1.4;
+        }
+
+        .mol-card-value small {
+            font-size: 11px;
+            font-weight: 400;
+            color: var(--carve-gray);
+        }
+
+        .mol-card-value code {
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            background: #EEF2FF;
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #334155;
+            word-break: break-all;
+            display: inline-block;
+            margin-top: 4px;
+            user-select: all;
+            cursor: text;
+        }
+
+        .mol-bullets {
+            font-family: var(--font-display);
+            font-size: 12px;
+            color: #334155;
+            line-height: 1.6;
+            padding-left: 0;
+            list-style: none;
+        }
+
+        .mol-bullets li {
+            padding: 4px 0;
+            padding-left: 16px;
+            position: relative;
+        }
+
+        .mol-bullets li::before {
+            content: '\203A';
+            position: absolute;
+            left: 0;
+            color: var(--carve-blue);
+            font-weight: 700;
+        }
+
+        .mol-structure-img {
+            width: 100%;
+            max-width: 320px;
+            margin: 0 auto;
+            display: block;
+            background: linear-gradient(135deg, #F8FAFF 0%, #EBF0FD 100%);
+            border-radius: 10px;
+            border: 1px solid var(--carve-border);
+            padding: 12px;
+        }
+
+        .mol-prose {
+            font-size: 12pt;
+            line-height: 1.85;
+            color: #334155;
+            margin-top: 16px;
+        }
+
+        /* v6.2: FIX 2 — Left justify mol-prose too */
+        .mol-prose p { margin-bottom: 10px; text-align: left; }
+
+        @media (max-width: 1200px) {
+            .mol-spec { grid-template-columns: 1fr; }
+        }
+
+        /* LOADING / ERROR */
+        .loading-container { max-width: 500px; margin: 120px auto; text-align: center; padding: 40px; }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--carve-blue);
+            border-radius: 50%;
+            width: 50px; height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 24px;
+        }
+
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .loading-text { font-family: var(--font-display); font-size: 16px; color: var(--carve-gray); }
+
+        .loading-molecule {
+            font-family: var(--font-display);
+            font-size: 28px; font-weight: 800;
+            color: var(--carve-blue); margin-top: 16px;
+        }
+
+        .error-container {
+            max-width: 500px; margin: 120px auto; padding: 40px;
+            background: #FEF2F2; border: 2px solid #DC2626; border-radius: 8px; text-align: center;
+        }
+
+        .error-title { font-family: var(--font-display); font-size: 22px; font-weight: 700; color: #DC2626; margin-bottom: 16px; }
+        .error-message { font-size: 15px; color: #991B1B; margin-bottom: 24px; }
+
+        .error-btn {
+            padding: 12px 28px; background: var(--carve-blue); color: white; border: none; border-radius: 6px;
+            font-family: var(--font-display); font-size: 14px; font-weight: 700; cursor: pointer; text-decoration: none; display: inline-block;
+        }
+
+        /* PRINT */
+        @media print {
+            body { background: white; }
+            .master-header, .sidebar { display: none !important; }
+            .app-layout { display: block; }
+            .main-content { padding: 0; }
+            .paper-sheet { box-shadow: none; margin: 0; page-break-after: always; border: none; max-height: none; }
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1200px) {
+            .sidebar { display: none !important; }
+            .main-content { padding: 16px; }
+            .paper-sheet { width: 100%; min-height: auto; max-height: none; padding: 0.5in; padding-bottom: 0.8in; }
+            .cover-molecule-name { font-size: 32px; }
+            .metrics-row { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- MASTER HEADER -->
+    <div class="master-header">
+        <div class="header-left">
+            <a href="https://carveintel.com" style="text-decoration:none"><div class="brand-text">Carve<span>Intel</span></div></a>
+            <div class="separator">//</div>
+            <div class="sub-brand">Molecular Intelligence Report</div>
+        </div>
+    </div>
+
+    <!-- LOADING STATE -->
+    <div id="loading-state" class="loading-container">
+        <div class="spinner"></div>
+        <div class="loading-text">Validating access token...</div>
+        <div class="loading-molecule" id="loading-molecule"></div>
+        <div id="loading-timer" style="font-family:var(--font-display);font-size:13px;color:#64748B;margin-top:16px;display:none;">Elapsed: <span id="elapsed-time">0:00</span></div>
+        <div id="status-log" style="margin-top:24px;text-align:left;font-family:'Courier New',monospace;font-size:12px;color:#475569;max-width:600px;margin-left:auto;margin-right:auto;background:#F8FAFC;border:1px solid #E5E7EB;border-radius:6px;padding:16px;display:none;max-height:300px;overflow-y:auto;"></div>
+    </div>
+
+    <!-- ERROR STATE -->
+    <div id="error-state" class="error-container" style="display:none;">
+        <div class="error-title">Access Denied</div>
+        <div class="error-message" id="error-message">Invalid or expired token</div>
+        <a href="walkthrough.html" class="error-btn">Open Walkthrough &amp; Demo</a>
+    </div>
+
+    <!-- APP LAYOUT -->
+    <div id="app-layout" class="app-layout" style="display:none;">
+
+        <!-- SIDEBAR -->
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-section-title">Contents</div>
+            <ul class="toc-list" id="toc-list"></ul>
+
+            <div class="sidebar-section-title">Language</div>
+            <div class="sidebar-languages">
+                <div class="language-grid">
+                    <button class="lang-btn active" data-lang="en">&#x1F1EC;&#x1F1E7; EN</button>
+                    <button class="lang-btn" data-lang="zh">&#x1F1E8;&#x1F1F3; &#x4E2D;&#x6587;</button>
+                    <button class="lang-btn" data-lang="ja">&#x1F1EF;&#x1F1F5; &#x65E5;&#x672C;&#x8A9E;</button>
+                    <button class="lang-btn" data-lang="de">&#x1F1E9;&#x1F1EA; DE</button>
+                    <button class="lang-btn" data-lang="fr">&#x1F1EB;&#x1F1F7; FR</button>
+                    <button class="lang-btn" data-lang="es">&#x1F1EA;&#x1F1F8; ES</button>
+                </div>
+            </div>
+
+            <div class="sidebar-section-title">Actions</div>
+            <div class="sidebar-actions">
+                <button class="action-btn" onclick="window.print()">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+                    Print Report
+                </button>
+                <button class="action-btn" onclick="window.print()">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                    Save as PDF
+                </button>
+            </div>
+        </nav>
+
+        <!-- MAIN CONTENT -->
+        <div class="main-content" id="main-content"></div>
+    </div>
+
+    <script>
+        // ============================================
+        // STATE
+        // ============================================
+        var currentMolecule = '';
+        var translationCache = {};
+        var isTranslating = false;
+
+        // ============================================
+        // INIT
+        // ============================================
+        var urlParams = new URLSearchParams(window.location.search);
+        var token = urlParams.get('token');
+
+        if (!token) {
+            window.location.replace('walkthrough.html');
+        } else if (token === 'DEMO_LM299') {
+            loadDemoReport('jobs/lm-299_demo_report.json', 'LM-299');
+        } else if (token === 'DEMO_ASPIRIN') {
+            loadDemoReport('jobs/aspirin_demo_report.json', 'Aspirin');
+        } else {
+            validateAndGenerate(token);
+        }
+
+        async function loadDemoReport(jsonPath, label) {
+            try {
+                statusLog('Demo mode — loading ' + label + ' report...', 'info');
+                var resp = await fetch(jsonPath);
+                if (!resp.ok) throw new Error('Demo report file not found');
+                var reportData = await resp.json();
+                currentMolecule = reportData.molecule || 'demo';
+                window.currentReportType = reportData.report_type || 'abfto';
+                translationCache['en'] = reportData;
+                statusLog('Demo report loaded: ' + (reportData.sections ? reportData.sections.length : 0) + ' sections', 'ok');
+                displayReport(currentMolecule, reportData);
+                var nameEl = document.getElementById('cover-customer-name');
+                var customerName = reportData.customer_name || (reportData.customer && reportData.customer.name) || '';
+                if (nameEl && customerName) nameEl.textContent = customerName;
+            } catch (e) {
+                showError('Demo load failed: ' + e.message);
+            }
+        }
+
+        // ============================================
+        // LANGUAGE
+        // ============================================
+        document.querySelectorAll('.lang-btn').forEach(function(btn) {
+            btn.addEventListener('click', async function() {
+                if (isTranslating) return;
+                var lang = this.getAttribute('data-lang');
+                if (lang === getCurrentLanguage()) return;
+                await switchLanguage(lang);
+            });
+        });
+
+        function getCurrentLanguage() {
+            var a = document.querySelector('.lang-btn.active');
+            return a ? a.getAttribute('data-lang') : 'en';
+        }
+
+        async function switchLanguage(lang) {
+            if (translationCache[lang]) {
+                renderFullReport(currentMolecule, translationCache[lang]);
+                updateActiveLang(lang);
+                return;
+            }
+            isTranslating = true;
+            document.querySelectorAll('.lang-btn').forEach(function(b) { b.classList.add('loading'); });
+            try {
+                var data = await generateReport(currentMolecule, lang);
+                translationCache[lang] = data;
+                renderFullReport(currentMolecule, data);
+                updateActiveLang(lang);
+            } catch (e) {
+                console.error('Translation failed:', e);
+                alert('Translation failed. Please try again.');
+            } finally {
+                isTranslating = false;
+                document.querySelectorAll('.lang-btn').forEach(function(b) { b.classList.remove('loading'); });
+            }
+        }
+
+        function updateActiveLang(lang) {
+            document.querySelectorAll('.lang-btn').forEach(function(b) {
+                b.classList.toggle('active', b.getAttribute('data-lang') === lang);
+            });
+        }
+
+        // ============================================
+        // STATUS LOG
+        // ============================================
+        function statusLog(msg, type) {
+            var log = document.getElementById('status-log');
+            log.style.display = 'block';
+            var now = new Date().toLocaleTimeString();
+            var color = type === 'ok' ? '#059669' : type === 'err' ? '#DC2626' : type === 'warn' ? '#D97706' : '#475569';
+            log.innerHTML += '<div style="color:' + color + ';margin-bottom:4px;">[' + now + '] ' + msg + '</div>';
+            log.scrollTop = log.scrollHeight;
+        }
+
+        var pollInterval = null;
+        var lastLogLength = 0;
+        function startPolling() {
+            pollInterval = setInterval(function() {
+                fetch('/status_tail.php?key=carve2026&after=' + lastLogLength)
+                .then(function(r) { return r.ok ? r.json() : null; })
+                .then(function(d) {
+                    if (d && d.lines) {
+                        d.lines.forEach(function(line) {
+                            if (line.indexOf('attempt') > -1) statusLog(line.trim(), 'warn');
+                            else if (line.indexOf('SUCCESS') > -1) statusLog(line.trim(), 'ok');
+                            else if (line.indexOf('ERROR') > -1 || line.indexOf('timed out') > -1) statusLog(line.trim(), 'err');
+                            else if (line.indexOf('Request received') > -1 || line.indexOf('http_code') > -1 || line.indexOf('response_length') > -1) statusLog(line.trim(), 'info');
+                        });
+                        lastLogLength = d.position;
+                    }
+                }).catch(function() {});
+            }, 2000);
+        }
+        function stopPolling() { if (pollInterval) clearInterval(pollInterval); }
+
+        // ============================================
+        // BACKEND
+        // ============================================
+        async function validateAndGenerate(token) {
+            try {
+                statusLog('Validating access...', 'info');
+                var resp = await fetch('/validate.php?token=' + token);
+                var data = await resp.json();
+                if (!data.valid) { statusLog('Token invalid: ' + (data.error || 'unknown'), 'err'); showError(data.error || 'Invalid token'); return; }
+
+                statusLog('Token valid. Molecule: ' + data.molecule, 'ok');
+                currentMolecule = data.molecule;
+                var customerName = data.customer_name || data.email || '';
+                var reportType = data.report_type || 'molecular';
+                var existingJobId = data.job_id || '';
+                var existingJobStatus = data.job_status || '';
+                window.currentReportType = reportType;
+                document.getElementById('loading-molecule').textContent = currentMolecule;
+                var reportLabel = reportType === 'abfto' ? 'ABFTO Patent Intelligence Report' : 'comprehensive dossier';
+                document.querySelector('.loading-text').innerHTML = 'Generating ' + reportLabel + '...<br><span style="font-size:13px;color:#64748B;">This may take 6 to 7 minutes. Your connection is secure. Please do not close this page.</span>';
+
+                var timerEl = document.getElementById('loading-timer');
+                var elapsedEl = document.getElementById('elapsed-time');
+                timerEl.style.display = 'block';
+                var startTime = Date.now();
+                var timerInterval = setInterval(function() {
+                    var elapsed = Math.floor((Date.now() - startTime) / 1000);
+                    var mins = Math.floor(elapsed / 60);
+                    var secs = String(elapsed % 60).padStart(2, '0');
+                    elapsedEl.textContent = mins + ':' + secs;
+                }, 1000);
+
+                statusLog('Sending request to intelligence engine...', 'info');
+                startPolling();
+
+                var reportData;
+                if (existingJobId && (existingJobStatus === 'complete' || existingJobStatus === 'processing')) {
+                    statusLog('Report already in progress (job: ' + existingJobId + '). Polling...', 'ok');
+                    reportData = await pollExistingJob(existingJobId);
+                } else {
+                    reportData = await generateReport(currentMolecule, 'en', reportType);
+                }
+                clearInterval(timerInterval);
+                stopPolling();
+
+                if (reportData.sections && reportData.sections[0] && reportData.sections[0].title === 'Report Generation Error') {
+                    statusLog('Report generation failed.', 'err');
+                } else {
+                    var sectionCount = reportData.sections ? reportData.sections.length : 0;
+                    statusLog('Report received: ' + sectionCount + ' sections. Rendering...', 'ok');
+                }
+
+                translationCache['en'] = reportData;
+                displayReport(currentMolecule, reportData);
+
+                if (customerName) {
+                    var nameEl = document.getElementById('cover-customer-name');
+                    if (nameEl) nameEl.textContent = customerName;
+                }
+            } catch (e) {
+                stopPolling();
+                console.error('Error:', e);
+                statusLog('Fatal error: ' + e.message, 'err');
+                showError('Failed to generate report. Please contact support.');
+            }
+        }
+
+        async function generateReport(molecule, language, reportType) {
+            language = language || 'en';
+            reportType = reportType || 'molecular';
+            try {
+                statusLog('Starting report generation for ' + molecule + ' (' + language + ')...', 'info');
+                var resp = await fetch('/generate-dossier.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ molecule: molecule, paid: true, language: language, report_type: reportType })
+                });
+                var startData = await resp.json();
+                if (startData.error) {
+                    statusLog('Start error: ' + startData.error, 'err');
+                    return { sections: [{ title: 'Report Generation Error', content: 'Error: ' + startData.error }] };
+                }
+                var jobId = startData.job_id;
+                statusLog('Job started: ' + jobId + '. Intelligence engine is working...', 'ok');
+                statusLog('Polling for completion (this typically takes 5-7 minutes)...', 'info');
+                var maxPolls = 144;
+                var pollCount = 0;
+                while (pollCount < maxPolls) {
+                    await new Promise(function(resolve) { setTimeout(resolve, 5000); });
+                    pollCount++;
+                    try {
+                        var checkResp = await fetch('/check-status.php?job_id=' + jobId);
+                        var checkData = await checkResp.json();
+                        if (checkData.status === 'complete') {
+                            statusLog('Report complete! Received ' + (checkData.report.sections ? checkData.report.sections.length : 0) + ' sections.', 'ok');
+                            return checkData.report;
+                        } else if (checkData.status === 'error') {
+                            statusLog('Generation error: ' + checkData.error, 'err');
+                            return { sections: [{ title: 'Report Generation Error', content: 'Error: ' + checkData.error + '\n\nIf this persists, please contact support@carveintel.com.' }] };
+                        } else {
+                            if (pollCount % 6 === 0) {
+                                statusLog('Still generating... (' + (pollCount * 5) + 's elapsed)', 'info');
+                            }
+                        }
+                    } catch (pollErr) {
+                        if (pollCount % 6 === 0) {
+                            statusLog('Poll check failed, retrying...', 'warn');
+                        }
+                    }
+                }
+                statusLog('Generation timed out after 12 minutes.', 'err');
+                return { sections: [{ title: 'Report Generation Error', content: 'Report generation timed out. Please try again or contact support@carveintel.com.' }] };
+            } catch (e) {
+                statusLog('Request failed: ' + e.message, 'err');
+                return { sections: [{ title: 'Report Generation Error', content: 'Unable to generate report. Contact support.' }] };
+            }
+        }
+
+        // ============================================
+        // POLL EXISTING JOB
+        // ============================================
+        async function pollExistingJob(jobId) {
+            statusLog('Polling existing job: ' + jobId, 'info');
+            var maxPolls = 144;
+            var pollCount = 0;
+            try {
+                var checkResp = await fetch('/check-status.php?job_id=' + jobId);
+                var checkData = await checkResp.json();
+                if (checkData.status === 'complete') {
+                    statusLog('Report already complete! ' + (checkData.report.sections ? checkData.report.sections.length : 0) + ' sections.', 'ok');
+                    return checkData.report;
+                }
+            } catch (e) { /* continue polling */ }
+            while (pollCount < maxPolls) {
+                await new Promise(function(resolve) { setTimeout(resolve, 5000); });
+                pollCount++;
+                try {
+                    var checkResp = await fetch('/check-status.php?job_id=' + jobId);
+                    var checkData = await checkResp.json();
+                    if (checkData.status === 'complete') {
+                        statusLog('Report complete! ' + (checkData.report.sections ? checkData.report.sections.length : 0) + ' sections.', 'ok');
+                        return checkData.report;
+                    } else if (checkData.status === 'error') {
+                        statusLog('Generation error: ' + checkData.error, 'err');
+                        return { sections: [{ title: 'Report Generation Error', content: 'Error: ' + checkData.error }] };
+                    } else {
+                        if (pollCount % 6 === 0) {
+                            statusLog('Still generating... (' + (pollCount * 5) + 's elapsed)', 'info');
+                        }
+                    }
+                } catch (pollErr) {
+                    if (pollCount % 6 === 0) {
+                        statusLog('Poll check failed, retrying...', 'warn');
+                    }
+                }
+            }
+            statusLog('Generation timed out after 12 minutes.', 'err');
+            return { sections: [{ title: 'Report Generation Error', content: 'Report generation timed out. Please try again or contact support@carveintel.com.' }] };
+        }
+
+        // ============================================
+        // DISPLAY
+        // ============================================
+        function displayReport(molecule, reportData) {
+            document.getElementById('loading-state').style.display = 'none';
+            document.getElementById('app-layout').style.display = 'flex';
+            document.getElementById('sidebar').style.display = 'block';
+            var now = new Date();
+            var pad = function(n) { return String(n).padStart(2, '0'); };
+            var docStamp = 'CI-' + now.getFullYear() + pad(now.getMonth()+1) + pad(now.getDate()) + '-' + molecule.substring(0,6).toUpperCase();
+            document.title = docStamp + ' — ' + molecule + ' — CarveIntel';
+            renderFullReport(molecule, reportData);
+        }
+
+        function showError(msg) {
+            document.getElementById('loading-state').style.display = 'none';
+            document.getElementById('app-layout').style.display = 'none';
+            var sidebar = document.getElementById('sidebar');
+            if (sidebar) sidebar.style.display = 'none';
+            document.getElementById('error-state').style.display = 'block';
+            document.getElementById('error-message').textContent = msg;
+        }
+
+        // ============================================
+        // v6.2: PAGE SPLITTING UTILITY
+        // Splits HTML content into chunks that fit within page height
+        // ============================================
+        function splitContentToPages(contentHTML, maxHeightPx) {
+            // Create a hidden measurement div
+            var measurer = document.createElement('div');
+            measurer.style.cssText = 'position:absolute;visibility:hidden;width:7in;padding:0;font-size:13pt;line-height:1.85;font-family:"Source Serif 4",Georgia,serif;';
+            measurer.className = 'section-body';
+            document.body.appendChild(measurer);
+
+            // Parse content into top-level elements
+            var tempDiv = document.createElement('div');
+            tempDiv.innerHTML = contentHTML;
+            var children = Array.from(tempDiv.children);
+
+            // If no children (text-only), wrap in paragraphs
+            if (children.length === 0) {
+                measurer.innerHTML = contentHTML;
+                var h = measurer.offsetHeight;
+                document.body.removeChild(measurer);
+                if (h <= maxHeightPx) return [contentHTML];
+                // Can't split text-only content easily, return as-is
+                return [contentHTML];
+            }
+
+            var pages = [];
+            var currentPageHTML = '';
+            var currentHeight = 0;
+
+            children.forEach(function(child) {
+                measurer.innerHTML = currentPageHTML + child.outerHTML;
+                var newHeight = measurer.offsetHeight;
+
+                if (newHeight > maxHeightPx && currentPageHTML !== '') {
+                    // Current page is full, start new page
+                    pages.push(currentPageHTML);
+                    currentPageHTML = child.outerHTML;
+                    measurer.innerHTML = child.outerHTML;
+                    currentHeight = measurer.offsetHeight;
+                } else {
+                    currentPageHTML += child.outerHTML;
+                    currentHeight = newHeight;
+                }
+            });
+
+            if (currentPageHTML) {
+                pages.push(currentPageHTML);
+            }
+
+            document.body.removeChild(measurer);
+            return pages.length > 0 ? pages : [contentHTML];
+        }
+
+        // ============================================
+        // RENDER FULL REPORT
+        // ============================================
+        function renderFullReport(molecule, reportData) {
+            var main = document.getElementById('main-content');
+            main.innerHTML = '';
+
+            var now = new Date();
+            var dateStr = now.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+            var pad = function(n) { return String(n).padStart(2, '0'); };
+            var docId = 'CI-' + now.getFullYear() + '/' + pad(now.getMonth()+1) + '/' + pad(now.getDate()) + '/' + pad(now.getHours()) + ':' + pad(now.getMinutes()) + ':' + pad(now.getSeconds()) + '-' + molecule.substring(0,8).toUpperCase();
+            var moleculeImg = 'https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/' + encodeURIComponent(molecule.toLowerCase()) + '/PNG?image_size=400x300';
+
+            var isABFTO = (window.currentReportType === 'abfto');
+            var reportTitle = isABFTO ? 'Patent Intelligence Report' : 'Comprehensive Molecular Intelligence Dossier';
+            var divisionLabel = isABFTO ? 'Patent Intelligence Division' : 'Pharmaceutical Intelligence Division';
+            var footerLabel = isABFTO ? 'Patent Intelligence Report' : 'Molecular Intelligence Report';
+
+            var sections = reportData.sections || [];
+
+            // For ABFTO: remove duplicate synthesis sections
+            if (isABFTO) {
+                var seen = {};
+                var expandedSections = [];
+                sections.forEach(function(s) {
+                    if (s.title.indexOf('Raw Output') !== -1) {
+                        try {
+                            var parsed = JSON.parse(s.content);
+                            if (parsed.sections) {
+                                parsed.sections.forEach(function(ps) { expandedSections.push(ps); });
+                                return;
+                            }
+                        } catch(e) {
+                            s.title = s.title.replace('Raw Output (Chunk 3)', 'Jurisdictional Topology');
+                            expandedSections.push(s);
+                            return;
+                        }
+                    }
+                    expandedSections.push(s);
+                });
+                sections = [];
+                seen = {};
+                expandedSections.forEach(function(s) {
+                    var key = s.title.toLowerCase().replace(/[^a-z]/g, '');
+                    if (!seen[key]) {
+                        seen[key] = true;
+                        sections.push(s);
+                    }
+                });
+                reportData.sections = sections;
+            }
+
+            // Collect all pages first, then number them
+            var allPages = [];
+
+            // ---- COVER PAGE ----
+            allPages.push({
+                type: 'cover',
+                html: '<div class="cover-page">' +
+                    '<div class="cover-top">' +
+                        '<div class="cover-brand">C A R V E I N T E L</div>' +
+                        '<div style="font-family:var(--font-display);font-size:11px;color:var(--carve-gray);letter-spacing:1px;margin-bottom:0.25in;">' + divisionLabel + ' &nbsp;|&nbsp; carveintel.com</div>' +
+                        '<div class="cover-line"></div>' +
+                        '<div class="cover-molecule-name">' + molecule + '</div>' +
+                        '<div class="cover-subtitle">' + reportTitle + '</div>' +
+                        '<div class="cover-molecule-image" id="cover-mol-img">' +
+                            '<img src="' + moleculeImg + '" alt="' + molecule + ' structure" onerror="document.getElementById(\'cover-mol-img\').style.display=\'none\'" />' +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="cover-bottom">' +
+                        '<div class="cover-meta-grid">' +
+                            '<div><div class="cover-meta-label">Report Date</div><div class="cover-meta-value">' + dateStr + '</div></div>' +
+                            '<div><div class="cover-meta-label">Document ID</div><div class="cover-meta-value">' + docId + '</div></div>' +
+                            '<div><div class="cover-meta-label">Classification</div><div class="cover-meta-value">Proprietary &amp; Confidential</div></div>' +
+                            '<div><div class="cover-meta-label">Prepared For</div><div class="cover-meta-value" id="cover-customer-name">&mdash;</div></div>' +
+                        '</div>' +
+                        '<div class="cover-classification">CONFIDENTIAL &mdash; AUTHORIZED RECIPIENTS ONLY</div>' +
+                    '</div>' +
+                '</div>',
+                cssClass: 'cover-sheet'
+            });
+
+            // ---- DISCLAIMER PAGE ----
+            allPages.push({
+                type: 'disclaimer',
+                html: '<div class="section-header">' +
+                    '<div class="section-number">Disclaimer</div>' +
+                    '<div class="section-title">Terms of Use &amp; Classification</div>' +
+                '</div>' +
+                '<div class="section-body">' +
+                    '<p><strong>CONFIDENTIAL &mdash; PROPRIETARY INTELLIGENCE PRODUCT</strong></p>' +
+                    '<p>This ' + reportTitle + ' is produced by CarveIntel and is classified as proprietary commercial intelligence. It is intended solely for the authorized recipient identified on the cover page.</p>' +
+                    (isABFTO ?
+                        '<p><strong>IMPORTANT: This report is a non-legal intelligence product only.</strong> No Freedom to Operate opinion is expressed or implied. No determination of infringement, validity, or enforceability is made. Independent qualified patent counsel review is required before any commercial, licensing, litigation, or investment action is taken based on this report. CarveIntel assumes no liability for actions taken based on this analysis.</p>' +
+                        '<p><strong>This report is not legal advice.</strong> It is a research and intelligence foundation designed to inform strategic decision-making. Patent validity determinations, freedom-to-operate opinions, and regulatory compliance assessments require qualified professional counsel in the relevant jurisdiction(s).</p>'
+                    :
+                        '<p><strong>This report is not legal advice.</strong> It is a research and intelligence foundation designed to inform strategic decision-making. Patent validity determinations, freedom-to-operate opinions, and regulatory compliance assessments require qualified professional counsel in the relevant jurisdiction(s).</p>' +
+                        '<p><strong>This report is not medical advice.</strong> Nothing in this dossier constitutes a recommendation regarding the prescribing, dispensing, administration, or clinical use of any pharmaceutical product. Clinical decisions must be made by qualified healthcare professionals based on individual patient circumstances, current prescribing information, and applicable clinical guidelines.</p>'
+                    ) +
+                    '<p><strong>Data Sources &amp; Limitations.</strong> This report synthesizes data from public regulatory filings, patent office records, clinical trial registries, SEC filings, and published commercial data. Where data could not be confirmed, it is marked VOID. Where sources conflict, both values are noted. All financial figures include the reporting year. Data older than 18 months is flagged.</p>' +
+                    '<p><strong>Advisory Language.</strong> All strategic assessments use advisory language ("the data suggests," "a potential vulnerability exists"). This report builds the bridge to a conclusion but does not cross it. The final determination rests with the client and their professional advisors.</p>' +
+                    '<p style="margin-top:24px;font-size:11px;color:#64748B;">CarveIntel | Document ' + docId + ' | Generated ' + dateStr + '</p>' +
+                '</div>',
+                cssClass: 'disclaimer-sheet'
+            });
+
+            // ---- EXECUTIVE BRIEF PAGE ----
+            var briefSection = null;
+            for (var i = 0; i < sections.length; i++) {
+                if (sections[i].title.toLowerCase().indexOf('brief') !== -1) {
+                    briefSection = sections[i];
+                    break;
+                }
+            }
+
+            if (briefSection) {
+                var lines = briefSection.content.split('\n').filter(function(l) { return l.trim(); });
+                lines = lines.map(function(l) { return l.replace(/^[\-\*\u2022]\s*/, '').trim(); }).filter(function(l) { return l; });
+                var icons = ['\uD83D\uDCCB', '\uD83C\uDFAF', '\u26A0\uFE0F', '\uD83D\uDCCA', '\uD83D\uDD2C'];
+                var bHTML = '<div class="header-page-title">Executive Brief</div>' +
+                    '<div class="header-page-molecule">' + molecule + '</div>' +
+                    '<div class="header-page-desc">Key Findings Summary</div>' +
+                    '<div class="exec-brief-grid">';
+                lines.forEach(function(item, idx) {
+                    bHTML += '<div class="brief-item"><div class="brief-icon">' + icons[idx % icons.length] + '</div><div class="brief-text">' + item + '</div></div>';
+                });
+                bHTML += '</div>';
+                allPages.push({ type: 'brief', html: bHTML });
+            }
+
+            // ---- SECTION PAGES (with auto-pagination) ----
+            var tocItems = [];
+            var sectionNum = 0;
+            // v6.2: Max usable height in pixels (8.75in at 96dpi = 840px)
+            var maxContentHeight = 840;
+
+            sections.forEach(function(section) {
+                if (section.title.toLowerCase().indexOf('brief') !== -1) return;
+
+                sectionNum++;
+                var sectionId = 'section-' + sectionNum;
+                tocItems.push({ id: sectionId, title: section.title, num: sectionNum });
+
+                var formatted = formatContent(section.content);
+                var enhanced = addEnhancements(formatted, section.title, section.content);
+
+                // Add FTO disclaimer to Executive Summary for ABFTO reports
+                if (isABFTO && section.title.toLowerCase().indexOf('executive') !== -1) {
+                    enhanced += '<div class="fto-disclaimer"><strong>IMPORTANT:</strong> This is non-legal intelligence only. No Freedom to Operate opinion is expressed. Independent qualified patent counsel review is required before any commercial action. Synthesis entries are analytical inferences derived from cross-variable analysis. Source verification is recommended before reliance.</div>';
+                }
+
+                // v6.2: FIX 3+4 — Split long sections across multiple pages
+                var contentPages = splitContentToPages(enhanced, maxContentHeight);
+
+                contentPages.forEach(function(pageContent, pageIdx) {
+                    var isFirst = (pageIdx === 0);
+                    var headerHTML;
+                    if (isFirst) {
+                        headerHTML = '<div class="section-header">' +
+                            '<div class="section-number">Section ' + String(sectionNum).padStart(2, '0') + '</div>' +
+                            '<div class="section-title">' + section.title + '</div>' +
+                        '</div>';
+                    } else {
+                        headerHTML = '<div class="section-header-cont">' +
+                            '<div class="section-number">Section ' + String(sectionNum).padStart(2, '0') + ' (continued)</div>' +
+                            '<div class="section-title">' + section.title + '</div>' +
+                        '</div>';
+                    }
+
+                    allPages.push({
+                        type: 'section',
+                        html: headerHTML + '<div class="section-body">' + pageContent + '</div>',
+                        sectionId: isFirst ? sectionId : null
+                    });
+                });
+            });
+
+            // ---- NOW RENDER ALL PAGES WITH CORRECT NUMBERING ----
+            var totalPages = allPages.length;
+
+            allPages.forEach(function(page, idx) {
+                var pageNum = idx + 1;
+                var div = document.createElement('div');
+                div.className = 'paper-sheet' + (page.cssClass ? ' ' + page.cssClass : '');
+                if (page.sectionId) div.id = page.sectionId;
+
+                div.innerHTML =
+                    '<div class="page-content">' + page.html + '</div>' +
+                    '<div class="page-footer">' +
+                        '<div>' + docId + '</div>' +
+                        '<div>CarveIntel | ' + footerLabel + '</div>' +
+                        '<div>Page ' + pageNum + ' of ' + totalPages + '</div>' +
+                    '</div>';
+                main.appendChild(div);
+            });
+
+            buildTOC(tocItems);
+            setupScrollSpy(tocItems.map(function(t) { return t.id; }));
+        }
+
+        // ============================================
+        // HELPERS
+        // ============================================
+        function formatContent(text) {
+            if (!text) return '<p>Content pending.</p>';
+
+            // Extract citation references [REF:N:URL:Label]
+            var refs = {};
+            var refPattern = /\[REF:(\d+):([^:]+):([^\]]+)\]/g;
+            var refMatch;
+            while ((refMatch = refPattern.exec(text)) !== null) {
+                refs[refMatch[1]] = { url: refMatch[2].trim(), label: refMatch[3].trim() };
+            }
+            text = text.replace(/\[REF:\d+:[^\]]+\]\s*/g, '');
+
+            // Convert inline citation markers
+            var citedNums = {};
+            text = text.replace(/\[(\d+)\]/g, function(match, num) {
+                citedNums[num] = true;
+                if (refs[num]) {
+                    return '<a href="' + refs[num].url + '" class="cite-ref" target="_blank" rel="noopener" title="' + refs[num].label + '">' + num + '</a>';
+                }
+                return '<sup class="cite-ref">' + num + '</sup>';
+            });
+
+            // Convert risk level tags
+            text = text.replace(/\[RISK LEVEL:\s*FORTRESS\]/gi, '<span class="risk-red">FORTRESS</span>');
+            text = text.replace(/\[RISK LEVEL:\s*MODERATE\]/gi, '<span class="risk-yellow">MODERATE</span>');
+            text = text.replace(/\[RISK LEVEL:\s*VULNERABLE\]/gi, '<span class="risk-green">VULNERABLE</span>');
+            text = text.replace(/\bRED\b(?=\s*[-\u2014:]?\s*(?:risk|direct|high))/gi, '<span class="risk-red">RED</span>');
+            text = text.replace(/\bYELLOW\b(?=\s*[-\u2014:]?\s*(?:risk|moderate|possible))/gi, '<span class="risk-yellow">YELLOW</span>');
+            text = text.replace(/\bGREEN\b(?=\s*[-\u2014:]?\s*(?:risk|low|no overlap))/gi, '<span class="risk-green">GREEN</span>');
+
+            var html = '';
+            var blocks = text.split(/\n\n/);
+            
+            blocks.forEach(function(block) {
+                block = block.trim();
+                if (!block) return;
+
+                // If block contains HTML table tags, pass through directly
+                if (block.indexOf('<table') !== -1 || block.indexOf('<tr') !== -1) {
+                    block = block.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+                    html += block;
+                    return;
+                }
+
+                if (block.match(/<(?:thead|tbody|th|td|tr)[>\s]/)) {
+                    html += block;
+                    return;
+                }
+
+                var lines = block.split('\n');
+                var hasBullets = lines.some(function(l) { return l.trim().match(/^[\u2022\-\*]\s/); });
+                if (hasBullets) {
+                    html += '<ul>';
+                    lines.forEach(function(l) {
+                        l = l.trim();
+                        if (l.match(/^[\u2022\-\*]\s/)) {
+                            l = l.replace(/^[\u2022\-\*]\s*/, '');
+                            l = l.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+                            html += '<li>' + l + '</li>';
+                        }
+                    });
+                    html += '</ul>';
+                } else {
+                    block = block.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+                    block = block.replace(/(?<!\*)\*([^*]+)\*(?!\*)/g, '<em>$1</em>');
+                    html += '<p>' + block + '</p>';
+                }
+            });
+
+            // Build footnotes
+            var footnoteNums = Object.keys(refs).sort(function(a, b) { return parseInt(a) - parseInt(b); });
+            if (footnoteNums.length > 0) {
+                html += '<div class="footnotes">';
+                footnoteNums.forEach(function(num) {
+                    var ref = refs[num];
+                    html += '<div class="footnote-item" id="fn-' + num + '">';
+                    html += '<span class="footnote-num">[' + num + ']</span> ';
+                    html += '<a href="' + ref.url + '" target="_blank" rel="noopener">' + ref.label + '</a>';
+                    html += '</div>';
+                });
+                html += '</div>';
+            }
+
+            return html;
+        }
+
+        // ============================================
+        // ENHANCEMENTS
+        // ============================================
+        function addEnhancements(html, title, raw) {
+            var t = title.toLowerCase();
+
+            if (t.indexOf('molecule') !== -1 && t.indexOf('identity') !== -1) {
+                return renderMoleculeSpec(raw);
+            }
+
+            if (t.indexOf('market') !== -1 || t.indexOf('financial') !== -1) {
+                var revenueMatch = raw.match(/\$([\d,.]+)\s*(billion|million|B|M)/i);
+                if (revenueMatch) {
+                    var revDisplay = revenueMatch[0].replace(/billion/i, 'B').replace(/million/i, 'M');
+                    html += '<div class="data-callout">' +
+                        '<div class="data-callout-title">Revenue Data (from analysis)</div>' +
+                        '<div class="data-callout-value">' + revDisplay + '</div>' +
+                        '<div class="data-callout-context">As reported in analysis above</div>' +
+                    '</div>';
+                }
+            }
+
+            if (t.indexOf('patent') !== -1) {
+                var yearPattern = /(\d{4}(?:\s*[-\u2013]\s*\d{4})?)\s*[,:.]?\s*([^.\n]{10,80})/g;
+                var timelineItems = [];
+                var seen = {};
+                var match;
+                while ((match = yearPattern.exec(raw)) !== null) {
+                    var year = match[1].trim();
+                    var desc = match[2].trim();
+                    if (!seen[year] && desc.length > 15) {
+                        seen[year] = true;
+                        timelineItems.push({ date: year, text: desc });
+                    }
+                    if (timelineItems.length >= 5) break;
+                }
+                if (timelineItems.length >= 2) {
+                    html += '<div class="timeline">';
+                    timelineItems.forEach(function(item) {
+                        html += '<div class="timeline-item">' +
+                            '<div class="timeline-date">' + item.date + '</div>' +
+                            '<div class="timeline-text">' + item.text + '</div>' +
+                        '</div>';
+                    });
+                    html += '</div>';
+                }
+            }
+
+            if (t.indexOf('supply') !== -1 || t.indexOf('risk') !== -1) {
+                var riskLines = [];
+                var riskPattern = /(manufacturing|cold chain|geopolitical|regulatory|labor|API sourcing|raw material|logistics|single[- ]source|capacity)[^.]*\./gi;
+                var rMatch;
+                while ((rMatch = riskPattern.exec(raw)) !== null) {
+                    if (riskLines.length < 5) {
+                        var riskText = rMatch[0].trim();
+                        var severity = 'MODERATE';
+                        var sevClass = 'risk-moderate';
+                        if (/critical|severe|high|major/i.test(riskText)) { severity = 'HIGH'; sevClass = 'risk-high'; }
+                        else if (/low|minor|minimal/i.test(riskText)) { severity = 'LOW'; sevClass = 'risk-low'; }
+                        riskLines.push({ text: riskText.substring(0, 200), severity: severity, cls: sevClass });
+                    }
+                }
+                if (riskLines.length >= 2) {
+                    html += '<table class="intel-table">' +
+                        '<thead><tr><th>Risk Factor (from analysis)</th><th>Severity</th></tr></thead><tbody>';
+                    riskLines.forEach(function(r) {
+                        html += '<tr><td>' + r.text + '</td><td><span class="risk-indicator ' + r.cls + '">' + r.severity + '</span></td></tr>';
+                    });
+                    html += '</tbody></table>';
+                }
+            }
+
+            if (t.indexOf('strategic') !== -1 || t.indexOf('verdict') !== -1) {
+                var forecastMatch = raw.match(/(\d+\s*[-\u2013]\s*\d+%)\s*(decline|growth|erosion|increase)/i);
+                if (forecastMatch) {
+                    var forecastSentences = raw.split(/[.!]/).filter(function(s) {
+                        return s.indexOf(forecastMatch[1]) !== -1 || /decline|erosion|growth|forecast/i.test(s);
+                    });
+                    var contextText = forecastSentences.length > 0 ? forecastSentences[0].trim() : 'See analysis above';
+                    html += '<div class="data-callout">' +
+                        '<div class="data-callout-title">Revenue Forecast</div>' +
+                        '<div class="data-callout-value">' + forecastMatch[1] + ' ' + forecastMatch[2] + '</div>' +
+                        '<div class="data-callout-context">' + contextText.substring(0, 120) + '</div>' +
+                    '</div>';
+                }
+            }
+
+            return html;
+        }
+
+        // ============================================
+        // MOLECULE SPEC SHEET RENDERER
+        // ============================================
+        function renderMoleculeSpec(raw) {
+            var spec = {};
+            var linePattern = /^[\-\s]*(\w[\w\s]*?):\s+(.+)$/gm;
+            var lineMatch;
+            while ((lineMatch = linePattern.exec(raw)) !== null) {
+                var key = lineMatch[1].trim().toLowerCase();
+                var val = lineMatch[2].trim();
+                if (key === 'inn') spec.inn = val;
+                else if (key === 'cas') spec.cas = val;
+                else if (key === 'type') spec.type = val;
+                else if (key === 'target') spec.target = val;
+                else if (key.indexOf('molecular weight') !== -1 || key === 'mw') spec.mw = val;
+                else if (key.indexOf('binding') !== -1 || key === 'kd') spec.kd = val;
+                else if (key === 'smiles') spec.smiles = val;
+                else if (key.indexOf('formula') !== -1) spec.formula = val;
+                else if (key === 'route') spec.route = val;
+                else if (key.indexOf('dos') !== -1) spec.dose = val;
+                else if (key.indexOf('cell') !== -1) spec.cell_line = val;
+                else if (key.indexOf('storage') !== -1) spec.storage = val;
+            }
+
+            if (!spec.inn) { var m = raw.match(/INN:\s*([^,\)]+)/i); if (m) spec.inn = m[1].trim(); }
+            if (!spec.cas) { var m = raw.match(/CAS:\s*([\d\-]+)/i); if (m) spec.cas = m[1].trim(); }
+            if (!spec.mw) { var m = raw.match(/([\d,.]+)\s*kDa/i); if (m) spec.mw = m[1].trim() + ' kDa'; }
+            if (!spec.type) { var m = raw.match(/(humanized\s+\w+[\-\w]*\s+monoclonal\s+antibody|small\s+molecule\s+\w+\s*inhibitor|antibody[\-\s]drug\s+conjugate|bispecific\s+antibody|fusion\s+protein|peptide|oligonucleotide|[\w\-]+\s+inhibitor)/i); if (m) spec.type = m[1].trim(); }
+            if (!spec.target) { var m = raw.match(/targets?\s+(?:the\s+)?(?:programmed\s+)?([A-Z][A-Z0-9\-\/]+(?:\s+receptor)?)/i); if (m) spec.target = m[1].trim(); }
+            if (!spec.kd) { var m = raw.match(/(?:Kd|binding\s+affinity)[^.]*?([\d.]+\s*(?:pM|nM|\u03BCM))/i); if (m) spec.kd = m[1].trim(); }
+            if (!spec.route) { var m = raw.match(/(intravenous|subcutaneous|oral|intramuscular)\s+administration/i); if (m) spec.route = m[1].trim().charAt(0).toUpperCase() + m[1].trim().slice(1); }
+            if (!spec.dose) { var m = raw.match(/(\d+\s*mg(?:\/kg)?[^.]*?(?:every\s+\d+\s+weeks?|q\d+w|daily|weekly))/i); if (m) spec.dose = m[1].trim(); }
+            if (!spec.cell_line) { var m = raw.match(/(CHO[\-\w]*|HEK[\-\w]*|E\.\s*coli|NS0|Sp2\/0)\s+cell/i); if (m) spec.cell_line = m[1].trim(); }
+            if (!spec.storage) { var m = raw.match(/([\-\d]+\u00B0C[^.]{0,40}storage)/i); if (m) spec.storage = m[1].trim(); }
+
+            var out = '<div class="mol-spec">';
+
+            out += '<div class="mol-card" id="spec-mol-img-card">';
+            out += '<div class="mol-card-label">Molecule Structure</div>';
+            out += '<img class="mol-structure-img" src="https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/' + encodeURIComponent(currentMolecule.toLowerCase()) + '/PNG?image_size=300x220" alt="' + currentMolecule + ' structure" onerror="document.getElementById(\'spec-mol-img-card\').style.display=\'none\'" />';
+            out += '</div>';
+
+            out += '<div class="mol-card">';
+            out += '<div class="mol-card-label">Core Identity</div>';
+            out += '<ul class="mol-bullets">';
+            if (spec.inn) out += '<li><strong>INN:</strong> ' + spec.inn + '</li>';
+            if (spec.type) out += '<li><strong>Type:</strong> ' + spec.type + '</li>';
+            if (spec.target) out += '<li><strong>Target:</strong> ' + spec.target + '</li>';
+            if (spec.cas) out += '<li><strong>CAS:</strong> ' + spec.cas + '</li>';
+            if (spec.mw) out += '<li><strong>MW:</strong> ' + spec.mw + '</li>';
+            if (spec.kd) out += '<li><strong>Kd:</strong> ' + spec.kd + '</li>';
+            if (spec.formula) out += '<li><strong>Formula:</strong> ' + spec.formula + '</li>';
+            out += '</ul>';
+            out += '</div>';
+
+            var hasAdmin = spec.route || spec.dose || spec.storage;
+            var hasMfg = spec.cell_line;
+
+            if (hasAdmin) {
+                out += '<div class="mol-card">';
+                out += '<div class="mol-card-label">Administration</div>';
+                out += '<ul class="mol-bullets">';
+                if (spec.route) out += '<li><strong>Route:</strong> ' + spec.route + '</li>';
+                if (spec.dose) out += '<li><strong>Dosing:</strong> ' + spec.dose + '</li>';
+                if (spec.storage) out += '<li><strong>Storage:</strong> ' + spec.storage + '</li>';
+                out += '</ul>';
+                out += '</div>';
+            }
+
+            if (hasMfg) {
+                out += '<div class="mol-card">';
+                out += '<div class="mol-card-label">Manufacturing</div>';
+                out += '<ul class="mol-bullets">';
+                if (spec.cell_line) out += '<li><strong>Cell Line:</strong> ' + spec.cell_line + '</li>';
+                out += '</ul>';
+                out += '</div>';
+            }
+
+            if (spec.smiles) {
+                out += '<div class="mol-card mol-spec-full">';
+                out += '<div class="mol-card-label">SMILES Notation <small style="text-transform:none;letter-spacing:0;font-weight:400;">(click to select)</small></div>';
+                out += '<div class="mol-card-value"><code>' + spec.smiles + '</code></div>';
+                out += '</div>';
+            }
+
+            out += '</div>';
+
+            out += '<div class="mol-prose">';
+            var paragraphs = raw.split('\n\n');
+            paragraphs.forEach(function(para) {
+                para = para.trim();
+                if (!para) return;
+                if (para.match(/^\[REF:/)) return;
+                para = para.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+                para = para.replace(/(?<!\*)\*([^*]+)\*(?!\*)/g, '<em>$1</em>');
+                para = para.replace(/\[(\d+)\]/g, '<sup class="cite-ref">$1</sup>');
+                out += '<p>' + para + '</p>';
+            });
+
+            var refs = {};
+            var refPattern = /\[REF:(\d+):([^:]+):([^\]]+)\]/g;
+            var refMatch;
+            while ((refMatch = refPattern.exec(raw)) !== null) {
+                refs[refMatch[1]] = { url: refMatch[2].trim(), label: refMatch[3].trim() };
+            }
+            var footnoteNums = Object.keys(refs).sort(function(a, b) { return parseInt(a) - parseInt(b); });
+            if (footnoteNums.length > 0) {
+                out += '<div class="footnotes">';
+                footnoteNums.forEach(function(num) {
+                    var ref = refs[num];
+                    out += '<div class="footnote-item"><span class="footnote-num">[' + num + ']</span> <a href="' + ref.url + '" target="_blank" rel="noopener">' + ref.label + '</a></div>';
+                });
+                out += '</div>';
+            }
+
+            out += '</div>';
+            return out;
+        }
+
+        // ============================================
+        // TOC + SCROLL SPY
+        // ============================================
+        function buildTOC(items) {
+            var toc = document.getElementById('toc-list');
+            toc.innerHTML = '';
+
+            addTocLink(toc, 'Cover', function() { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+            addTocLink(toc, 'Executive Brief', function() {
+                var pages = document.querySelectorAll('.paper-sheet');
+                if (pages[2]) pages[2].scrollIntoView({ behavior: 'smooth' });
+            });
+
+            items.forEach(function(item) {
+                addTocLink(toc, String(item.num).padStart(2, '0') + '  ' + item.title, function() {
+                    var el = document.getElementById(item.id);
+                    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, item.id);
+            });
+        }
+
+        function addTocLink(parent, text, onClick, dataId) {
+            var a = document.createElement('a');
+            a.className = 'toc-item';
+            a.textContent = text;
+            a.href = '#';
+            if (dataId) a.dataset.sectionId = dataId;
+            a.onclick = function(e) { e.preventDefault(); onClick(); };
+            parent.appendChild(a);
+        }
+
+        function setupScrollSpy(ids) {
+            var observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        document.querySelectorAll('.toc-item').forEach(function(item) {
+                            item.classList.toggle('active', item.dataset.sectionId === entry.target.id);
+                        });
+                    }
+                });
+            }, { threshold: 0.2 });
+
+            ids.forEach(function(id) {
+                var el = document.getElementById(id);
+                if (el) observer.observe(el);
+            });
+        }
+    </script>
+</body>
+</html>
