@@ -1,0 +1,316 @@
+<!-- index.html | CarveIntel | v2.2 | 2026-09-16 | Phil Cheevers -->
+<!-- Homepage. v2.2: mobile ABFTO section stacks to 1 column; header/hero unchanged -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CarveIntel — Pharmaceutical Patent Intelligence</title>
+<meta name="description" content="AI-powered patent intelligence for pharmaceutical molecules. ABFTO reports delivered same day.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%232B61E5'/%3E%3Ctext x='16' y='23' text-anchor='middle' font-family='system-ui' font-weight='800' font-size='22' fill='white'%3EC%3C/text%3E%3C/svg%3E">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  background: #FFFFFF;
+  color: #0F172A;
+  font-size: 17px;
+  line-height: 1.6;
+}
+a { color: #2B61E5; text-decoration: none; }
+
+/* ─── Header ─── */
+header {
+  padding: 1.1rem 3rem;
+  border-bottom: 3px solid #2B61E5;
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+}
+.logo {
+  font-size: 2.8rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+.logo-carve { color: #0F172A; }
+.logo-intel { color: #2B61E5; }
+.header-slash {
+  font-size: 1.8rem;
+  font-weight: 300;
+  color: #64748B;
+  margin: 0 0.25rem;
+}
+.header-tagline {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #475569;
+  letter-spacing: -0.2px;
+}
+
+/* ─── Main layout: equal columns ─── */
+.main {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 1.75rem 3rem 2rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3.5rem;
+  align-items: start;
+}
+
+/* ─── Left: editorial ─── */
+.editorial h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0F172A;
+  line-height: 1.3;
+  margin-bottom: 0.75rem;
+}
+.editorial .lead {
+  font-size: 17px;
+  color: #334155;
+  margin-bottom: 1rem;
+}
+
+/* Steps */
+.steps-header {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #2B61E5;
+  margin-bottom: 0.5rem;
+}
+.step-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+  font-size: 16px;
+  color: #0F172A;
+}
+.step-num {
+  font-weight: 800;
+  color: #2B61E5;
+  min-width: 20px;
+}
+.step-label { font-weight: 700; }
+.step-desc { color: #475569; }
+
+.divider {
+  border: none;
+  height: 1px;
+  background: #E2E8F0;
+  margin: 1rem 0;
+}
+
+/* Who this serves */
+.serves-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #0F172A;
+  margin-bottom: 0.5rem;
+}
+.serves-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+.serves-item h3 {
+  font-size: 15px;
+  font-weight: 700;
+  color: #0F172A;
+}
+.serves-item p {
+  font-size: 13px;
+  color: #475569;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* ─── Right: what you get ─── */
+.report-card {
+  border: 1px solid #E2E8F0;
+  border-top: 3px solid #2B61E5;
+  padding: 2rem;
+}
+.report-card h2 {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin-bottom: 0.15rem;
+}
+.report-card .subtitle {
+  font-size: 14px;
+  color: #475569;
+  margin-bottom: 0.25rem;
+}
+.report-card .delivery {
+  font-size: 14px;
+  font-weight: 700;
+  color: #2B61E5;
+  margin-bottom: 1.25rem;
+}
+.section-list {
+  list-style: none;
+  margin-bottom: 1.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 1.5rem;
+}
+.section-list li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  padding: 5px 0;
+  font-size: 15px;
+  color: #0F172A;
+  border-bottom: 1px solid #F1F5F9;
+}
+.section-list li:last-child { border-bottom: none; }
+.sec-num {
+  font-size: 12px;
+  font-weight: 800;
+  color: #2B61E5;
+  min-width: 24px;
+  font-variant-numeric: tabular-nums;
+}
+.sec-title { font-weight: 600; }
+
+.report-card .cta {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  background: #2B61E5;
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 16px;
+  text-align: center;
+  border-radius: 4px;
+  margin-bottom: 0.75rem;
+}
+.report-card .cta:hover { background: #1D4ED8; }
+.report-card .contact {
+  display: block;
+  text-align: center;
+  font-size: 14px;
+  color: #475569;
+}
+.report-card .contact a { color: #2B61E5; }
+
+/* ─── Footer ─── */
+footer {
+  padding: 1.5rem 3rem;
+  border-top: 1px solid #E2E8F0;
+  font-size: 13px;
+  color: #64748B;
+  display: flex;
+  justify-content: space-between;
+}
+footer a { color: #64748B; }
+footer a:hover { color: #2B61E5; }
+
+/* ─── Responsive ─── */
+@media (max-width: 768px) {
+  header { padding: 1rem 1.5rem; flex-wrap: wrap; }
+  .logo { font-size: 2.2rem; }
+  .header-tagline { font-size: 1.1rem; }
+  .main {
+    padding: 2rem 1.5rem;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .serves-grid { grid-template-columns: 1fr; }
+  .section-list { grid-template-columns: 1fr; }
+  footer { padding: 1.5rem; flex-direction: column; gap: 0.5rem; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo"><span class="logo-carve">Carve</span><span class="logo-intel">Intel</span></div>
+  <span class="header-slash">//</span>
+  <span class="header-tagline">Pharmaceutical Patent Intelligence — Delivered Same Day</span>
+</header>
+
+<div class="main">
+
+  <!-- LEFT: Editorial -->
+  <div class="editorial">
+    <h1>The fastest path from molecule to patent clarity.</h1>
+
+    <p class="lead">Walk into your patent attorney's office with a complete intelligence dossier already in hand. Every claim mapped. Every jurisdiction covered. Every risk identified. Your attorney bills hours — CarveIntel gives you the answers before the clock starts.</p>
+
+    <div class="steps-header">Delivered in 3 Steps</div>
+    <div class="step-row">
+      <span class="step-num">1.</span>
+      <span class="step-label">You do the inventing</span>
+      <span class="step-desc">— bring your notes to us.</span>
+    </div>
+    <div class="step-row">
+      <span class="step-num">2.</span>
+      <span class="step-label">We do the build.</span>
+    </div>
+    <div class="step-row">
+      <span class="step-num">3.</span>
+      <span class="step-label">You take it to your lawyer.</span>
+    </div>
+
+    <hr class="divider">
+
+    <div class="serves-title">Who this serves</div>
+    <div class="serves-grid">
+      <div class="serves-item">
+        <h3>Patent Holders</h3>
+        <p>Know your perimeter. See what's filed, what's expiring, and where the gaps are before someone else finds them.</p>
+      </div>
+      <div class="serves-item">
+        <h3>Research Labs</h3>
+        <p>Prepare your filing with complete prior art intelligence. Walk into the patent office with the full picture.</p>
+      </div>
+      <div class="serves-item">
+        <h3>Law Firms</h3>
+        <p>Client-ready intelligence from day one. Sharper counsel, faster engagement, stronger position.</p>
+      </div>
+      <div class="serves-item">
+        <h3>Biosimilar Developers</h3>
+        <p>Thicket mapping. Weak claims. Design-around corridors. Entry strategy built on data, not guesswork.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: What you get -->
+  <div class="report-card">
+    <h2>ABFTO Report</h2>
+    <div class="subtitle">Abbreviated Freedom-to-Operate Intelligence</div>
+    <div class="delivery">Delivered same day · 12 sections · 8 jurisdictions · 6 languages</div>
+
+    <ol class="section-list">
+      <li><span class="sec-num">01</span> <span class="sec-title">Executive Summary</span></li>
+      <li><span class="sec-num">02</span> <span class="sec-title">Key Claims &amp; Risk Assessment</span></li>
+      <li><span class="sec-num">03</span> <span class="sec-title">Patent Portfolio Composition</span></li>
+      <li><span class="sec-num">04</span> <span class="sec-title">Claim Architecture Analysis</span></li>
+      <li><span class="sec-num">05</span> <span class="sec-title">Jurisdictional Topology</span></li>
+      <li><span class="sec-num">06</span> <span class="sec-title">Litigation History</span></li>
+      <li><span class="sec-num">07</span> <span class="sec-title">Biosimilar Pipeline</span></li>
+      <li><span class="sec-num">08</span> <span class="sec-title">Design-Around Feasibility</span></li>
+      <li><span class="sec-num">09</span> <span class="sec-title">Patent Lifecycle</span></li>
+      <li><span class="sec-num">10</span> <span class="sec-title">Thicket &amp; White Space</span></li>
+      <li><span class="sec-num">11</span> <span class="sec-title">Signal Detection</span></li>
+      <li><span class="sec-num">12</span> <span class="sec-title">Strategic Verdict</span></li>
+    </ol>
+
+    <a href="c2/FT-c3.html" class="cta">Start Your Order →</a>
+
+  </div>
+
+</div>
+
+<footer>
+  <span>© 2026 CarveIntel</span>
+  <span>Pharmaceutical Patent Intelligence</span>
+</footer>
+
+</body>
+</html>
