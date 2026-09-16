@@ -1,0 +1,130 @@
+# Master inventory for Phil's websites.
+# Agents: read AGENTS.md, then this file, then the site's SITE.md.
+
+sites:
+  - id: carveintel
+    name: CarveIntel
+    live_urls:
+      - https://carveintel.com/
+      - https://pinkhouse.tech/carveintel/
+    source: sites/carveintel/
+    github: philcheevers-pixel/lifebutwrong  # bootstrap home; prefer own repo later
+    hosting:
+      primary: cloudflare-dns  # proxies to Apache origin
+      origin: pinkhouse-droplet  # identical file served at /carveintel/
+      droplet_path: /var/www/html/carveintel/
+    deploy: rsync-to-droplet  # then confirm carveintel.com (purge CF cache if stale)
+    status: git-backed-bootstrap  # recovered from live 2026-09-16; confirm laptop copy
+    notes: >
+      Single-file homepage (inline CSS). Header lockup CarveIntel // tagline must stay.
+      ABFTO section stacks to 1 column below 768px. Order CTA path c2/FT-c3.html is currently 404.
+      Live origin file was truncated mid-footer; bootstrap restored a minimal footer close.
+
+  - id: pinkhouse
+    name: Pink House
+    live_urls:
+      - https://pinkhouse.tech/
+    source: unknown  # live on droplet; not fully mirrored in this repo
+    github: unknown
+    hosting:
+      primary: pinkhouse-droplet
+      droplet_path: /var/www/html/
+    deploy: rsync-to-droplet
+    status: unknown
+    notes: Hub for Sight, Truth Serum, Tranquility, TokenScope paths, Life of Jesus testbed, etc.
+
+  - id: lifeofjesus-testbed
+    name: Life of Jesus (Pink House testbed)
+    live_urls:
+      - https://pinkhouse.tech/lifeofjesus/
+    source: lifeofjesus/
+    github: philcheevers-pixel/lifebutwrong
+    hosting:
+      primary: pinkhouse-droplet
+      droplet_path: /var/www/html/lifeofjesus/
+    deploy: rsync-to-droplet
+    status: git-backed
+    notes: Comfort-first static preview. Buy CTAs deep-link to Squarespace store.
+
+  - id: lifeofjesus-store
+    name: Life of Jesus (Squarespace store)
+    live_urls:
+      - https://www.lifeofjesus.ca/
+    source: squarespace
+    github: none
+    hosting:
+      primary: squarespace
+    deploy: squarespace-editor
+    status: platform-hosted
+    notes: Do not wipe commerce. Design port / DNS cutover are separate decisions.
+
+  - id: lifebutwrong
+    name: Life But Wrong
+    live_urls:
+      - https://lifebutwrong.com/  # HostGator/CF challenge as of 2026-09; cutover planned
+    source: ./  # repo root (index, shop, posts, works)
+    github: philcheevers-pixel/lifebutwrong
+    hosting:
+      primary: hostgator  # current
+      planned: digitalocean-app-platform
+    deploy: push-main-autodeploy  # once App Platform connected
+    status: git-backed
+    notes: See root README launch checklist. Replace YOUR-* shop placeholders before launch.
+
+  - id: tokenscope
+    name: TokenScope
+    live_urls:
+      - https://pinkhouse.tech/tokenscope/
+      - https://tokenscope.com/  # separate product; verify ownership/intent before editing
+    source: unknown-in-this-repo
+    github: philcheevers-pixel/tokenscope
+    hosting:
+      primary: mixed
+    deploy: unknown
+    status: unknown
+    notes: GitHub repo exists; also referenced from pinkhouse. Confirm which URL is canonical before changes.
+
+  - id: tranquility
+    name: Tranquility discussion
+    live_urls:
+      - https://pinkhouse.tech/tranquility/
+    source: unknown-in-this-repo
+    github: philcheevers-pixel/tranquility-discussion-groups
+    hosting:
+      primary: pinkhouse-droplet
+    deploy: unknown
+    status: unknown
+
+  - id: sight
+    name: Pink House Sight
+    live_urls:
+      - https://pinkhouse.tech/sight/
+      - https://pinkhouse.tech/how-to-see/
+    source: unknown  # on droplet
+    github: unknown
+    hosting:
+      primary: pinkhouse-droplet
+    deploy: rsync-to-droplet
+    status: unknown
+    notes: Vision a11y controls; free for end users. Prefer docs before native apps.
+
+  - id: truthserum
+    name: Truth Serum
+    live_urls:
+      - https://pinkhouse.tech/truthserum/
+    source: unknown  # historically pinkhouse/truthserum branches
+    github: philcheevers-pixel/lifebutwrong  # partial / branch history
+    hosting:
+      primary: pinkhouse-droplet
+    deploy: unknown
+    status: unknown
+    notes: Web path exists; Chrome extension is separate and not mobile.
+
+# Droplet (shared)
+pinkhouse_droplet:
+  host_hint: pinkhouse.tech
+  ip_hint: 68.183.194.162
+  server: Apache/2.4.58 (Ubuntu)
+  docroot: /var/www/html/
+  example_rsync: |
+    rsync -av --delete ./sites/carveintel/ USER@pinkhouse.tech:/var/www/html/carveintel/

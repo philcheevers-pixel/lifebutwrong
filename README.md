@@ -2,6 +2,14 @@
 
 Static site for **lifebutwrong.com** — satirical wrong takes, inappropriate products, and a separate factual works page.
 
+## Multi-site agent playbook
+
+Phil runs several sites. Agents should follow the same loop every time:
+
+- [`AGENTS.md`](AGENTS.md) — edit → PR → deploy checklist
+- [`sites/registry.yaml`](sites/registry.yaml) — inventory (CarveIntel, Pink House, Life of Jesus, …)
+- [`sites/`](sites/) — per-site source bootstrap + `SITE.md` rules
+
 ## Local preview
 
 Open `index.html` in a browser, or run a simple server:
