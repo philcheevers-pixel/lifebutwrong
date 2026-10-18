@@ -1,0 +1,195 @@
+:root {
+  --ink: #142033;
+  --muted: #4a5a70;
+  --paper: #e8eef6;
+  --paper-2: #d5e0ee;
+  --line: #9aacbf;
+  --accent: #0f6e56;
+  --accent-ink: #f4fffb;
+  --danger: #8b2e2e;
+  --danger-ink: #fff6f4;
+  --focus: #c45c26;
+  --radius: 10px;
+  --pad: max(1rem, env(safe-area-inset-left));
+  --pad-r: max(1rem, env(safe-area-inset-right));
+  --pad-b: max(1rem, env(safe-area-inset-bottom));
+  --type: clamp(1.25rem, 4.6vw, 1.55rem);
+  --display: clamp(1.85rem, 7vw, 2.35rem);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  font-family: "Source Sans 3", "Segoe UI", sans-serif;
+  font-size: var(--type);
+  line-height: 1.45;
+  color: var(--ink);
+  background:
+    radial-gradient(120% 80% at 10% -10%, #f7fbff 0%, transparent 55%),
+    radial-gradient(90% 70% at 100% 0%, #cfdced 0%, transparent 50%),
+    linear-gradient(165deg, #f3f7fc 0%, var(--paper) 45%, var(--paper-2) 100%);
+}
+
+body.is-colour {
+  --ink: #111;
+  --muted: #222;
+  --paper: #ffe566;
+  --paper-2: #ffd84d;
+  --line: #111;
+  --accent: #111;
+  --accent-ink: #ffe566;
+  --danger: #111;
+  --danger-ink: #ffe566;
+  --focus: #111;
+  background: var(--paper);
+}
+
+.shell {
+  width: min(40rem, 100%);
+  min-height: 100dvh;
+  margin: 0 auto;
+  padding: 1.25rem var(--pad-r) var(--pad-b) var(--pad);
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 1rem;
+}
+
+.top {
+  padding-top: 0.35rem;
+}
+
+.brand {
+  margin: 0;
+  font-family: Fraunces, Georgia, serif;
+  font-size: var(--display);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+}
+
+.tag {
+  margin: 0.35rem 0 0;
+  color: var(--muted);
+  font-size: 0.95em;
+}
+
+main {
+  display: grid;
+  grid-template-rows: 1fr auto auto;
+  gap: 0.85rem;
+  min-height: 0;
+}
+
+textarea {
+  width: 100%;
+  min-height: min(58dvh, 28rem);
+  resize: vertical;
+  border: 2px solid color-mix(in srgb, var(--ink) 28%, transparent);
+  border-radius: var(--radius);
+  padding: 1rem 1.05rem;
+  font: inherit;
+  color: inherit;
+  background: color-mix(in srgb, #fff 72%, var(--paper));
+  box-shadow: inset 0 1px 0 color-mix(in srgb, #fff 55%, transparent);
+  caret-color: var(--focus);
+}
+
+body.is-colour textarea {
+  background: #fff8bf;
+  border-color: #111;
+  box-shadow: none;
+}
+
+textarea:focus {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+textarea::placeholder {
+  color: color-mix(in srgb, var(--muted) 80%, transparent);
+}
+
+.status {
+  margin: 0;
+  min-height: 1.4em;
+  color: var(--muted);
+  font-size: 0.92em;
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.55rem;
+}
+
+button {
+  appearance: none;
+  border: 2px solid transparent;
+  border-radius: var(--radius);
+  padding: 0.85rem 0.6rem;
+  font: inherit;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  background: var(--accent);
+  color: var(--accent-ink);
+  min-height: 3.1rem;
+}
+
+button:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+button[aria-pressed="true"] {
+  box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--accent-ink) 70%, transparent);
+}
+
+button.danger {
+  background: transparent;
+  color: var(--danger);
+  border-color: color-mix(in srgb, var(--danger) 55%, transparent);
+}
+
+body.is-colour button.danger {
+  background: transparent;
+  color: #111;
+  border-color: #111;
+}
+
+.foot {
+  padding-bottom: 0.25rem;
+}
+
+.foot p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.88em;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 380px) {
+  .actions {
+    grid-template-columns: 1fr;
+  }
+}
